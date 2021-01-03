@@ -3,31 +3,46 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router';
 import cookies from 'next-cookies'
+import Dashboard from "./dahsboard";
+import axios from 'axios';
 
-export default function Home(props) {
-  console.log('props', props)
+export default function Home({id,
+                               burless_session,
+                               burless,
+                               data}) {
+  console.log(id,
+    burless_session,
+    burless,
+    data)
   const router = useRouter()
   useEffect(() => {
     router.push('/', undefined, { shallow: true })
   }, []);
 
-
-  return (
-    <div>
-     Heyy
-    </div>
-  )
+  if (burless || links.length > 0) {
+    return (
+      <div>
+        Heyy
+      </div>
+    )
+  } else {
+    return (
+      <Dashboard />
+    )
+  }
 }
 
 Home.getInitialProps = async (ctx) => {
   const burless = cookies(ctx).burless;
   const id = ctx.query.id;
   const burless_session = cookies(ctx).session;
-  const links = await fetch('http://localhost:3000/api/links');
+  const res = await axios('http://localhost:3000/api/links');
+  const {data} = res.data;
+  //TODO: Handle catch
   return {
     id,
     burless_session,
     burless,
-    links
+    data
   };
 };

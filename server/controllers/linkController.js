@@ -46,17 +46,19 @@ class linkController {
     const burless = req.cookies.burless;
     if (burless) {
       const user = await getUserIdFromToken(burless);
-      const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
+      const links = await Link.find({"user": ObjectId('5fec735f8817ee951e90b517')});
       res.status(200).json(links);
     } else {
       // const session = req.sessionID;
       // console.log('sessi', session)
       // const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
-      // console.log('links', links)
-      // res.status(200).json(links);
-
-      const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
-      res.status(200).json(links);
+      Link.find({"session": 'B2tpkLa1m1AStfgBvlcojxsN_XycOZud'}, function(error, result) {
+        if (error) {
+          return res.json({ 'status': 422, 'error': error.toString() });
+        } else {
+          res.json({ 'status': 200, 'data': result });
+        }
+      });
     }
   };
 
