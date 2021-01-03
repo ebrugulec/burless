@@ -42,6 +42,25 @@ class linkController {
 
   };
 
+  static getAllLink = async (req, res) => {
+    const burless = req.cookies.burless;
+    if (burless) {
+      const user = await getUserIdFromToken(burless);
+      const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
+      res.status(200).json(links);
+    } else {
+      // const session = req.sessionID;
+      // console.log('sessi', session)
+      // const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
+      // console.log('links', links)
+      // res.status(200).json(links);
+
+      const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
+      res.status(200).json(links);
+    }
+  };
+
+
   static getLink = (req, res) => {
     console.log('getUrl')
     res.redirect('https://stackoverflow.com/questions/4643142/regex-to-test-if-string-begins-with-http-or-https')
