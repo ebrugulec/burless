@@ -45,18 +45,27 @@ app.prepare().then(() => {
   server.use(cookieParser());
 
   const corsOptions = {
-    origin: true,
+    origin: 'http://localhost:3000',
     credentials: true,
   };
   server.use(cors(corsOptions));
   server.use(express.json());
 
+  const isDevMode = true;
+
+// 1st change.
+  if (!isDevMode) {
+    app.set('trust proxy', 1);
+  }
   server.use(
     session({
       secret: "somerandonstuffs",
       resave: false,
       saveUninitialized: true,
+      unset: 'destroy',
+      name: 'burless_session',
       store: store,
+      secure: !isDevMode,
       cookie: {
         maxAge: 300000 * 24 * 60 * 60 * 1000
       }
@@ -112,9 +121,9 @@ app.prepare().then(() => {
     }
   });
 
-  // server.get('*', (req, res) => {
-  //   // return app.render(req, res, '/index');
-  // });
+  server.get('/site/*', (req, res) => {
+    return app.render(req, res, '/index');
+  });
 
   /* eslint-disable no-console */
   server.listen(3000, (err) => {

@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const { parse } = require('url');
 dotenv.config();
 const getUserIdFromToken = require('../utils/getUserIdFromToken');
 
@@ -14,23 +15,26 @@ const BASE_URL = process.env.BASE_URL;
 
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
+    const parsedUrl = parse(req.url, true);
+    const { pathname, query } = parsedUrl;
+
     const burless_token = req.cookies.burless;
     const sessionId = req.session.id;
 
     const userId = await getUserIdFromToken(burless_token);
   //TODO: Add and check alias
       try {
-        const urlCode = shortId.generate();
-        const shortLink = `${BASE_URL}/${urlCode}`;
-        let url = new Link({
-          link: reqUrl,
-          shortLink,
-          urlCode,
-          user: userId ? userId : null,
-          session: userId ? null : sessionId,
-        });
-        await url.save();
-        return app.render(req, res, '/index', req.query);
+        // const urlCode = shortId.generate();
+        // const shortLink = `${BASE_URL}/${urlCode}`;
+        // let url = new Link({
+        //   link: reqUrl,
+        //   shortLink,
+        //   urlCode,
+        //   user: userId ? userId : null,
+        //   session: userId ? null : sessionId,
+        // });
+        // await url.save();
+        return app.render(req, res, '/index', {id: '3532'});
 
       } catch (err) {
         return res.status(500).json("Internal Server error " + err);
