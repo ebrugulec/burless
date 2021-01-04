@@ -16,25 +16,22 @@ const BASE_URL = process.env.BASE_URL;
 
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
-    const parsedUrl = parse(req.url, true);
-    const { pathname, query } = parsedUrl;
-
     const burless_token = req.cookies.burless;
     const sessionId = req.session.id;
 
     const userId = await getUserIdFromToken(burless_token);
   //TODO: Add and check alias
     try {
-      // const linkCode = shortId.generate();
-      // const shortLink = `${BASE_URL}/${linkCode}`;
-      // let url = new Link({
-      //   longLink: reqUrl,
-      //   shortLink,
-      //   linkCode,
-      //   user: userId ? userId : null,
-      //   session: userId ? null : sessionId,
-      // });
-      // await url.save();
+      const linkCode = shortId.generate();
+      const shortLink = `${BASE_URL}/${linkCode}`;
+      let url = new Link({
+        longLink: reqUrl,
+        shortLink,
+        linkCode,
+        user: userId ? userId : null,
+        session: userId ? null : sessionId,
+      });
+      await url.save();
       return app.render(req, res, '/index', {id: '3532'});
 
     } catch (err) {
@@ -64,32 +61,32 @@ class linkController {
 
 
   static getLink = async (req, res) => {
-    console.log('getUrl')
-
     const { id } = req.params;
-    console.log('link', id)
-    // try {
-    //   const link = await Link.findOne({ 'linkCode': id });
-    //
-    //   if (link) {
-    //     const referrer = req.get('Referrer');
-    //     let totalClickCount = link.totalClickCount;
-    //     totalClickCount++;
-    //
-    //     let click = new Click({
-    //       _link: link._id,
-    //       referrer: referrer,
-    //     });
-    //     await click.save();
-    //     await link.update({ totalClickCount });
-    //     return res.redirect(link.longLink);
-    //   }else {
-    //     return res.status(400).json("Url doesn't exists.");
-    //   }
-    // } catch (err) {
-    //   console.log('er', err)
-    //   return res.status(500).json("Internal error.");
-    // }
+
+    try {
+      const link = await Link.findOne({ 'linkCode': id });
+
+      if (link) {
+        const referrer = req.get('Referrer');
+        const ipInfo = req.ipInfo;
+        let totalClickCount = link.totalClickCount;
+        totalClickCount++;
+
+        let click = new Click({
+          _link: link._id,
+          referrer: referrer,
+          country: ipInfo.country
+        });
+        await click.save();
+        await link.update({ totalClickCount });
+        return res.redirect(link.longLink);
+      }else {
+        return res.status(400).json("Url doesn't exists.");
+      }
+    } catch (err) {
+      //HandleCatch
+      return res.status(500).json("Internal error.");
+    }
   };
 }
 

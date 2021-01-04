@@ -13,8 +13,10 @@ const ClickSchema = new Schema({
   referrer: {
     type: String,
     default: 'Direct'
+  },
+  country: {
+    type: String,
   }
-
 });
 
 module.exports = mongoose.model("Click", ClickSchema);

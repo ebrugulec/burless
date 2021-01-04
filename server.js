@@ -7,11 +7,13 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const MongoDBSession = require('connect-mongodb-session')(session);
 const dotenv = require("dotenv");
-
+const expressip = require('express-ip');
 const checkUrl = require('./server/utils/checkUrl');
 dotenv.config();
 
 const DB = process.env.DATABASE_URI;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(DB, {
   useNestedStrict: true,
@@ -42,32 +44,25 @@ app.prepare().then(() => {
 
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(bodyParser.json());
-
+  server.use(expressip().getIpInfoMiddleware);
   server.use(cookieParser());
 
   const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true,
   };
   server.use(cors(corsOptions));
   server.use(express.json());
 
-  const isDevMode = true;
-
-
-// 1st change.
-  if (!isDevMode) {
-    app.set('trust proxy', 1);
-  }
   server.use(
     session({
-      secret: "somerandonstuffs",
+      secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
       unset: 'destroy',
       name: 'burless_session',
       store: store,
-      secure: !isDevMode,
+      secure: true,
       cookie: {
         maxAge: 300000 * 24 * 60 * 60 * 1000
       }
@@ -76,45 +71,19 @@ app.prepare().then(() => {
 
   server.use('/api', apiRoutes);
 
-  // Server-side
   const route = pathMatch();
 
-  // server.get('/', (req, res) => {
-  //   console.log('/ normal')
-  //
-  //   return app.render(req, res, '/index', req.query);
-  // });
-
-  server.get('/artist/:id', (req, res) => {
-    console.log('/artist/:id')
-
-    const params = route('/artist/:id')(parse(req.url).pathname);
-    return app.render(req, res, '/artist', params);
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/index', req.query);
   });
 
-  server.get('/album/:id', (req, res) => {
-    const params = route('/album/:id')(parse(req.url).pathname);
-    return app.render(req, res, '/album', params);
+  server.get('/:id', async (req, res) => {
+    await linkController.getLink(req, res)
   });
-
-  server.get('/:id', (req, res) => {
-    linkController.getLink(req, res)
-  });
-
-  // server.get('/*', (req, res) => {
-  //   const reqUrl = req.url.substring(1);
-  //   console.log('reqUrl', reqUrl)
-  //   console.log('reqUrl', reqUrl)
-  //   console.log('checkUrl(reqUrl)', checkUrl(reqUrl));
-  //   res.status(301)
-  //   if (checkUrl(reqUrl)) {
-  //     linkController.shortenLink(req, res, app, reqUrl)
-  //   }
-  //   return handle(req, res);
-  // });
 
   server.get('*', async (req, res) => {
     const reqUrl = req.url.substring(1);
+    //TODO: Check here
     if (checkUrl(reqUrl)) {
       res.status(301);
       await linkController.shortenLink(req, res, app, reqUrl)
@@ -123,9 +92,8 @@ app.prepare().then(() => {
     }
   });
 
-  /* eslint-disable no-console */
-  server.listen(3000, (err) => {
+  server.listen(PORT, (err) => {
     if (err) throw err;
-    console.log('Server ready on http://localhost:3000');
+    console.log('Server ready on PORT');
   });
 });
