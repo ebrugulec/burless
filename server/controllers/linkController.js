@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const Click = require('../models/Click');
 const { parse } = require('url');
 dotenv.config();
 const getUserIdFromToken = require('../utils/getUserIdFromToken');
@@ -23,23 +24,22 @@ class linkController {
 
     const userId = await getUserIdFromToken(burless_token);
   //TODO: Add and check alias
-      try {
-        // const urlCode = shortId.generate();
-        // const shortLink = `${BASE_URL}/${urlCode}`;
-        // let url = new Link({
-        //   link: reqUrl,
-        //   shortLink,
-        //   urlCode,
-        //   user: userId ? userId : null,
-        //   session: userId ? null : sessionId,
-        // });
-        // await url.save();
-        return app.render(req, res, '/index', {id: '3532'});
+    try {
+      // const linkCode = shortId.generate();
+      // const shortLink = `${BASE_URL}/${linkCode}`;
+      // let url = new Link({
+      //   longLink: reqUrl,
+      //   shortLink,
+      //   linkCode,
+      //   user: userId ? userId : null,
+      //   session: userId ? null : sessionId,
+      // });
+      // await url.save();
+      return app.render(req, res, '/index', {id: '3532'});
 
-      } catch (err) {
-        return res.status(500).json("Internal Server error " + err);
-      }
-
+    } catch (err) {
+      return res.status(500).json("Internal Server error " + err);
+    }
   };
 
   static getAllLink = async (req, res) => {
@@ -63,26 +63,26 @@ class linkController {
   };
 
 
-  static getLink = (req, res) => {
+  static getLink = async (req, res) => {
     console.log('getUrl')
-    res.redirect('https://stackoverflow.com/questions/4643142/regex-to-test-if-string-begins-with-http-or-https')
 
-    // const { link } = req.params;
-    // console.log('link', link)
+    const { id } = req.params;
+    console.log('link', id)
     // try {
-    //   const url = await Link.findOne({ 'urlCode': link });
+    //   const link = await Link.findOne({ 'linkCode': id });
     //
-    //   if (url) {
-    //     let totalClickCount = url.totalClickCount;
+    //   if (link) {
+    //     const referrer = req.get('Referrer');
+    //     let totalClickCount = link.totalClickCount;
     //     totalClickCount++;
-    //     //
-    //     // let click = new Click({
-    //     //   _link: urlId
-    //     // });
-    //     // await click.save();
-    //     await url.update({ totalClickCount });
-    //     console.log('url', url.link)
-    //     return res.redirect(url.link);
+    //
+    //     let click = new Click({
+    //       _link: link._id,
+    //       referrer: referrer,
+    //     });
+    //     await click.save();
+    //     await link.update({ totalClickCount });
+    //     return res.redirect(link.longLink);
     //   }else {
     //     return res.status(400).json("Url doesn't exists.");
     //   }

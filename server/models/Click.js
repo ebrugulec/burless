@@ -6,7 +6,14 @@ const ClickSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  _link: { type: Schema.Types.ObjectId, ref: 'Link' },
+  _link: {
+    type: Schema.Types.ObjectId,
+    ref: 'Link'
+  },
+  referrer: {
+    type: String,
+    default: 'Direct'
+  }
 
 });
 

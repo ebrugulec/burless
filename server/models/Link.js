@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const LinkSchema = new Schema({
-  link: {
+  longLink: {
     type: String,
     required: true
   },
@@ -10,7 +10,7 @@ const LinkSchema = new Schema({
     type: String,
     required: true
   },
-  urlCode: {
+  linkCode: {
     type: String,
     required: true
   },

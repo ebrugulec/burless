@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const MongoDBSession = require('connect-mongodb-session')(session);
 const dotenv = require("dotenv");
+
 const checkUrl = require('./server/utils/checkUrl');
 dotenv.config();
 
@@ -53,6 +54,7 @@ app.prepare().then(() => {
 
   const isDevMode = true;
 
+
 // 1st change.
   if (!isDevMode) {
     app.set('trust proxy', 1);
@@ -95,9 +97,9 @@ app.prepare().then(() => {
     return app.render(req, res, '/album', params);
   });
 
-  // server.get('/:id', (req, res) => {
-  //   linkController.getLink(req, res)
-  // });
+  server.get('/:id', (req, res) => {
+    linkController.getLink(req, res)
+  });
 
   // server.get('/*', (req, res) => {
   //   const reqUrl = req.url.substring(1);
@@ -119,10 +121,6 @@ app.prepare().then(() => {
     } else {
       return handle(req, res, '/index');
     }
-  });
-
-  server.get('/site/*', (req, res) => {
-    return app.render(req, res, '/index');
   });
 
   /* eslint-disable no-console */
