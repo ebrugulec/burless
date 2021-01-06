@@ -6,29 +6,32 @@ import cookies from 'next-cookies'
 import Dashboard from "./dahsboard";
 import axios from 'axios';
 
-export default function Home({id,
-                               burless_session,
-                               burless,
-                               data}) {
+export default function Home() {
 
-  const router = useRouter()
-  useEffect(() => {
-    router.push('/', undefined, { shallow: true })
-  }, []);
+  // const router = useRouter()
+  // useEffect(() => {
+  //   router.push('/', undefined, { shallow: true })
+  // }, []);
+  //
+  // if (burless || links.length > 0) {
+  //   return (
+  //     <div>
+  //       Heyy
+  //     </div>
+  //   )
+  // } else {
+  //   return (
+  //     <Dashboard />
+  //   )
+  // }
 
-  if (burless || links.length > 0) {
-    return (
-      <div>
-        Heyy index
-      </div>
-    )
-  } else {
-    return (
-      <Dashboard />
-    )
-  }
+  return (
+    <div>
+      Index.js
+    </div>
+  )
 }
-//
+
 // Home.getInitialProps = async (ctx) => {
 //   const burless = cookies(ctx).burless;
 //   const id = ctx.query.id;
