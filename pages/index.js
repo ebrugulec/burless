@@ -10,10 +10,7 @@ export default function Home({id,
                                burless_session,
                                burless,
                                data}) {
-  console.log(id,
-    burless_session,
-    burless,
-    data)
+
   const router = useRouter()
   useEffect(() => {
     router.push('/', undefined, { shallow: true })
@@ -22,7 +19,7 @@ export default function Home({id,
   if (burless || links.length > 0) {
     return (
       <div>
-        Heyy
+        Heyy index
       </div>
     )
   } else {
@@ -31,18 +28,18 @@ export default function Home({id,
     )
   }
 }
-
-Home.getInitialProps = async (ctx) => {
-  const burless = cookies(ctx).burless;
-  const id = ctx.query.id;
-  const burless_session = cookies(ctx).session;
-  const res = await axios('http://localhost:3000/api/links');
-  const {data} = res.data;
-  //TODO: Handle catch
-  return {
-    id,
-    burless_session,
-    burless,
-    data
-  };
-};
+//
+// Home.getInitialProps = async (ctx) => {
+//   const burless = cookies(ctx).burless;
+//   const id = ctx.query.id;
+//   const burless_session = cookies(ctx).session;
+//   const res = await axios('http://localhost:3000/api/links');
+//   const {data} = res.data;
+//   //TODO: Handle catch
+//   return {
+//     id,
+//     burless_session,
+//     burless,
+//     data
+//   };
+// };
