@@ -66,9 +66,9 @@ class linkController {
     const parseIp = (req) =>
       (typeof req.headers['x-forwarded-for'] === 'string'
         && req.headers['x-forwarded-for'].split(',').shift())
-      || req.connection?.remoteAddress
-      || req.socket?.remoteAddress
-      || req.connection?.socket?.remoteAddress
+      || (req.connection && req.connection.remoteAddress)
+      || (req.socket && req.socket.remoteAddress)
+      || (req.connection && req.connection.socket && req.connection.socket.remoteAddress);
 
     const geo = geoip.lookup(parseIp(req));
     const country = geo && geo['country'];
