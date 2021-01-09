@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const Click = require('../models/Click');
 const { parse } = require('url');
+const geoip = require('geoip-lite');
 dotenv.config();
 const getUserIdFromToken = require('../utils/getUserIdFromToken');
 
@@ -62,20 +63,26 @@ class linkController {
 
   static getLink = async (req, res) => {
     const { id } = req.params;
+    const ip = (typeof req.headers['x-forwarded-for'] === 'string'
+      && req.headers['x-forwarded-for'].split(',').shift())
+      || req.connection?.remoteAddress
+      || req.socket?.remoteAddress
+      || req.connection?.socket?.remoteAddress;
 
+    const geo = geoip.lookup(ip);
+    const country = geo && geo['country'];
     try {
       const link = await Link.findOne({ 'linkCode': id });
 
       if (link) {
         const referrer = req.get('Referrer');
-        const ipInfo = req.ipInfo;
         let totalClickCount = link.totalClickCount;
         totalClickCount++;
 
         let click = new Click({
           _link: link._id,
           referrer: referrer,
-          country: ipInfo.country
+          country: country,
         });
         await click.save();
         await link.update({ totalClickCount });
