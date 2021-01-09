@@ -63,13 +63,14 @@ class linkController {
 
   static getLink = async (req, res) => {
     const { id } = req.params;
-    const ip = (typeof req.headers['x-forwarded-for'] === 'string'
-      && req.headers['x-forwarded-for'].split(',').shift())
+    const parseIp = (req) =>
+      (typeof req.headers['x-forwarded-for'] === 'string'
+        && req.headers['x-forwarded-for'].split(',').shift())
       || req.connection?.remoteAddress
       || req.socket?.remoteAddress
-      || req.connection?.socket?.remoteAddress;
+      || req.connection?.socket?.remoteAddress
 
-    const geo = geoip.lookup(ip);
+    const geo = geoip.lookup(parseIp(req));
     const country = geo && geo['country'];
     try {
       const link = await Link.findOne({ 'linkCode': id });
