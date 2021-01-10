@@ -10,11 +10,11 @@ import LinkList from "../components/LinkList";
 export default function Home({ linkData, id }) {
 
   const router = useRouter();
-  // useEffect(() => {
-  //   if (id) {
-  //     router.push('/', undefined, { shallow: true })
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (id) {
+      router.push('/', undefined, { shallow: true })
+    }
+  }, []);
 
   // if (burless || links.length > 0) {
   if (true) {

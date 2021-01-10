@@ -11,9 +11,6 @@ const LinkList = ({ linkData }) => {
   const stopLoading = () => setLoading(false)
   const router = useRouter();
 
-  Router.onRouteChangeComplete = url =>
-    console.log('Route changed to: ', url);
-
   useEffect(() => {
     setFirstRender(false);
     Router.events.on("routeChangeStart", startLoading)
@@ -22,7 +19,7 @@ const LinkList = ({ linkData }) => {
       Router.events.off("routeChangeStart", startLoading)
       Router.events.off("routeChangeComplete", stopLoading)
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (linkData) {
@@ -33,7 +30,7 @@ const LinkList = ({ linkData }) => {
         setLinks(linkData.links)
       }
     }
-  }, [linkData])
+  }, [linkData]);
 
   const handlePagination = page => {
     if (!firstRender) {

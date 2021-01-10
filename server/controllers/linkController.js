@@ -87,7 +87,6 @@ class linkController {
     }
   };
 
-
   static getLink = async (req, res) => {
     const { id } = req.params;
     const parseIp = (req) =>
@@ -122,6 +121,68 @@ class linkController {
       //HandleCatch
       return res.status(500).json("Internal error.");
     }
+  };
+
+  static getCountry  = async (req, res) => {
+    // Yalnizca user'lar istatistiklere ulasabilecek.
+    const { id } = req.params;
+
+    Click.aggregate(
+      [
+        {
+          $match: {
+            "_link": ObjectId(id),
+          },
+        },
+        {$group: {
+            _id: {
+              country: "$country",
+            },
+            count: {$sum: 1}
+          }},
+        {$sort: {"count": -1} },
+        { "$limit": 10 },
+      ]).exec(function(err, result){
+      if (err) {
+        console.log('Error Fetching model');
+        console.log(err);
+      } else {
+        return res.json({ 'status': 200, 'data': result });
+      }
+    });
+  };
+
+  static getCountry  = async (req, res) => {
+    // Yalnizca user'lar istatistiklere ulasabilecek.
+    const { id } = req.params;
+
+    Click.aggregate(
+      [
+        {
+          $match: {
+            "_link": ObjectId(id),
+            "country": {
+              "$exists": true,
+              "$ne": null
+            }
+          },
+        },
+        {$group: {
+            _id: {
+              country: "$country",
+            },
+            count: {$sum: 1}
+          }},
+        {$sort: {"count": -1} },
+        { "$limit": 10 },
+      ]).exec(function(err, result){
+      if (err) {
+        console.log('Error Fetching model');
+        console.log(err);
+      } else {
+        return res.json({ 'status': 200, 'data': result });
+      }
+    });
   };
 }
 
