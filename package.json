@@ -28,10 +28,12 @@
     "next": "10.0.4",
     "next-cookies": "^2.0.3",
     "next-routes": "^1.4.2",
+    "node-fetch": "^2.6.1",
     "path": "^0.12.7",
     "path-match": "^1.2.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-paginate": "^7.0.0",
     "shortid": "^2.2.16",
     "urlencoded-body-parser": "^3.0.0",
     "valid-url": "^1.0.9"

@@ -12,7 +12,6 @@ const generateToken = async (res, payload) => {
     secure: false, // set to true if your using https
     httpOnly: true,
   });
-  console.log('cookie', res.cookie)
 
   return res.status(200).json("Ok");
 };

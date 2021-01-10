@@ -42,21 +42,48 @@ class linkController {
 
   static getAllLink = async (req, res) => {
     const burless = req.cookies.burless;
-    if (burless) {
-      const user = await getUserIdFromToken(burless);
-      const links = await Link.find({"user": ObjectId('5fec735f8817ee951e90b517')});
-      res.status(200).json(links);
+    console.log('req.query.page', req.query.page)
+
+    const perPage = 3;
+    const curPage = req.query.page || 1;
+
+    // if (burless) {
+      if (false) {
+      const userId = await getUserIdFromToken(burless);
+
+      Link.find({"user": ObjectId(userId)})
+        // .limit(perPage)
+        // .skip(perPage * page)
+        .sort([['createdAt', -1]])
+
+        .exec(function(err, result) {
+          if (err) {
+            return res.json({ 'status': 422, 'error': error.toString() });
+          } else {
+            res.json({ 'status': 200, 'data': result });
+          }
+        })
     } else {
-      // const session = req.sessionID;
-      // console.log('sessi', session)
-      // const links = await Link.find({"session": "B2tpkLa1m1AStfgBvlcojxsN_XycOZud"});
-      Link.find({"session": 'B2tpkLa1m1AStfgBvlcojxsN_XycOZud'}, function(error, result) {
-        if (error) {
-          return res.json({ 'status': 422, 'error': error.toString() });
-        } else {
-          res.json({ 'status': 200, 'data': result });
-        }
-      });
+      const session = req.sessionID;
+      const totalLinks = await Link.countDocuments({session: "zvWvMADgKdOLymj-pIDz_BDfJia-HPvu"});
+      Link.find({session: "zvWvMADgKdOLymj-pIDz_BDfJia-HPvu"})
+        .limit(perPage)
+        .skip((curPage - 1) * perPage)
+        .sort({createdAt: -1})
+        .exec(function(err, result) {
+          if (err) {
+            return res.json({ 'status': 422, 'error': error.toString() });
+          } else {
+            res.json(
+              {
+                message: "Fetched links",
+                status: 200,
+                links: result,
+                curPage: curPage,
+                maxPage: Math.ceil(totalLinks / perPage),
+              });
+          }
+        })
     }
   };
 

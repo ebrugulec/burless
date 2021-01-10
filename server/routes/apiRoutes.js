@@ -10,7 +10,7 @@ const UserController = require("../controllers/userController");
 
 // router.delete('/links/:urlId', LinkController.deleteUrl);
 // router.get('/links/statistic/:urlId', LinkController.getUrlClickCount);
-router.get('/links', LinkController.getAllLink)
+router.get('/links/', LinkController.getAllLink)
 
 router.get('/me', auth, UserController.getUser);
 router.post('/register', [

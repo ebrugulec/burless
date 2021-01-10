@@ -83,8 +83,6 @@ class userController {
       };
 
       await generateToken(res, payload);
-      console.log('res.cookies', res.cookie)
-
     } catch (e) {
       console.error(e);
       res.status(500).json({
