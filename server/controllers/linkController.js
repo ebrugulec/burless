@@ -152,7 +152,7 @@ class linkController {
     });
   };
 
-  static getCountry  = async (req, res) => {
+  static getReferrer  = async (req, res) => {
     // Yalnizca user'lar istatistiklere ulasabilecek.
     const { id } = req.params;
 
@@ -161,7 +161,7 @@ class linkController {
         {
           $match: {
             "_link": ObjectId(id),
-            "country": {
+            "referrer": {
               "$exists": true,
               "$ne": null
             }
@@ -169,7 +169,7 @@ class linkController {
         },
         {$group: {
             _id: {
-              country: "$country",
+              referrer: "$referrer",
             },
             count: {$sum: 1}
           }},
@@ -184,6 +184,59 @@ class linkController {
       }
     });
   };
+
+  static deleteUrl = async (req, res) => {
+    const { urlId } = req.params;
+    try {
+      Link.deleteOne({ '_id': urlId }, function (err) {
+        if(!err) {
+          return res.status(204).json("Deleted");
+        } else {
+          return res.status(400).json("Url doesn't exists.");
+        }
+      });
+    } catch (e) {
+      return res.status(500).json("Internal error.");
+    }
+  };
+
+  static getLinkClickCount = async (req, res) => {
+    const { id } = req.params;
+    //TODO: Remove query this controller
+    let date = new Date();
+    date.setDate(date.getDate()-1);
+    Click.aggregate(
+      [
+        {
+          $match: {
+            "_link": ObjectId(id),
+            "createdAt": {'$gte': date}
+          },
+        },
+        {$group: {
+            _id: {
+              year: {$year: "$createdAt"},
+              month: {$month: "$createdAt"},
+              day: {$dayOfMonth: "$createdAt"}
+            },
+            count: {$sum: 1}
+          }},
+        {$project: {
+            date: "$_id",
+            count: 1,
+            _id: 0
+          }},
+        {$sort: {"date": 1} }
+      ]).exec(function(err, result){
+      if (err) {
+        console.log('Error Fetching model');
+        console.log(err);
+      } else {
+        console.log(result);
+        return res.json({ 'status': 200, 'data': result });
+      }
+    });
+  }
 }
 
 module.exports = linkController;

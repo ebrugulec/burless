@@ -14,6 +14,8 @@ router.get('/links/', LinkController.getAllLink);
 
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry);
+router.get('/links/referrer/:id', LinkController.getReferrer);
+router.get('/links/statistic/:id', LinkController.getLinkClickCount);
 
 router.get('/me', auth, UserController.getUser);
 router.post('/register', [
