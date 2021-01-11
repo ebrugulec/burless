@@ -200,6 +200,32 @@ class linkController {
     }
   };
 
+  static getLinkTotalInfo = async (req, res) => {
+    //User'in bilgileri ile total info'u gormeli.
+    const userId = 1;
+
+    Link.aggregate([
+      {
+        $match : {"user": ObjectId("5fe9088de4828d65f0afa941") },
+      },
+      {
+        $group : {
+          _id : null,
+          total : {
+            $sum : "$totalClickCount"
+          }
+        }
+      }
+    ]).exec(function(err, result){
+      if (err) {
+        console.log('Error Fetching model');
+        console.log(err);
+      } else {
+        console.log('result'. result);
+        return res.json({ 'status': 200, 'data': result });
+      }});
+  };
+
   static getLinkClickCount = async (req, res) => {
     const { id } = req.params;
     //TODO: Remove query this controller
@@ -228,13 +254,13 @@ class linkController {
           }},
         {$sort: {"date": 1} }
       ]).exec(function(err, result){
-      if (err) {
-        console.log('Error Fetching model');
-        console.log(err);
-      } else {
-        console.log(result);
-        return res.json({ 'status': 200, 'data': result });
-      }
+        if (err) {
+          console.log('Error Fetching model');
+          console.log(err);
+        } else {
+          console.log(result);
+          return res.json({ 'status': 200, 'data': result });
+        }
     });
   }
 }
