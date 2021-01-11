@@ -15,6 +15,7 @@ const getUserIdFromToken = require('../utils/getUserIdFromToken');
 
 const BASE_URL = process.env.BASE_URL;
 
+//TODO: Move mongoose query to service.
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
     const burless_token = req.cookies.burless;
@@ -221,8 +222,15 @@ class linkController {
         console.log('Error Fetching model');
         console.log(err);
       } else {
-        console.log('result'. result);
-        return res.json({ 'status': 200, 'data': result });
+        const findQuery = Link.find({"user": ObjectId("5fe9088de4828d65f0afa941")}).sort({totalClickCount : -1}).limit(1);
+        findQuery.exec(function(err, maxResult){
+          if (err) {return err;}
+          const totalLinksQ = Link.countDocuments({"user": ObjectId("5fe9088de4828d65f0afa941")});
+          totalLinksQ.exec(function(err, totalLinks){
+            if (err) {return err;}
+            return res.json({ 'status': 200, 'data': totalLinks });
+          });
+        });
       }});
   };
 
