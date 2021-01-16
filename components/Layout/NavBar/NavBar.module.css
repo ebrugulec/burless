@@ -1,0 +1,9 @@
+.NavBar a {
+  color: inherit;
+  text-decoration: none;
+}
+.NavBar .active {
+  color: blue;
+}
+
+/*# sourceMappingURL=NavBar.module.css.map */

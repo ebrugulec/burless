@@ -1,0 +1,13 @@
+.NavButton {
+  display: flex;
+  flex-direction: row;
+}
+.NavButton .Icon {
+  font-size: 40px;
+}
+.NavButton .Label {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+/*# sourceMappingURL=NavButton.module.css.map */

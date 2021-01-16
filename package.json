@@ -8,6 +8,9 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
@@ -29,16 +32,19 @@
     "next-cookies": "^2.0.3",
     "next-routes": "^1.4.2",
     "node-fetch": "^2.6.1",
+    "node-sass": "^5.0.0",
     "path": "^0.12.7",
     "path-match": "^1.2.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-paginate": "^7.0.0",
+    "sass": "^1.32.4",
     "shortid": "^2.2.16",
     "urlencoded-body-parser": "^3.0.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "prettier": "^1.17.1"
   }
 }

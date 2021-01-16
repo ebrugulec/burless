@@ -1,0 +1,21 @@
+.Layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #FA4141;
+  height: 100%;
+  width: 100%;
+}
+.Layout .Content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: green;
+}
+.Layout .Content a {
+  color: inherit;
+}
+
+/*# sourceMappingURL=Layout.module.css.map */

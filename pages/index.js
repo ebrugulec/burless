@@ -6,6 +6,8 @@ import cookies from 'next-cookies'
 import Dashboard from "./dahsboard";
 import axios from 'axios';
 import LinkList from "../components/LinkList";
+import Layout from "../components/Layout"
+import Link from 'next/link'
 
 export default function Home({ linkData, id }) {
 
@@ -19,9 +21,15 @@ export default function Home({ linkData, id }) {
   // if (burless || links.length > 0) {
   if (true) {
     return (
-      <div className="home-page">
-        <LinkList linkData={linkData} />
-      </div>
+      // <div className="home-page">
+      //   <LinkList linkData={linkData} />
+      // </div>
+      <Layout>
+        <br />
+        <Link href="/explore">
+          <a> Welcome to WHATABYTE! Start Exploring Now</a>
+        </Link>
+      </Layout>
     )
   } else {
     return (
