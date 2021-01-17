@@ -4,11 +4,14 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 const generateToken = require('../utils/generateToken');
-
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const User = require("../models/User");
+const Link = require("../models/Link");
 
 class userController {
   static signUp = async (req, res) => {
+    const sessionId = req.sessionID;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -46,14 +49,24 @@ class userController {
       const payload = {
         id: user.id
       };
+
+      await this.updateUserLinksWithSession(sessionId, user.id);
+      req.session.regenerate((err) => {
+        if(err) {
+          console.error(err);
+        }
+      });
       await generateToken(res, payload);
+      res.json({ 'status': 200 });
     } catch (err) {
       res.status(500).send("Error in Saving");
     }
   };
 
   static signIn = async (req, res) => {
+    const sessionId = req.sessionID;
     const errors = validationResult(req);
+    console.log('req', req)
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -82,6 +95,13 @@ class userController {
         id: user.id
       };
 
+      await this.updateUserLinksWithSession(sessionId, user.id);
+      req.session.regenerate((err) => {
+        if(err) {
+          console.error(err);
+        }
+      });
+
       await generateToken(res, payload);
     } catch (e) {
       console.error(e);
@@ -89,10 +109,16 @@ class userController {
         message: "Server Error"
       });
     }
-  }
+  };
 
   static getUser = async (req, res) => {
-    console.log('gectii')
+  };
+
+  static async updateUserLinksWithSession(sessionId, userId) {
+    await Link.updateMany(
+      {session: sessionId},
+      {"user": userId},
+      {upsert: true});
   }
 }
 

@@ -1,13 +1,13 @@
 .NavButton {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    .Icon {
-      font-size: 40px;
-    }
-  
-    .Label {
-      font-size: 12px;
-      text-transform: capitalize;
-    }
+  .Icon {
+    font-size: 40px;
   }
+
+  .Label {
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+}
