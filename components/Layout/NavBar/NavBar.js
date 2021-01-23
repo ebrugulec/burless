@@ -9,7 +9,6 @@ const NavBar = props => (
         key={button.path}
         path={button.path}
         label={button.label}
-        icon={button.icon}
       />
     ))}
   </div>

@@ -1,38 +1,25 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChartBar,
-  faLink,
-  faRobot,
-  faSignOutAlt,
-  faEnvelope
-} from "@fortawesome/free-solid-svg-icons";
 
 const navButtons = [
   {
     label: "Links",
-    path: "/link",
-    icon: <FontAwesomeIcon icon={faLink} />
+    path: "/links",
   },
   {
     label: "Statistic",
-    path: "/chart-line",
-    icon: <FontAwesomeIcon icon={faChartBar} />
+    path: "/statistic",
   },
   {
     label: "Profile",
-    path: "/grav",
-    icon: <FontAwesomeIcon icon={faRobot} />
+    path: "/profile",
   },
   {
     label: "Contact",
-    path: "/envelope",
-    icon: <FontAwesomeIcon icon={faEnvelope} />
+    path: "/contact",
   },
   {
     label: "Sign Out",
-    path: "/sign-out-alt",
-    icon: <FontAwesomeIcon icon={faSignOutAlt} />
+    path: "/sign-out",
   }
 ];
 

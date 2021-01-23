@@ -1,0 +1,9 @@
+.Header {
+  margin-left: 10px;
+  padding-top: 15px;
+}
+.Header svg:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=Header.module.css.map */

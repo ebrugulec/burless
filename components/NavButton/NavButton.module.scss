@@ -1,13 +1,18 @@
 .NavButton {
-  display: flex;
-  flex-direction: row;
+  //display: flex;
+  //flex-direction: row;
+  //color: white;
+  //.Icon {
+  //  font-size: 40px;
+  //}
+  //
 
-  .Icon {
-    font-size: 40px;
-  }
-
+  margin-bottom: 10px;
   .Label {
-    font-size: 12px;
-    text-transform: capitalize;
+    margin-bottom: 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

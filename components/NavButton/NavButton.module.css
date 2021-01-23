@@ -1,13 +1,11 @@
 .NavButton {
-  display: flex;
-  flex-direction: row;
-}
-.NavButton .Icon {
-  font-size: 40px;
+  margin-bottom: 10px;
 }
 .NavButton .Label {
-  font-size: 12px;
-  text-transform: capitalize;
+  margin-bottom: 2px;
+}
+.NavButton .Label:hover {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=NavButton.module.css.map */

@@ -1,0 +1,10 @@
+.Header {
+  margin-left: 10px;
+  padding-top: 15px;
+
+  svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

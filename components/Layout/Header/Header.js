@@ -1,12 +1,11 @@
 import Link from "next/link";
 import BurlessLogo from "./BurlessLogo"
 
-// import "./Header.scss";
+import style from "./Header.module.scss";
 
 const Header = props => (
   <Link href="/">
-    {/*<div className="Header">{props.appTitle}</div>*/}
-    <BurlessLogo />
+    <div className={style.Header}><BurlessLogo /></div>
   </Link>
 );
 

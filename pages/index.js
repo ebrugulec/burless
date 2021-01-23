@@ -26,9 +26,9 @@ export default function Home({ linkData, id }) {
       // </div>
       <Layout>
         <br />
-        <Link href="/explore">
-          <a> Welcome to WHATABYTE! Start Exploring Now</a>
-        </Link>
+        {/*<Link href="/explore">*/}
+        {/*  /!*<a> Welcome to WHATABYTE! Start Exploring Now</a>*!/*/}
+        {/*</Link>*/}
       </Layout>
     )
   } else {
