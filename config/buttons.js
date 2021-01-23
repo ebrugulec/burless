@@ -3,7 +3,7 @@ import React from "react";
 const navButtons = [
   {
     label: "Links",
-    path: "/links",
+    path: "/",
   },
   {
     label: "Statistic",

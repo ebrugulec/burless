@@ -69,16 +69,26 @@ app.prepare().then(() => {
     })
   );
 
-  server.use('/api', apiRoutes);
-
   const route = pathMatch();
-
-  server.get('/', (req, res) => {
-    return app.render(req, res, '/index', req.query);
-  });
 
   server.get('/login', (req, res) => {
     return app.render(req, res, '/login', req.query);
+  });
+
+  server.get('/profile', (req, res) => {
+    return app.render(req, res, '/profile');
+  });
+
+  server.get('/statistic', (req, res) => {
+    return app.render(req, res, '/statistic');
+  });
+
+  server.get('/contact', (req, res) => {
+    return app.render(req, res, '/contact');
+  });
+
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/index', req.query);
   });
 
   server.get('/:id', async (req, res) => {
@@ -95,6 +105,8 @@ app.prepare().then(() => {
       return handle(req, res, '/index');
     }
   });
+
+  server.use('/api', apiRoutes);
 
   server.listen(PORT, (err) => {
     if (err) throw err;
