@@ -66,7 +66,7 @@ class userController {
   static signIn = async (req, res) => {
     const sessionId = req.sessionID;
     const errors = validationResult(req);
-    console.log('req', req)
+    console.log('signIn')
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -81,14 +81,14 @@ class userController {
       });
 
       if (!user)
-        return res.status(400).json({
-          message: "User Not Exist"
+        return res.status(404).json({
+          data: {message: "User Not Exist"}
         });
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
-        return res.status(400).json({
-          message: "Incorrect Password !"
+        return res.status(404).json({
+          data: {message: "Incorrect Password !"}
         });
 
       const payload = {
@@ -98,7 +98,7 @@ class userController {
       await this.updateUserLinksWithSession(sessionId, user.id);
       req.session.regenerate((err) => {
         if(err) {
-          console.error(err);
+          console.log(err);
         }
       });
 

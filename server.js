@@ -77,6 +77,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/index', req.query);
   });
 
+  server.get('/login', (req, res) => {
+    return app.render(req, res, '/login', req.query);
+  });
+
   server.get('/:id', async (req, res) => {
     await linkController.getLink(req, res)
   });
