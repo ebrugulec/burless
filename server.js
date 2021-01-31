@@ -30,7 +30,7 @@ const store = new MongoDBSession({
   collection: "session"
 });
 
-const linkController = require('./server/controllers/linkController')
+// const linkController = require('./server/controllers/linkController')
 
 const dev = process.env.NODE_ENV !== 'production';
 const next = require('next');
