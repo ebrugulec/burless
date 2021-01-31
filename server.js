@@ -39,7 +39,7 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 const { parse } = require('url');
 
-const apiRoutes = require('./server/routes/apiRoutes');
+// const apiRoutes = require('./server/routes/apiRoutes');
 
 app.prepare().then(() => {
   const server = express();
