@@ -5,7 +5,7 @@ export default function Profile() {
 
   return (
     <Layout>
-      heyy
+      Profile
     </Layout>
   )
 };

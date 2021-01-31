@@ -78,7 +78,7 @@ app.prepare().then(() => {
   );
 
   const route = pathMatch();
-  server.use('/api', apiRoutes);
+  // server.use('/api', apiRoutes);
 
 
   server.get('/login', (req, res) => {
@@ -102,19 +102,19 @@ app.prepare().then(() => {
   });
 
   server.get('/:id', async (req, res) => {
-    await linkController.getLink(req, res)
+    // await linkController.getLink(req, res)
   });
 
-  server.get('*', async (req, res) => {
-    const reqUrl = req.url.substring(1);
-    //TODO: Check here
-    if (checkUrl(reqUrl)) {
-      res.status(301);
-      await linkController.shortenLink(req, res, app, reqUrl, client)
-    } else {
-      return handle(req, res, '/index');
-    }
-  });
+  // server.get('*', async (req, res) => {
+  //   // const reqUrl = req.url.substring(1);
+  //   // //TODO: Check here
+  //   // if (checkUrl(reqUrl)) {
+  //   //   res.status(301);
+  //   //   await linkController.shortenLink(req, res, app, reqUrl, client)
+  //   // } else {
+  //   //   return handle(req, res, '/index');
+  //   // }
+  // });
 
   server.listen(PORT, (err) => {
     if (err) throw err;
