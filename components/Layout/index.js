@@ -20,10 +20,14 @@ const Layout = props => {
       <Head>
         <title>Burless</title>
       </Head>
-      <Header appTitle={appTitle} />
       <div className="row">
-        <div className="col-2"><NavBar navButtons={navButtons} /></div>
-        <div className="col-10"><div className="Content">{props.children}</div></div>
+        <div className={'col-3 ' + style.NavWrapper}>
+          <Header appTitle={appTitle} />
+          <NavBar navButtons={navButtons} />
+        </div>
+        <div className="col-9">
+          <div className="Content">{props.children}</div>
+        </div>
       </div>
     </div>
   );

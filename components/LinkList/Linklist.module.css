@@ -1,19 +1,13 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
+.linkList {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
-#__next {
-  height: 100%;
-}
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+.linkList .link {
+  padding: 2rem;
+  margin: 1rem;
+  background: #ccc;
 }
 
 .paginate-wrap {
@@ -25,6 +19,7 @@ a {
   border-radius: 3px;
   max-width: 100%;
   flex-wrap: wrap;
+  background: #ccc;
 }
 body.light .paginate-wrap {
   background: #fafafa;
@@ -72,3 +67,5 @@ body.light .paginate-wrap .paginate-disabled > a {
 .paginate-wrap .paginate-disabled > a:hover {
   background: transparent !important;
 }
+
+/*# sourceMappingURL=Linklist.css.map */

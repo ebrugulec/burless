@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require("mongoose");
 const MongoDBSession = require('connect-mongodb-session')(session);
 const dotenv = require("dotenv");
+const redis = require("redis");
 const expressip = require('express-ip');
 const checkUrl = require('./server/utils/checkUrl');
 dotenv.config();
@@ -14,6 +15,7 @@ dotenv.config();
 const DB = process.env.DATABASE_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const PORT = process.env.PORT || 8080;
+const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
 mongoose.connect(DB, {
   useNestedStrict: true,
@@ -41,6 +43,12 @@ const apiRoutes = require('./server/routes/apiRoutes');
 
 app.prepare().then(() => {
   const server = express();
+  const client = redis.createClient(REDIS_PORT);
+
+  client.on("error", (err) => {
+    console.log(err);
+  });
+
 
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(bodyParser.json());
@@ -70,6 +78,8 @@ app.prepare().then(() => {
   );
 
   const route = pathMatch();
+  server.use('/api', apiRoutes);
+
 
   server.get('/login', (req, res) => {
     return app.render(req, res, '/login', req.query);
@@ -100,13 +110,11 @@ app.prepare().then(() => {
     //TODO: Check here
     if (checkUrl(reqUrl)) {
       res.status(301);
-      await linkController.shortenLink(req, res, app, reqUrl)
+      await linkController.shortenLink(req, res, app, reqUrl, client)
     } else {
       return handle(req, res, '/index');
     }
   });
-
-  server.use('/api', apiRoutes);
 
   server.listen(PORT, (err) => {
     if (err) throw err;

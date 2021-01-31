@@ -17,18 +17,15 @@ export default function Home({ linkData, id }) {
       router.push('/', undefined, { shallow: true })
     }
   }, []);
+  console.log('link data', linkData)
 
   // if (burless || links.length > 0) {
   if (true) {
     return (
-      // <div className="home-page">
-      //   <LinkList linkData={linkData} />
-      // </div>
       <Layout>
-        <br />
-        {/*<Link href="/explore">*/}
-        {/*  /!*<a> Welcome to WHATABYTE! Start Exploring Now</a>*!/*/}
-        {/*</Link>*/}
+        <div className="home-page">
+          <LinkList linkData={linkData} />
+        </div>
       </Layout>
     )
   } else {

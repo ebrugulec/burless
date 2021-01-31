@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const Click = require('../models/Click');
 const { parse } = require('url');
 const geoip = require('geoip-lite');
+const redis = require("redis");
 dotenv.config();
 const getUserIdFromToken = require('../utils/getUserIdFromToken');
 
@@ -17,12 +18,25 @@ const BASE_URL = process.env.BASE_URL;
 
 //TODO: Move mongoose query to service.
 class linkController {
-  static shortenLink = async (req, res, app, reqUrl) => {
+  static shortenLink = async (req, res, app, reqUrl, client) => {
     const burless_token = req.cookies.burless;
     const sessionId = req.session.id;
 
     const userId = await getUserIdFromToken(burless_token);
-  //TODO: Add and check alias
+
+    const current_user = userId || sessionId;
+    client.get(current_user, function(err, reply) {
+      if (!reply) {
+        if (current_user) {
+          client.setex(current_user, 3600, 1);
+        }
+      } else if (reply >= 3) {
+        return app.render(req, res, '/error');
+      } else {
+        client.incr(current_user);
+      }
+    });
+
     try {
       const linkCode = shortId.generate();
       const shortLink = `${BASE_URL}/${linkCode}`;
@@ -45,7 +59,7 @@ class linkController {
     const burless = req.cookies.burless;
     console.log('req.query.page', req.query.page)
 
-    const perPage = 3;
+    const perPage = 10;
     const curPage = req.query.page || 1;
 
     // if (burless) {
@@ -66,8 +80,8 @@ class linkController {
         })
     } else {
       const session = req.sessionID;
-      const totalLinks = await Link.countDocuments({session: "zvWvMADgKdOLymj-pIDz_BDfJia-HPvu"});
-      Link.find({session: "zvWvMADgKdOLymj-pIDz_BDfJia-HPvu"})
+      const totalLinks = await Link.countDocuments({session: "FrKNz5ap7vLyU49W0EF8Lv4ppuYUPZwq"});
+      Link.find({session: "FrKNz5ap7vLyU49W0EF8Lv4ppuYUPZwq"})
         .limit(perPage)
         .skip((curPage - 1) * perPage)
         .sort({createdAt: -1})

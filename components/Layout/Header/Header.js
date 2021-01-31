@@ -1,11 +1,18 @@
 import Link from "next/link";
-import BurlessLogo from "./BurlessLogo"
+import Image from 'next/image';
+// import BurlessLogo from "../../../public/burless-logo.png";
 
 import style from "./Header.module.scss";
+import React from "react";
 
 const Header = props => (
   <Link href="/">
-    <div className={style.Header}><BurlessLogo /></div>
+    <Image
+      src="/burless-logo.png"
+      alt="BurlessLogo"
+      width={90}
+      height={90}
+    />
   </Link>
 );
 

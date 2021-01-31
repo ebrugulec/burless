@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import Router, { useRouter } from "next/router";
-// import "./styles.scss"
+import style from './Linklist.module.scss'
 
 const LinkList = ({ linkData }) => {
   const [links, setLinks] = useState([]);
@@ -46,11 +46,11 @@ const LinkList = ({ linkData }) => {
   return (
     <>
       {loading && <h1>Loading..</h1>}
-      <ul className="link-list">
+      <ul className={style.linkList}>
         {links.length > 0 &&
         links.map((link, i) => {
           return (
-            <li className="link" key={i}>
+            <li className={style.link} key={i}>
               <span>{link.linkCode}</span>
             </li>
           )
@@ -59,8 +59,8 @@ const LinkList = ({ linkData }) => {
       <ReactPaginate
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        previousLabel={"previous"}
-        nextLabel={"next"}
+        previousLabel={"<<"}
+        nextLabel={">>"}
         breakLabel={"..."}
         initialPage={linkData.curPage - 1}
         pageCount={linkData.maxPage}
@@ -74,6 +74,14 @@ const LinkList = ({ linkData }) => {
         previousLinkClassName={"paginate-prev-a"}
         breakLinkClassName={"paginate-break-a"}
       />
+      <style jsx>{`
+        .container {
+          background: #ccc;
+        }
+        p {
+          color: blue;
+        }
+      `}</style>
     </>
   );
 };
