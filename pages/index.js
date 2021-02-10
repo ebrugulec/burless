@@ -8,6 +8,7 @@ import axios from 'axios';
 import LinkList from "../components/LinkList";
 import Layout from "../components/Layout"
 import Link from 'next/link'
+import "../styles/styles.scss"
 
 export default function Home({ linkData, id }) {
 
@@ -24,6 +25,7 @@ export default function Home({ linkData, id }) {
     return (
       <Layout>
         <div className="home-page">
+          <div className="example">Hello World!</div>
           <LinkList linkData={linkData} />
         </div>
       </Layout>

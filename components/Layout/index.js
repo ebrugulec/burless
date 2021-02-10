@@ -3,9 +3,9 @@ import Head from "next/head";
 import Header from "./Header/Header";
 import NavBar from "./NavBar/NavBar";
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 
 import style from "./Layout.module.scss";
 // import "./index.module.scss";

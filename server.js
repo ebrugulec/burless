@@ -15,7 +15,6 @@ dotenv.config();
 const DB = process.env.DATABASE_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 const PORT = process.env.PORT || 8080;
-const REDIS_PORT = process.env.REDIS_PORT || 6379;
 
 mongoose.connect(DB, {
   useNestedStrict: true,
@@ -30,7 +29,7 @@ const store = new MongoDBSession({
   collection: "session"
 });
 
-// const linkController = require('./server/controllers/linkController')
+const linkController = require('./server/controllers/linkController')
 
 const dev = process.env.NODE_ENV !== 'production';
 const next = require('next');
@@ -39,16 +38,10 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 const { parse } = require('url');
 
-// const apiRoutes = require('./server/routes/apiRoutes');
+const apiRoutes = require('./server/routes/apiRoutes');
 
 app.prepare().then(() => {
   const server = express();
-  const client = redis.createClient(REDIS_PORT);
-
-  client.on("error", (err) => {
-    console.log(err);
-  });
-
 
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(bodyParser.json());
@@ -78,7 +71,7 @@ app.prepare().then(() => {
   );
 
   const route = pathMatch();
-  // server.use('/api', apiRoutes);
+  server.use('/api', apiRoutes);
 
 
   server.get('/login', (req, res) => {
@@ -102,19 +95,19 @@ app.prepare().then(() => {
   });
 
   server.get('/:id', async (req, res) => {
-    // await linkController.getLink(req, res)
+    await linkController.getLink(req, res)
   });
 
-  // server.get('*', async (req, res) => {
-  //   // const reqUrl = req.url.substring(1);
-  //   // //TODO: Check here
-  //   // if (checkUrl(reqUrl)) {
-  //   //   res.status(301);
-  //   //   await linkController.shortenLink(req, res, app, reqUrl, client)
-  //   // } else {
-  //   //   return handle(req, res, '/index');
-  //   // }
-  // });
+  server.get('*', async (req, res) => {
+    const reqUrl = req.url.substring(1);
+    //TODO: Check here
+    if (checkUrl(reqUrl)) {
+      res.status(301);
+      await linkController.shortenLink(req, res, app, reqUrl)
+    } else {
+      return handle(req, res, '/index');
+    }
+  });
 
   server.listen(PORT, (err) => {
     if (err) throw err;

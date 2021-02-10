@@ -22,9 +22,9 @@ const LinkSchema = new Schema({
     type: Number,
     default: 0
   },
-  clicks: [{ type: Schema.Types.ObjectId, ref: 'Click' }],
+  // clicks: [{ type: Schema.Types.ObjectId, ref: 'Click' }],
   session: { type: String, ref: 'Session' },
-  user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 module.exports = mongoose.model("Link", LinkSchema);

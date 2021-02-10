@@ -7,7 +7,6 @@ body {
 #__next {
   height: 100%;
 }
-
 a {
   color: inherit;
   text-decoration: none;
@@ -27,11 +26,9 @@ a {
   max-width: 100%;
   flex-wrap: wrap;
 }
-
 body.light .paginate-wrap {
   background: #fafafa;
 }
-
 .paginate-wrap .paginate-a,
 .paginate-wrap .paginate-next-a,
 .paginate-wrap .paginate-prev-a,
@@ -39,14 +36,12 @@ body.light .paginate-wrap {
   cursor: pointer;
   padding: 0.2rem 0.4rem;
 }
-
 .paginate-wrap .paginate-a:focus,
 .paginate-wrap .paginate-next-a:focus,
 .paginate-wrap .paginate-prev-a:focus,
 .paginate-wrap .paginate-break-a:focus {
   outline: 0;
 }
-
 .paginate-wrap .paginate-a:hover,
 .paginate-wrap .paginate-next-a:hover,
 .paginate-wrap .paginate-prev-a:hover,
@@ -54,34 +49,26 @@ body.light .paginate-wrap {
   background: #745788;
   background: #d9c5e6;
 }
-
 .paginate-wrap .paginate-li {
   margin: 0 0.2rem;
 }
-
 .paginate-wrap .paginate-next-a,
 .paginate-wrap .paginate-prev-a {
   color: #745788;
   margin: 0 0.3rem;
 }
-
 .paginate-wrap .paginate-active {
   border: 2px solid #d9c5e6;
   background: #d9c5e6;
 }
-
 .paginate-wrap .paginate-disabled > a {
   cursor: not-allowed;
   background: transparent;
   color: #666;
 }
-
 body.light .paginate-wrap .paginate-disabled > a {
   color: #ccc;
 }
-
 .paginate-wrap .paginate-disabled > a:hover {
   background: transparent !important;
 }
-
-/*# sourceMappingURL=globals.css.map */
