@@ -5,7 +5,12 @@
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "yarn eslint ./ --ext .js",
+    "stlint": "yarn stylelint ./src/**/*.scss --config=.stylelintrc.js",
+    "stlint:fix": "yarn stlint --fix",
+    "lint:fix": "yarn lint --fix",
+    "precommit": "yarn lint --fix && yarn stlint --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -51,6 +56,12 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.6",
-    "prettier": "^1.17.1"
+    "prettier": "^1.17.1",
+    "stylelint": "^13.10.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^5.0.9",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-scss": "^3.19.0"
   }
 }

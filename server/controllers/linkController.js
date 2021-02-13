@@ -125,35 +125,10 @@ class linkController {
             console.log(' db redis');
             res.redirect(link.longLink);
           }
-          //TODO: Handle else
+          //TODO: Handle Url doesn't exists.
         }
           this.saveLinkAndStatisticInfo(req, id)
       });
-      // const link = await Link.findOne({ 'linkCode': id });
-      // if (link) {
-      //   const parseIp = (req) =>
-      //     (typeof req.headers['x-forwarded-for'] === 'string'
-      //       && req.headers['x-forwarded-for'].split(',').shift())
-      //     || (req.connection && req.connection.remoteAddress)
-      //     || (req.socket && req.socket.remoteAddress)
-      //     || (req.connection && req.connection.socket && req.connection.socket.remoteAddress);
-      //
-      //   const geo = geoip.lookup(parseIp(req));
-      //   const country = geo && geo['country'];
-      //   const referrer = req.get('Referrer');
-      //   let totalClickCount = link.totalClickCount;
-      //   totalClickCount++;
-      //
-      //   let click = new Click({
-      //     _link: link._id,
-      //     referrer: referrer,
-      //     country: country,
-      //   });
-      //   await click.save();
-      //   await link.update({ totalClickCount });
-      // }else {
-      //   return res.status(400).json("Url doesn't exists.");
-      // }
     } catch (err) {
       //HandleCatch
       return res.status(500).json("Internal error.");

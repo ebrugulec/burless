@@ -1,4 +1,10 @@
-const withSass = require('@zeit/next-sass')
-module.exports = withSass({
-  /* config options here */
-})
+const path = require('path');
+
+module.exports = {
+  images: {
+    loader: 'imgix'
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/assets/stylesheets')],
+  }
+};
