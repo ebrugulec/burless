@@ -1,6 +1,6 @@
-import style from "./NavBar.module.scss";
-import NavButton from "../../NavButton";
-import React from "react";
+import style from './NavBar.module.scss'
+import NavButton from '../../NavButton'
+import React from 'react'
 
 const NavBar = props => (
   <div className={style.NavBar}>
@@ -12,6 +12,6 @@ const NavBar = props => (
       />
     ))}
   </div>
-);
+)
 
-export default NavBar;
+export default NavBar

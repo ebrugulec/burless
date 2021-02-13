@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const ClickSchema = new Schema({
   createdAt: {
@@ -17,6 +17,6 @@ const ClickSchema = new Schema({
   country: {
     type: String,
   }
-});
+})
 
-module.exports = mongoose.model("Click", ClickSchema);
+module.exports = mongoose.model('Click', ClickSchema)

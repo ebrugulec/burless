@@ -1,9 +1,9 @@
-const validUrl = require('valid-url');
+const validUrl = require('valid-url')
 
 const checkUrl = (reqUrl) => {
-  const urlRegex = new RegExp('^(http|https)://');
+  const urlRegex = new RegExp('^(http|https)://')
 
-  return !!(urlRegex.test(reqUrl) && validUrl.isUri(reqUrl));
-};
+  return !!(urlRegex.test(reqUrl) && validUrl.isUri(reqUrl))
+}
 
-module.exports = checkUrl;
+module.exports = checkUrl

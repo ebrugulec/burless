@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import Router from "next/router";
+import { useState, useEffect } from 'react'
+import Router from 'next/router'
 
 // import Layout from "../component/Layout";
 
-import { login } from "../requests/userApi";
-import {error} from "next/dist/build/output/log";
+import { login } from '../requests/userApi'
+import {error} from 'next/dist/build/output/log'
 // import useUser from "../data/useUser";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   // const { mutate, loggedIn } = useUser();
 
@@ -20,17 +20,17 @@ const Login = () => {
   // if (loggedIn) return <> Redirecting.... </>;
 
   const onLoginSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (email && password) {
       login({ email, password })
         .then((res) => {
-          console.log('res', res);
+          console.log('res', res)
         })
         .catch((err) => {
-          console.log('err', err);
+          console.log('err', err)
         })
     }
-  };
+  }
 
   return (
     <div className="container">
@@ -62,7 +62,7 @@ const Login = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

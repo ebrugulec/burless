@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const TotalClick = new Schema({
   linkCode: {
@@ -10,6 +10,6 @@ const TotalClick = new Schema({
     type: Number,
     default: 0
   }
-});
+})
 
-module.exports = mongoose.model("TotalClick", TotalClick);
+module.exports = mongoose.model('TotalClick', TotalClick)

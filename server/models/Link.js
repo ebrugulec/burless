@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const LinkSchema = new Schema({
   longLink: {
@@ -25,6 +25,6 @@ const LinkSchema = new Schema({
   // clicks: [{ type: Schema.Types.ObjectId, ref: 'Click' }],
   session: { type: String, ref: 'Session' },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-});
+})
 
-module.exports = mongoose.model("Link", LinkSchema);
+module.exports = mongoose.model('Link', LinkSchema)

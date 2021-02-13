@@ -1,6 +1,6 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import style from "./NavButton.module.scss";
+import style from './NavButton.module.scss'
 
 const Index = props => (
   <Link href={props.path}>
@@ -11,6 +11,6 @@ const Index = props => (
       <span className={style.Label}>{props.label}</span>
     </div>
   </Link>
-);
+)
 
-export default Index;
+export default Index

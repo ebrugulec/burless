@@ -1,7 +1,7 @@
-import Layout from "../components/Layout";
-import React from "react";
+import Layout from '../components/Layout'
+import React from 'react'
 
-export default function Contact() {
+export default function Contact () {
 
   return (
     <Layout>
@@ -11,4 +11,4 @@ export default function Contact() {
       Thanks for using burless.
     </Layout>
   )
-};
+}

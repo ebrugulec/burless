@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import Router, { useRouter } from "next/router";
+import React, { useState, useEffect } from 'react'
+import ReactPaginate from 'react-paginate'
+import Router, { useRouter } from 'next/router'
 import style from './Linklist.module.scss'
 
 const LinkList = ({ linkData }) => {
-  const [links, setLinks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
+  const [links, setLinks] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [firstRender, setFirstRender] = useState(true)
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-    setFirstRender(false);
-    Router.events.on("routeChangeStart", startLoading)
-    Router.events.on("routeChangeComplete", stopLoading)
+    setFirstRender(false)
+    Router.events.on('routeChangeStart', startLoading)
+    Router.events.on('routeChangeComplete', stopLoading)
     return () => {
-      Router.events.off("routeChangeStart", startLoading)
-      Router.events.off("routeChangeComplete", stopLoading)
+      Router.events.off('routeChangeStart', startLoading)
+      Router.events.off('routeChangeComplete', stopLoading)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (linkData) {
@@ -30,7 +30,7 @@ const LinkList = ({ linkData }) => {
         setLinks(linkData.links)
       }
     }
-  }, [linkData]);
+  }, [linkData])
 
   const handlePagination = page => {
     if (!firstRender) {
@@ -42,7 +42,7 @@ const LinkList = ({ linkData }) => {
         query: query,
       })
     }
-  };
+  }
   return (
     <>
       {loading && <h1>Loading..</h1>}
@@ -59,20 +59,20 @@ const LinkList = ({ linkData }) => {
       <ReactPaginate
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        previousLabel={"<<"}
-        nextLabel={">>"}
-        breakLabel={"..."}
+        previousLabel={'<<'}
+        nextLabel={'>>'}
+        breakLabel={'...'}
         initialPage={linkData.curPage - 1}
         pageCount={linkData.maxPage}
         onPageChange={handlePagination}
-        containerClassName={"paginate-wrap"}
-        subContainerClassName={"paginate-inner"}
-        pageClassName={"paginate-li"}
-        pageLinkClassName={"paginate-a"}
-        activeClassName={"paginate-active"}
-        nextLinkClassName={"paginate-next-a"}
-        previousLinkClassName={"paginate-prev-a"}
-        breakLinkClassName={"paginate-break-a"}
+        containerClassName={'paginate-wrap'}
+        subContainerClassName={'paginate-inner'}
+        pageClassName={'paginate-li'}
+        pageLinkClassName={'paginate-a'}
+        activeClassName={'paginate-active'}
+        nextLinkClassName={'paginate-next-a'}
+        previousLinkClassName={'paginate-prev-a'}
+        breakLinkClassName={'paginate-break-a'}
       />
       <style jsx>{`
         .container {
@@ -83,6 +83,6 @@ const LinkList = ({ linkData }) => {
         }
       `}</style>
     </>
-  );
-};
-export default LinkList;
+  )
+}
+export default LinkList

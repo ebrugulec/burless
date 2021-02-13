@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react'
 
 const navButtons = [
   {
-    label: "Links",
-    path: "/",
+    label: 'Links',
+    path: '/',
   },
   {
-    label: "Statistic",
-    path: "/statistic",
+    label: 'Statistic',
+    path: '/statistic',
   },
   {
-    label: "Profile",
-    path: "/profile",
+    label: 'Profile',
+    path: '/profile',
   },
   {
-    label: "Contact",
-    path: "/contact",
+    label: 'Contact',
+    path: '/contact',
   },
   {
-    label: "Sign Out",
-    path: "/sign-out",
+    label: 'Sign Out',
+    path: '/sign-out',
   }
-];
+]
 
-export default navButtons;
+export default navButtons
