@@ -14,4 +14,4 @@ module.exports = {
     },
     "scss/at-import-partial-extension-blacklist": [''],
   }
-}
+};
