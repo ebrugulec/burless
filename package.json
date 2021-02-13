@@ -71,7 +71,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn precommit"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "./src/**/*.js?(x)": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
