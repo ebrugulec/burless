@@ -11,9 +11,11 @@ module.exports = {
     'node': true
   },
   'extends': [
-    'eslint:recommended',
+    'plugin:prettier/recommended',
+    'plugin:css-modules/recommended',
     'plugin:react/recommended'
   ],
+  'parser': 'babel-eslint',
   'parserOptions': {
     'ecmaFeatures': {
       'jsx': true
