@@ -10,7 +10,7 @@
     "stlint": "yarn stylelint ./src/**/*.scss --config=.stylelintrc.js",
     "stlint:fix": "yarn stlint --fix",
     "lint:fix": "yarn lint --fix",
-    "precommit": "yarn lint --fix && yarn stlint --fix"
+    "precommit": "yarn lint --fix && yarn stlint --fix && prettier --write"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
