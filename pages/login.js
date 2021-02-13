@@ -4,7 +4,7 @@ import Router from 'next/router'
 // import Layout from "../component/Layout";
 
 import { login } from '../requests/userApi'
-import {error} from 'next/dist/build/output/log'
+import { error } from 'next/dist/build/output/log'
 // import useUser from "../data/useUser";
 
 const Login = () => {
@@ -28,7 +28,7 @@ const Login = () => {
         })
         .catch((err) => {
           console.log('err', err)
-        })
+        });
     }
   }
 
@@ -63,6 +63,6 @@ const Login = () => {
       </form>
     </div>
   )
-}
+};
 
 export default Login

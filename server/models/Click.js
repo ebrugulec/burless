@@ -4,19 +4,19 @@ const { Schema } = mongoose
 const ClickSchema = new Schema({
   createdAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   _link: {
     type: Schema.Types.ObjectId,
-    ref: 'Link'
+    ref: 'Link',
   },
   referrer: {
     type: String,
-    default: 'Direct'
+    default: 'Direct',
   },
   country: {
     type: String,
-  }
+  },
 })
 
 module.exports = mongoose.model('Click', ClickSchema)

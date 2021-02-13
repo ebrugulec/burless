@@ -4,14 +4,13 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 import Dashboard from './dahsboard'
-import axios from 'axios'
+import axios from "axios"
 import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
 import Link from 'next/link'
 import '../styles/styles.scss'
 
 export default function Home ({ linkData, id }) {
-
   const router = useRouter()
   useEffect(() => {
     if (id) {
@@ -31,16 +30,10 @@ export default function Home ({ linkData, id }) {
       </Layout>
     )
   } else {
-    return (
-      <Dashboard />
-    )
+    return <Dashboard />
   }
 
-  return (
-    <div>
-      Index.js
-    </div>
-  )
+  return <div>Index.js</div>
 }
 
 export const getServerSideProps = async (ctx) => {
@@ -58,16 +51,17 @@ export const getServerSideProps = async (ctx) => {
       throw new Error('Failed to fetch')
     }
     linkData = await res.json()
-  } catch(err) {
+  } catch (err) {
     linkData = { error: { message: err.message } }
   }
   console.log('ctx', ctx.req.query)
   //TODO: Handle catch
-  return { props: {
-    // id,
-    // burless_session,
-    // burless,
-    linkData
+  return {
+    props: {
+      // id,
+      // burless_session,
+      // burless,
+      linkData,
+    },
   }
-  }
-}
+};

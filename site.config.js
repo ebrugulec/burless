@@ -5,7 +5,7 @@ module.exports = {
   googleAnalytic: '',
   author: {
     email: '',
-    name: ''
+    name: '',
   },
-  lang: 'en'
+  lang: 'en',
 }

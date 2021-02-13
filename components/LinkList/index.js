@@ -18,7 +18,7 @@ const LinkList = ({ linkData }) => {
     return () => {
       Router.events.off('routeChangeStart', startLoading)
       Router.events.off('routeChangeComplete', stopLoading)
-    }
+    };
   }, [])
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const LinkList = ({ linkData }) => {
     }
   }, [linkData])
 
-  const handlePagination = page => {
+  const handlePagination = (page) => {
     if (!firstRender) {
       const path = router.pathname
       const query = router.query
@@ -48,13 +48,13 @@ const LinkList = ({ linkData }) => {
       {loading && <h1>Loading..</h1>}
       <ul className={style.linkList}>
         {links.length > 0 &&
-        links.map((link, i) => {
-          return (
-            <li className={style.link} key={i}>
-              <span>{link.linkCode}</span>
-            </li>
-          )
-        })}
+          links.map((link, i) => {
+            return (
+              <li className={style.link} key={i}>
+                <span>{link.linkCode}</span>
+              </li>
+            )
+          })}
       </ul>
       <ReactPaginate
         marginPagesDisplayed={2}
@@ -84,5 +84,5 @@ const LinkList = ({ linkData }) => {
       `}</style>
     </>
   )
-}
+};
 export default LinkList

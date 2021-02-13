@@ -4,23 +4,23 @@ const { Schema } = mongoose
 const LinkSchema = new Schema({
   longLink: {
     type: String,
-    required: true
+    required: true,
   },
   shortLink: {
     type: String,
-    required: true
+    required: true,
   },
   linkCode: {
     type: String,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   totalClickCount: {
     type: Number,
-    default: 0
+    default: 0,
   },
   // clicks: [{ type: Schema.Types.ObjectId, ref: 'Click' }],
   session: { type: String, ref: 'Session' },

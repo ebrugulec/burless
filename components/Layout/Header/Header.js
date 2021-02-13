@@ -5,7 +5,7 @@ import Link from 'next/link'
 // import style from "./Header.module.scss";
 import React from 'react'
 
-const Header = props => (
+const Header = (props) => (
   <Link href="/">
     {/*<Image*/}
     {/*  src="/burless-logo.png"*/}

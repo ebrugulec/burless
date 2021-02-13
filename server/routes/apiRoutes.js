@@ -18,31 +18,35 @@ router.get('/links/country/:id', LinkController.getCountry)
 router.get('/links/referrer/:id', LinkController.getReferrer)
 router.get('/links/statistic/:id', LinkController.getLinkClickCount)
 
-
 router.get('/me', auth, UserController.getUser)
-router.post('/register', [
-  check('username', 'Please Enter a Valid Username')
-    .not()
-    .isEmpty(),
-  check('email', 'Please enter a valid email').isEmail(),
-  check('password', 'Please enter a valid password').isLength({
-    min: 6
-  })
-], UserController.signUp)
+router.post(
+  '/register',
+  [
+    check('username', 'Please Enter a Valid Username').not().isEmpty(),
+    check('email', 'Please enter a valid email').isEmail(),
+    check('password', 'Please enter a valid password').isLength({
+      min: 6,
+    }),
+  ],
+  UserController.signUp
+)
 
-router.post('/login', [
-  check('email', 'Please enter a valid email').isEmail(),
-  check('password', 'Please enter a valid password').isLength({
-    min: 6
-  })
-], UserController.signIn)
+router.post(
+  '/login',
+  [
+    check('email', 'Please enter a valid email').isEmail(),
+    check('password', 'Please enter a valid password').isLength({
+      min: 6,
+    }),
+  ],
+  UserController.signIn
+)
 
 router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
-
     //TODO: Handle err
     res.redirect('/')
-  })
+  });
 })
 
 module.exports = router

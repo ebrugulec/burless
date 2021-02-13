@@ -12,7 +12,7 @@ import style from './Layout.module.scss'
 
 import navButtons from '../../config/buttons'
 
-const Layout = props => {
+const Layout = (props) => {
   const appTitle = 'Burless'
 
   return (
@@ -31,6 +31,6 @@ const Layout = props => {
       </div>
     </div>
   )
-}
+};
 
 export default Layout

@@ -20,7 +20,7 @@ const navButtons = [
   {
     label: 'Sign Out',
     path: '/sign-out',
-  }
+  },
 ]
 
 export default navButtons

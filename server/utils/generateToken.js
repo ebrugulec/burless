@@ -14,6 +14,6 @@ const generateToken = async (res, payload) => {
   })
 
   return res.status(200)
-}
+};
 
 module.exports = generateToken

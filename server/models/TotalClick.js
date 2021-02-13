@@ -4,12 +4,12 @@ const { Schema } = mongoose
 const TotalClick = new Schema({
   linkCode: {
     type: String,
-    required: true
+    required: true,
   },
   totalClickCount: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 })
 
 module.exports = mongoose.model('TotalClick', TotalClick)

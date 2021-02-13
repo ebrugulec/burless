@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import style from './NavButton.module.scss'
 
-const Index = props => (
+const Index = (props) => (
   <Link href={props.path}>
     <div className={style.NavButton}>
       {console.log('path', props.path)}

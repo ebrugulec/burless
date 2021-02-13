@@ -2,9 +2,5 @@
 // import styles from '../styles/Home.module.css'
 
 export default function A () {
-  return (
-    <div>
-      Aaa
-    </div>
-  )
+  return <div>Aaa</div>
 }

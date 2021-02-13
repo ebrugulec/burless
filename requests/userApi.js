@@ -10,7 +10,7 @@ export const login = async ({ email, password }) => {
   console.log('reso', response)
   return new Promise(async (resolve, reject) => {
     response && response.data ? resolve(response) : reject(response)
-  })
+  });
 }
 
 export const register = async ({ username, email, password }) => {
