@@ -4,12 +4,11 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 import Dashboard from './dahsboard'
-import axios from "axios"
+import axios from 'axios'
 import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
 import Link from 'next/link'
 import '../styles/styles.scss'
-
 
 export default function Home ({ linkData, id }) {
   const router = useRouter()
@@ -65,4 +64,4 @@ export const getServerSideProps = async (ctx) => {
       linkData,
     },
   }
-};
+}

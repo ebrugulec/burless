@@ -11,7 +11,7 @@ export const login = async ({ email, password }) => {
   return new Promise(async (resolve, reject) => {
     response && response.data ? resolve(response) : reject(response)
   });
-}
+};
 
 export const register = async ({ username, email, password }) => {
   try {

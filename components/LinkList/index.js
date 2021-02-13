@@ -18,7 +18,7 @@ const LinkList = ({ linkData }) => {
     return () => {
       Router.events.off('routeChangeStart', startLoading)
       Router.events.off('routeChangeComplete', stopLoading)
-    };
+    }
   }, [])
 
   useEffect(() => {
@@ -84,5 +84,5 @@ const LinkList = ({ linkData }) => {
       `}</style>
     </>
   )
-};
+}
 export default LinkList
