@@ -10,6 +10,7 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import '../styles/styles.scss'
 
+
 export default function Home ({ linkData, id }) {
   const router = useRouter()
   useEffect(() => {
