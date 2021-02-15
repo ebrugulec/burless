@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import Router from 'next/router'
 
-// import Layout from "../component/Layout";
-
 import { login } from '../requests/userApi'
 
 const Login = (props) => {
@@ -14,7 +12,6 @@ const Login = (props) => {
     if (email && password) {
       login({ email, password })
         .then((res) => {
-          console.log('res', res)
           if (window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
             Router.back();
           } else {
