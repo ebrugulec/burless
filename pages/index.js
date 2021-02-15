@@ -8,7 +8,7 @@ import axios from 'axios'
 import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
 import Link from 'next/link'
-import '../styles/styles.scss'
+// import '../styles/styles.scss'
 
 export default function Home ({ linkData, id }) {
   const router = useRouter()

@@ -55,8 +55,6 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "babel-loader": "^8.2.2",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-css-modules": "^2.11.0",

@@ -74,6 +74,10 @@ app.prepare().then(() => {
   const route = pathMatch()
   server.use('/api', apiRoutes)
 
+  server.get('/contact', (req, res) => {
+    return app.render(req, res, '/contact')
+  });
+
   server.get('/login', (req, res) => {
     return app.render(req, res, '/login', req.query)
   });
@@ -86,9 +90,6 @@ app.prepare().then(() => {
     return app.render(req, res, '/statistic')
   });
 
-  server.get('/contact', (req, res) => {
-    return app.render(req, res, '/contact')
-  });
 
   server.get('/', (req, res) => {
     return app.render(req, res, '/index', req.query)

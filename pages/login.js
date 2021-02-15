@@ -4,20 +4,10 @@ import Router from 'next/router'
 // import Layout from "../component/Layout";
 
 import { login } from '../requests/userApi'
-import { error } from 'next/dist/build/output/log'
-// import useUser from "../data/useUser";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  // const { mutate, loggedIn } = useUser();
-
-  // useEffect(() => {
-  //   if (loggedIn) Router.replace("/");
-  // }, [loggedIn]);
-  //
-  // if (loggedIn) return <> Redirecting.... </>;
 
   const onLoginSubmit = (e) => {
     e.preventDefault()
@@ -25,6 +15,11 @@ const Login = () => {
       login({ email, password })
         .then((res) => {
           console.log('res', res)
+          if (window.history.length > 1 && document.referrer.indexOf(window.location.host) !== -1) {
+            Router.back();
+          } else {
+            Router.replace('/');
+          }
         })
         .catch((err) => {
           console.log('err', err)
