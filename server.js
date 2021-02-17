@@ -92,6 +92,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/contact')
   });
 
+  server.get('/signout', (req, res) => {
+    return app.render(req, res, '/signout')
+  });
+
   server.get('/', (req, res) => {
     return app.render(req, res, '/index', req.query)
   });
@@ -99,21 +103,21 @@ app.prepare().then(() => {
   server.get('/:id', (req, res) => {
     const paramsId = req.params.id
     if (utils.checkLinkId(paramsId)) {
-      return linkController.getLink(req, res)
+      return linkController.getLink(req, res, app)
     } else {
       return app.render(req, res, '/link')
     }
   });
 
-  server.get('*', async (req, res) => {
-    console.log('get all')
+  server.get('/*', async (req, res, next) => {
+    console.log('get all', req.params)
     const reqUrl = req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {
       res.status(301)
       await linkController.shortenLink(req, res, app, reqUrl)
     } else {
-      return handle(req, res);
+      return handle(req, res, next);
     }
   })
 

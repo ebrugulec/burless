@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Router from 'next/router'
+import { Context } from "../context";
 
 // import Layout from "../component/Layout";
 
-// import { login } from '../requests/userApi'
+import { login } from './api/userApi'
 import { error } from 'next/dist/build/output/log'
 // import useUser from "../data/useUser";
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { state, dispatch } = useContext(Context);
 
   // const { mutate, loggedIn } = useUser();
 
@@ -21,15 +23,18 @@ const Login = () => {
 
   const onLoginSubmit = (e) => {
     e.preventDefault()
-    // if (email && password) {
-    //   login({ email, password })
-    //     .then((res) => {
-    //       console.log('res', res)
-    //     })
-    //     .catch((err) => {
-    //       console.log('err', err)
-    //     });
-    // }
+    if (email && password) {
+      login({ email, password })
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: "Ryan Dhungel",
+          })
+        })
+        .catch((err) => {
+          console.log('err', err)
+        });
+    }
   }
 
   return (
@@ -60,6 +65,7 @@ const Login = () => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+        {JSON.stringify(state)}
       </form>
     </div>
   )

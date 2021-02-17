@@ -1,8 +1,11 @@
-// import '../styles/globals.scss'
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { Provider } from "../context";
 
 function MyApp ({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <Provider>
+      <Component {...pageProps} />
+    </Provider>
+  )
 }
 
 export default MyApp

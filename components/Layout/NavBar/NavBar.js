@@ -5,19 +5,6 @@ import Link from "next/link";
 
 const NavBar = (props) => (
   <div>
-    {/*<Link href="/statistic" as="/statistic">*/}
-    {/*  sta*/}
-    {/*</Link>*/}
-    {/*<Link href="/" as="/">*/}
-    {/*  /////*/}
-    {/*</Link>*/}
-
-    {/*<Link href="/profile" as="/profile">*/}
-    {/*  profile*/}
-    {/*</Link>*/}
-    {/*<Link href="/contact" as="/contact">*/}
-    {/*  contact*/}
-    {/*</Link>*/}
     {props.navButtons.map((button) => (
       <NavButton key={button.path} path={button.path} label={button.label} />
     ))}

@@ -110,7 +110,7 @@ class linkController {
     }
   };
 
-  static getLink = (req, res) => {
+  static getLink = (req, res, app) => {
     console.log('getLink')
     const { id } = req.params;
     try {
@@ -119,16 +119,20 @@ class linkController {
         if (link) {
           console.log('redis', link);
           res.redirect(JSON.parse(link));
+          this.saveLinkAndStatisticInfo(req, id)
         } else {
           const link = await Link.findOne({ 'linkCode': id });
           if (link) {
             client.setex(id, 600, JSON.stringify(link.longLink));
             console.log(' db redis');
+            this.saveLinkAndStatisticInfo(req, id)
             res.redirect(link.longLink);
+          } else {
+            return app.render(req, res, '/error')
           }
           //TODO: Handle Url doesn't exists.
         }
-          this.saveLinkAndStatisticInfo(req, id)
+
       });
     } catch (err) {
       //HandleCatch

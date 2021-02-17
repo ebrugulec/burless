@@ -19,7 +19,7 @@ const navButtons = [
   },
   {
     label: 'Sign Out',
-    path: '/sign-out',
+    path: '/signout',
   },
 ]
 
