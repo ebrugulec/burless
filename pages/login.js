@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 // import Layout from "../component/Layout";
 
-import { login } from '../requests/userApi'
+// import { login } from '../requests/userApi'
 import { error } from 'next/dist/build/output/log'
 // import useUser from "../data/useUser";
 
@@ -21,15 +21,15 @@ const Login = () => {
 
   const onLoginSubmit = (e) => {
     e.preventDefault()
-    if (email && password) {
-      login({ email, password })
-        .then((res) => {
-          console.log('res', res)
-        })
-        .catch((err) => {
-          console.log('err', err)
-        });
-    }
+    // if (email && password) {
+    //   login({ email, password })
+    //     .then((res) => {
+    //       console.log('res', res)
+    //     })
+    //     .catch((err) => {
+    //       console.log('err', err)
+    //     });
+    // }
   }
 
   return (

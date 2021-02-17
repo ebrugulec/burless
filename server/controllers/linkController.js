@@ -31,6 +31,7 @@ class linkController {
 
     const userId = await getUserIdFromToken(burless_token);
 
+    //TODO: Block with ip address
     const current_user = userId || sessionId;
     client.get(current_user, function(err, reply) {
       if (!reply) {
@@ -64,7 +65,7 @@ class linkController {
 
   static getAllLink = async (req, res) => {
     const burless = req.cookies.burless;
-    console.log('req.query.page', req.query.page)
+    console.log('holaa', req.query.page)
 
     const perPage = 10;
     const curPage = req.query.page || 1;
@@ -109,9 +110,9 @@ class linkController {
     }
   };
 
-  static getLink = async (req, res) => {
+  static getLink = (req, res) => {
+    console.log('getLink')
     const { id } = req.params;
-
     try {
       client.get(id, async (err, link) => {
         if (err) throw err;
@@ -163,7 +164,6 @@ class linkController {
   };
 
   static getCountry  = async (req, res) => {
-    // Yalnizca user'lar istatistiklere ulasabilecek.
     const { id } = req.params;
 
     Click.aggregate(
@@ -183,7 +183,6 @@ class linkController {
         { "$limit": 10 },
       ]).exec(function(err, result){
       if (err) {
-        console.log('Error Fetching model');
         console.log(err);
       } else {
         return res.json({ 'status': 200, 'data': result });
@@ -192,7 +191,6 @@ class linkController {
   };
 
   static getReferrer  = async (req, res) => {
-    // Yalnizca user'lar istatistiklere ulasabilecek.
     const { id } = req.params;
 
     Click.aggregate(

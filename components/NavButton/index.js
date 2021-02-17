@@ -1,14 +1,12 @@
 import Link from 'next/link'
 
-import style from './NavButton.module.scss'
-
 const Index = (props) => (
   <Link href={props.path} as={props.path} prefetch>
-    <div className={style.NavButton}>
+    <div>
       {console.log('path', props.path)}
 
       {/*<div className={style.Icon}>{props.icon}</div>*/}
-      <span className={style.Label}>{props.label}</span>
+      <span>{props.label}</span>
     </div>
   </Link>
 )

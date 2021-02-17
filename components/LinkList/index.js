@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import Router, { useRouter } from 'next/router'
-import style from './Linklist.module.scss'
 
 const LinkList = ({ linkData }) => {
   const [links, setLinks] = useState([])
@@ -46,11 +45,11 @@ const LinkList = ({ linkData }) => {
   return (
     <>
       {loading && <h1>Loading..</h1>}
-      <ul className={style.linkList}>
+      <ul>
         {links.length > 0 &&
           links.map((link, i) => {
             return (
-              <li className={style.link} key={i}>
+              <li key={i}>
                 <span>{link.linkCode}</span>
               </li>
             )

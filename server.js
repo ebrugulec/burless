@@ -10,6 +10,7 @@ const dotenv = require('dotenv')
 const redis = require('redis')
 const expressip = require('express-ip')
 const checkUrl = require('./server/utils/checkUrl')
+const utils = require('./server/utils')
 dotenv.config()
 
 const DB = process.env.DATABASE_URI
@@ -35,6 +36,7 @@ const linkController = require('./server/controllers/linkController')
 const dev = process.env.NODE_ENV !== 'production'
 const next = require('next')
 const pathMatch = require('path-match')
+//TODO: check here
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const { parse } = require('url')
@@ -74,19 +76,19 @@ app.prepare().then(() => {
   const route = pathMatch()
   server.use('/api', apiRoutes)
 
-  server.get('/login/', (req, res) => {
+  server.get('/login', (req, res) => {
     return app.render(req, res, '/login', req.query)
   });
 
-  server.get('/profile/', (req, res) => {
+  server.get('/profile', (req, res) => {
     return app.render(req, res, '/profile')
   });
 
-  server.get('/statistic/', (req, res) => {
+  server.get('/statistic', (req, res) => {
     return app.render(req, res, '/statistic')
   });
 
-  server.get('/contact/', (req, res) => {
+  server.get('/contact', (req, res) => {
     return app.render(req, res, '/contact')
   });
 
@@ -94,20 +96,26 @@ app.prepare().then(() => {
     return app.render(req, res, '/index', req.query)
   });
 
-  server.get('/:id', async (req, res) => {
-    await linkController.getLink(req, res)
+  server.get('/:id', (req, res) => {
+    const paramsId = req.params.id
+    if (utils.checkLinkId(paramsId)) {
+      return linkController.getLink(req, res)
+    } else {
+      return app.render(req, res, '/link')
+    }
   });
 
-  // server.get('*', async (req, res) => {
-  //   const reqUrl = req.url.substring(1)
-  //   //TODO: Check here
-  //   if (checkUrl(reqUrl)) {
-  //     res.status(301)
-  //     await linkController.shortenLink(req, res, app, reqUrl)
-  //   } else {
-  //     return handle(req, res, '/index')
-  //   }
-  // })
+  server.get('*', async (req, res) => {
+    console.log('get all')
+    const reqUrl = req.url.substring(1)
+    //TODO: Check here
+    if (checkUrl(reqUrl)) {
+      res.status(301)
+      await linkController.shortenLink(req, res, app, reqUrl)
+    } else {
+      return handle(req, res);
+    }
+  })
 
   server.listen(PORT, (err) => {
     if (err) throw err
