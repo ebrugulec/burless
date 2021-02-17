@@ -1,65 +1,67 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+// import Head from 'next/head'
+// import styles from '../styles/Home.module.css'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import cookies from 'next-cookies'
+import Dashboard from './dahsboard'
+import axios from 'axios'
+import LinkList from '../components/LinkList'
+import Layout from '../components/Layout'
+import Link from 'next/link'
+// import '../styles/styles.scss'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default function Home ({ linkData, id }) {
+  const router = useRouter()
+  useEffect(() => {
+    if (id) {
+      router.push('/', undefined, { shallow: true })
+    }
+  }, [])
+  console.log('link data', linkData)
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+  // if (burless || links.length > 0) {
+  if (true) {
+    return (
+      <Layout>
+        <div className="home-page">
+          <div className="example">Hello World!</div>
+          <LinkList linkData={linkData} />
         </div>
-      </main>
+      </Layout>
+    )
+  } else {
+    return <Dashboard />
+  }
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+  return <div>Index.js</div>
+}
+
+export const getServerSideProps = async (ctx) => {
+  const { query } = ctx
+  // const burless = cookies(ctx).burless;
+  // const id = ctx.query.id;
+  // const burless_session = cookies(ctx).session;
+
+  const page = query.page || 1
+  let linkData = null
+
+  try {
+    const res = await fetch(`http://localhost:8080/api/links?page=${page}`)
+    if (res.status !== 200) {
+      throw new Error('Failed to fetch')
+    }
+    linkData = await res.json()
+  } catch (err) {
+    linkData = { error: { message: err.message } }
+  }
+  console.log('ctx', ctx.req.query)
+  //TODO: Handle catch
+  return {
+    props: {
+      // id,
+      // burless_session,
+      // burless,
+      linkData,
+    },
+  }
 }
