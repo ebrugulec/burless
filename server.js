@@ -9,8 +9,8 @@ const MongoDBSession = require('connect-mongodb-session')(session)
 const dotenv = require('dotenv')
 const redis = require('redis')
 const expressip = require('express-ip')
-const checkUrl = require('./server/utils/checkUrl')
-const utils = require('./server/utils')
+const checkUrl = require('./utils/checkUrl')
+const utils = require('./utils')
 dotenv.config()
 
 const DB = process.env.DATABASE_URI
@@ -92,6 +92,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/contact')
   });
 
+  server.get('/signup', (req, res) => {
+    return app.render(req, res, '/signup')
+  });
+
   server.get('/signout', (req, res) => {
     return app.render(req, res, '/signout')
   });
@@ -110,7 +114,6 @@ app.prepare().then(() => {
   });
 
   server.get('/*', async (req, res, next) => {
-    console.log('get all', req.params)
     const reqUrl = req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {

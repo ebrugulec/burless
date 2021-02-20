@@ -13,7 +13,7 @@ const { parse } = require('url');
 const geoip = require('geoip-lite');
 const redis = require("redis");
 dotenv.config();
-const getUserIdFromToken = require('../utils/getUserIdFromToken');
+const getUserIdFromToken = require('../../utils/getUserIdFromToken');
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const client = redis.createClient(REDIS_PORT);
 

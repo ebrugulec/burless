@@ -17,7 +17,7 @@ router.get('/links/statistic/:id', LinkController.getLinkClickCount)
 
 router.get('/me', auth, UserController.getUser)
 router.post(
-  '/register',
+  '/signup',
   [
     check('username', 'Please Enter a Valid Username').not().isEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
