@@ -9,6 +9,7 @@ const ObjectId = mongoose.Types.ObjectId;
 const User = require("../models/User");
 const Link = require("../models/Link");
 
+//TODO: check response and return data
 class userController {
   static signUp = async (req, res) => {
     const sessionId = req.sessionID;
@@ -32,7 +33,9 @@ class userController {
       });
       if (user) {
         return res.status(400).json({
-          msg: "User Already Exists"
+          errors: [
+            {msg: "User Already Exists"}
+          ]
         });
       }
 
@@ -59,14 +62,17 @@ class userController {
       await generateToken(res, payload);
       res.json({ 'status': 200 });
     } catch (err) {
-      res.status(500).send("Error in Saving");
+      res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. There was an error. Please try again later."}
+        ]
+      });
     }
   };
 
   static signIn = async (req, res) => {
     const sessionId = req.sessionID;
     const errors = validationResult(req);
-    console.log('signIn')
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
@@ -80,15 +86,20 @@ class userController {
         email
       });
 
-      if (!user)
+      if (!user) {
         return res.status(404).json({
-          data: {message: "User Not Exist"}
+          errors: [
+            {msg: "User Not Exist"}
+          ]
         });
+      }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(404).json({
-          data: {message: "Incorrect Password !"}
+          errors: [
+            {msg: "Incorrect Password!"}
+          ]
         });
 
       const payload = {
@@ -104,9 +115,10 @@ class userController {
 
       await generateToken(res, payload);
     } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Server Error"
+      res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. There was an error. Please try again later."}
+        ]
       });
     }
   };

@@ -1,13 +1,11 @@
 import axios from 'axios'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
-console.log('BASE_URL', BASE_URL)
 export const login = async ({ email, password }) => {
   const response = await axios.post(`${BASE_URL}/api/login`, {
     email,
     password,
   })
-  console.log('reso', response)
   return new Promise(async (resolve, reject) => {
     response && response.data ? resolve(response) : reject(response)
   });

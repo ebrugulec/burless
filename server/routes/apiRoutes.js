@@ -5,9 +5,6 @@ const auth = require('../middleware/auth')
 const LinkController = require('../controllers/linkController')
 const UserController = require('../controllers/userController')
 
-// const request = require('superagent');
-// const async = require('async');
-
 router.delete('/links/:urlId', LinkController.deleteUrl)
 router.get('/links/statistic/:urlId', LinkController.getLinkClickCount)
 router.get('/links/', LinkController.getAllLink)

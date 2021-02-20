@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react'
 import Router from 'next/router'
 import { Context } from "../context";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 // import Layout from "../component/Layout";
 
 import { login } from './api/userApi'
 import { error } from 'next/dist/build/output/log'
+import axios from "axios";
 // import useUser from "../data/useUser";
 
 const Login = () => {
@@ -21,7 +23,7 @@ const Login = () => {
   //
   // if (loggedIn) return <> Redirecting.... </>;
 
-  const onLoginSubmit = (e) => {
+  const onLoginSubmit = async (e) => {
     e.preventDefault()
     if (email && password) {
       login({ email, password })
@@ -32,7 +34,9 @@ const Login = () => {
           })
         })
         .catch((err) => {
-          console.log('err', err)
+          if( err.response ){
+            console.log(err.response.data);
+          }
         });
     }
   }
