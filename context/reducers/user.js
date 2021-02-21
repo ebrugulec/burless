@@ -6,6 +6,11 @@ export function user(state, action) {
         user: action.payload,
         loggedIn: true
       };
+    case "SET_LOGGED_IN_INFO":
+      return {
+        ...state,
+        loggedIn: true
+      };
     default:
       return state;
   }

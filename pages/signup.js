@@ -29,7 +29,6 @@ const SignUp = () => {
     register(signupValues)
       .then((res) => {
         if (res && res.data) {
-          console.log('res', res)
           dispatch({
             type: "LOGGED_IN_USER",
             payload: res.data.email,
@@ -43,7 +42,6 @@ const SignUp = () => {
       });
   };
 
-  console.log('ree', errors)
   return (
     <div className="container">
       <FormWrapper onSignUpSubmit={onSignUpSubmit} validate={validate} initialValues={initialValues} isSignUp={true} />
