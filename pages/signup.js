@@ -15,39 +15,41 @@ const initialValues = {
   email: null,
   password: null,
 };
-// import useUser from "../data/useUser";
 
 const SignUp = () => {
   const { state, dispatch } = useContext(Context);
+  const [errors, setErrors] = useState([])
+  const {loggedIn} = state;
 
-  // const { mutate, loggedIn } = useUser();
+  useEffect(() => {
+    if (loggedIn) Router.replace("/");
+  }, [loggedIn]);
 
-  // useEffect(() => {
-  //   if (loggedIn) Router.replace("/");
-  // }, [loggedIn]);
-  //
-  // if (loggedIn) return <> Redirecting.... </>;
-
-  const onSignUpSubmit = async (values) => {
-    console.log('values', values)
-
-    register(values)
+  const onSignUpSubmit = async (signupValues) => {
+    register(signupValues)
       .then((res) => {
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: "Ryan Dhungel",
-        })
+        if (res && res.data) {
+          console.log('res', res)
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: res.data.email,
+          })
+        }
       })
       .catch((err) => {
-        if( err.response ){
-          console.log(err.response.data);
+        if(err.response && err.response.data && err.response.data.errors){
+          setErrors(err.response.data.errors)
         }
       });
   };
 
+  console.log('ree', errors)
   return (
     <div className="container">
-      <FormWrapper onSignUpSubmit validate={validate} initialValues={initialValues} isSignUp={true} />
+      <FormWrapper onSignUpSubmit={onSignUpSubmit} validate={validate} initialValues={initialValues} isSignUp={true} />
+      {errors && errors.map((error, i) => {
+        return <div key={i}>{error.msg}</div>
+      })}
     </div>
   )
 };

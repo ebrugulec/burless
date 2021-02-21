@@ -13,7 +13,7 @@ const generateToken = async (res, payload) => {
     httpOnly: true,
   })
 
-  return res.status(200)
+  return true
 }
 
 module.exports = generateToken

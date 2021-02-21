@@ -12,16 +12,14 @@ export const login = async ({ email, password }) => {
 };
 
 export const register = async ({ username, email, password }) => {
-  try {
-    const res = await axios.post('/api/signup', {
-      username,
-      email,
-      password,
-    })
-    console.log(res.data)
-  } catch (error) {
-    console.log(error)
-  }
+  const response = await axios.post('/api/signup', {
+    username,
+    email,
+    password,
+  })
+  return new Promise(async (resolve, reject) => {
+    response && response.data ? resolve(response) : reject(response)
+  });
 }
 
 export const getUser = async () => {

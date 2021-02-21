@@ -32,7 +32,7 @@ class userController {
         email
       });
       if (user) {
-        return res.status(400).json({
+        return res.status(409).json({
           errors: [
             {msg: "User Already Exists"}
           ]
@@ -60,7 +60,11 @@ class userController {
         }
       });
       await generateToken(res, payload);
-      res.json({ 'status': 200 });
+      res.send({
+        status: 200,
+        email: user.email,
+        username: user.username
+      });
     } catch (err) {
       res.status(500).send({
         errors: [
@@ -96,7 +100,7 @@ class userController {
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
-        return res.status(404).json({
+        return res.status(401).json({
           errors: [
             {msg: "Incorrect Password!"}
           ]
@@ -114,6 +118,11 @@ class userController {
       });
 
       await generateToken(res, payload);
+      res.send({
+        status: 200,
+        email: user.email,
+        username: user.username
+      });
     } catch (e) {
       res.status(500).send({
         errors: [
