@@ -37,9 +37,9 @@ export default function Home ({ linkData, id }) {
 
 export const getServerSideProps = async (ctx) => {
   const { query } = ctx
-  // const burless = cookies(ctx).burless;
-  // const id = ctx.query.id;
-  // const burless_session = cookies(ctx).session;
+  const burless = cookies(ctx).burless;
+  const id = ctx.query.id;
+  const burless_session = cookies(ctx).session;
 
   const page = query.page || 1
   let linkData = null
@@ -53,7 +53,6 @@ export const getServerSideProps = async (ctx) => {
   } catch (err) {
     linkData = { error: { message: err.message } }
   }
-  console.log('ctx', ctx.req.query)
   //TODO: Handle catch
   return {
     props: {
