@@ -13,7 +13,6 @@ const Header = (props) => (
     {/*  width={90}*/}
     {/*  height={90}*/}
     {/*/>*/}
-    hey
   </Link>
 )
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const navButtons = [
+const authenticatedNavButtons = [
   {
     label: 'Links',
     path: '/',
@@ -23,4 +23,4 @@ const navButtons = [
   },
 ]
 
-export default navButtons
+export default authenticatedNavButtons
