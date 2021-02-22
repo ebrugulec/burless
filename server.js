@@ -80,6 +80,7 @@ app.prepare().then(() => {
     return app.render(req, res, '/login', req.query)
   });
 
+  //TODO: Check protected route
   server.get('/profile', (req, res) => {
     return app.render(req, res, '/profile')
   });
