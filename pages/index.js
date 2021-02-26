@@ -1,6 +1,6 @@
 // import Head from 'next/head'
 // import styles from '../styles/Home.module.css'
-import React, { useEffect } from 'react'
+import React, {useContext, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import cookies from 'next-cookies'
 import Dashboard from './dahsboard'
@@ -8,15 +8,22 @@ import axios from 'axios'
 import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
 import Link from 'next/link'
+import {Context} from "../context";
 
 export default function Home ({ linkData, id }) {
+  const { state, dispatch } = useContext(Context);
+  console.log('state', state)
   const router = useRouter()
   useEffect(() => {
     if (id) {
       router.push('/', undefined, { shallow: true })
     }
   }, [])
-  console.log('link data', linkData)
+  useEffect(() => {
+    dispatch({
+      type: "SET_LOGGED_IN_INFO",
+    })
+  }, [])
 
   // if (burless || links.length > 0) {
   if (true) {

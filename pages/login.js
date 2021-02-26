@@ -19,9 +19,9 @@ const Login = () => {
   const [errors, setErrors] = useState([])
   const { loggedIn } = state;
 
-  useEffect(() => {
-    if (loggedIn) Router.replace("/");
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   if (loggedIn) Router.replace("/");
+  // }, [loggedIn]);
 
   const onLoginSubmit = async (loginValues) => {
     login(loginValues)
@@ -32,6 +32,8 @@ const Login = () => {
             payload: res.data.email,
           })
         }
+        //TODO: Bir sayfadan geldiyse back'e yonlendir
+        Router.replace("/");
       })
       .catch((err) => {
         if(err.response && err.response.data && err.response.data.errors){

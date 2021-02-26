@@ -39,9 +39,11 @@ router.post(
   UserController.signIn
 )
 
-router.post('/logout', (req, res) => {
+router.post('/signout', (req, res) => {
   req.session.destroy((err) => {
     //TODO: Handle err
+    res.clearCookie("burless");
+    res.clearCookie("burless_session");
     res.redirect('/')
   });
 })

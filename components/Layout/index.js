@@ -15,7 +15,7 @@ const Layout = (props) => {
     if (loggedIn) {
       setNavButtons(authenticatedNavButtons)
     }
-  }, []);
+  });
   return (
     <div>
       <Head>
