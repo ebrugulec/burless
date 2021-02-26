@@ -98,7 +98,14 @@ app.prepare().then(() => {
   });
 
   server.get('/signout', (req, res) => {
-    return app.render(req, res, '/signout')
+    // return app.render(req, res, '/signout')
+    console.log('signoutt')
+    req.session.destroy((err) => {
+      //TODO: Handle err
+      res.clearCookie("burless");
+      res.clearCookie("burless_session");
+      res.redirect('/')
+    });
   });
 
   server.get('/', (req, res) => {

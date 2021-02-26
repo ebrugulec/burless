@@ -10,12 +10,13 @@ const Layout = (props) => {
   const appTitle = 'Burless';
   const { state, dispatch } = useContext(Context);
   const { loggedIn } = state;
+  console.log('navv', loggedIn)
   const [navButtons, setNavButtons] = useState(unauthenticatedNavButtons);
   useEffect(() => {
     if (loggedIn) {
       setNavButtons(authenticatedNavButtons)
     }
-  }, []);
+  });
   return (
     <div>
       <Head>
