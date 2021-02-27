@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import Router from 'next/router'
+import React, { useState, useContext } from 'react'
 import { Context } from "../context";
 import {nameValidation, emailValidation, passwordValidation} from "../utils"
 import { register } from './api/userApi'
@@ -18,13 +17,8 @@ const initialValues = {
 };
 
 const SignUp = () => {
-  const { state, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [errors, setErrors] = useState([])
-  const {loggedIn} = state;
-
-  useEffect(() => {
-    if (loggedIn) Router.replace("/");
-  }, [loggedIn]);
 
   const onSignUpSubmit = async (signupValues) => {
     register(signupValues)
