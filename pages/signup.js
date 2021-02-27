@@ -4,6 +4,7 @@ import { Context } from "../context";
 import {nameValidation, emailValidation, passwordValidation} from "../utils"
 import { register } from './api/userApi'
 import FormWrapper from "../components/FormWrapper";
+import {tokenControl} from "../lib/tokenControl";
 
 const validate = {
   username: username => nameValidation("Username", username),
@@ -51,5 +52,7 @@ const SignUp = () => {
     </div>
   )
 };
+
+export const getServerSideProps = tokenControl;
 
 export default SignUp

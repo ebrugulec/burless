@@ -7,15 +7,15 @@ import {useContext, useEffect, useState} from "react";
 import {Context} from "../../context";
 
 const Layout = (props) => {
-  const appTitle = 'Burless';
-  const { state, dispatch } = useContext(Context);
-  const { loggedIn } = state;
-  const [navButtons, setNavButtons] = useState(unauthenticatedNavButtons);
-  useEffect(() => {
-    if (loggedIn) {
-      setNavButtons(authenticatedNavButtons)
-    }
-  });
+  // const appTitle = 'Burless';
+  // const { state } = useContext(Context);
+  // const { loggedIn } = state;
+  // const [navButtons, setNavButtons] = useState(unauthenticatedNavButtons);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     setNavButtons(authenticatedNavButtons)
+  //   }
+  // }, []);
   return (
     <div>
       <Head>
@@ -24,7 +24,7 @@ const Layout = (props) => {
       <div className="row">
         <div className={'col-3 ' + ''}>
           {/*<Header appTitle={appTitle} />*/}
-          <NavBar navButtons={navButtons} />
+          {/*<NavBar navButtons={navButtons} />*/}
         </div>
         <div className="col-9">
           <div className="Content">{props.children}</div>

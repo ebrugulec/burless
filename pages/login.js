@@ -4,6 +4,7 @@ import { Context } from "../context";
 import {emailValidation, passwordValidation} from "../utils"
 import { login } from './api/userApi'
 import FormWrapper from "../components/FormWrapper";
+import {tokenControl} from '../lib/tokenControl'
 
 const validate = {
   email: emailValidation,
@@ -15,13 +16,8 @@ const initialValues = {
 };
 
 const Login = () => {
-  const { state, dispatch } = useContext(Context);
   const [errors, setErrors] = useState([])
-  const { loggedIn } = state;
-
-  // useEffect(() => {
-  //   if (loggedIn) Router.replace("/");
-  // }, [loggedIn]);
+  const { dispatch } = useContext(Context);
 
   const onLoginSubmit = async (loginValues) => {
     login(loginValues)
@@ -50,5 +46,7 @@ const Login = () => {
     </div>
   )
 };
+
+export const getServerSideProps = tokenControl;
 
 export default Login

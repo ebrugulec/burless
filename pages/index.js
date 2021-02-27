@@ -11,29 +11,29 @@ import Link from 'next/link'
 import {Context} from "../context";
 
 export default function Home ({ linkData, id }) {
-  const { state, dispatch } = useContext(Context);
-  console.log('dispatch state', state)
-  const router = useRouter()
-  useEffect(() => {
-    if (id) {
-      router.push('/', undefined, { shallow: true })
-    }
-  }, [])
+  // const { state, dispatch } = useContext(Context);
+  // console.log('dispatch state', state)
+  // const router = useRouter()
+  // useEffect(() => {
+  //   if (id) {
+  //     router.push('/', undefined, { shallow: true })
+  //   }
+  // }, [])
 
   // if (burless || links.length > 0) {
-  if (true) {
-    return (
-      <Layout>
-        <div className="home-page">
-          <div className="example">Hello World!</div>
-          <LinkList linkData={linkData} />
-        </div>
-      </Layout>
-    )
-  } else {
-    return <Dashboard />
-  }
-
+  // if (true) {
+  //   return (
+  //     <Layout>
+  //       <div className="home-page">
+  //         <div className="example">Hello World!</div>
+  //         <LinkList linkData={linkData} />
+  //       </div>
+  //     </Layout>
+  //   )
+  // } else {
+  //   return <Dashboard />
+  // }
+  //
   return <div>Index.js</div>
 }
 
