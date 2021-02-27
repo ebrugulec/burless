@@ -1,29 +1,26 @@
-import {Context, Provider} from "../context";
+import React, {useReducer} from "react";
+import {Context, combineReducers} from "../context";
 import cookies from 'next-cookies'
-import { useRouter } from "next/router";
-import React, {useContext, useEffect} from "react";
+import {user} from "../context/reducers/user";
 
-export default function MyApp ({Component, pageProps, token}) {
-  const router = useRouter();
-  const { state, dispatch } = useContext(Context);
-  const {pathname} = router;
-//TODO: Check protected route
-//   useEffect(() => {
-//     if ((pathname === '/profile' || pathname === '/statistic') && !token) {
-//       router.push('/login')
-//     }
-//   });
-//TODO: Suna bak  res.writeHead(307, { Location: '/api/login' }); res.end();
+const initialState = {
+  user: {},
+  loggedIn: false
+};
+
+export default function MyApp ({Component, pageProps, props}) {
+  const [state, dispatch] = useReducer(combineReducers(user), props.token ? initialState['loggedIn'] = true : initialState);
+  const value = { state, dispatch };
+
+//TODO: res.writeHead(307, { Location: '/api/login' }); res.end();
   return (
-    <Provider>
-      <Component {...pageProps} token={token} />
-    </Provider>
+    <Context.Provider value={value}>
+      <Component {...pageProps} />
+    </Context.Provider>
   )
 }
 
 MyApp.getInitialProps = async ({ctx}) => {
   const token = cookies(ctx).burless;
-  return {
-    token
-  }
+  return { props: { token } };
 };

@@ -32,7 +32,6 @@ const Login = () => {
             payload: res.data.email,
           })
         }
-        //TODO: Bir sayfadan geldiyse back'e yonlendir
         Router.replace("/");
       })
       .catch((err) => {

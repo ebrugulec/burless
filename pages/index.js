@@ -12,17 +12,12 @@ import {Context} from "../context";
 
 export default function Home ({ linkData, id }) {
   const { state, dispatch } = useContext(Context);
-  console.log('state', state)
+  console.log('dispatch state', state)
   const router = useRouter()
   useEffect(() => {
     if (id) {
       router.push('/', undefined, { shallow: true })
     }
-  }, [])
-  useEffect(() => {
-    dispatch({
-      type: "SET_LOGGED_IN_INFO",
-    })
   }, [])
 
   // if (burless || links.length > 0) {

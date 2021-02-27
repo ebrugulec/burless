@@ -1,10 +1,10 @@
 import { useState, useEffect, useReducer, createContext } from "react";
 import { user } from "./reducers/user";
 
-const initialState = {
-  user: {},
-  loggedIn: false
-};
+// const initialState = {
+//   user: {},
+//   loggedIn: false
+// };
 
 const Context = createContext({});
 
@@ -13,11 +13,11 @@ const combineReducers = (...reducers) => (state, action) => {
   return state;
 };
 
-const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(combineReducers(user), initialState);
-  const value = { state, dispatch };
+// const Provider = ({ children }) => {
+//   const [state, dispatch] = useReducer(combineReducers(user), initialState);
+//   const value = { state, dispatch };
+//
+//   return <Context.Provider value={value}>{children}</Context.Provider>;
+// };
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
-};
-
-export { Context, Provider };
+export { Context, combineReducers };
