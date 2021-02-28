@@ -8,7 +8,7 @@ const generateToken = async (res, payload) => {
     expiresIn: process.env.DB_ENV === 'test' ? '1d' : '7d',
   })
   res.cookie('burless', token, {
-    expires: new Date(Date.now() + expiration),
+    expire: new Date(Date.now() + expiration),
     secure: false, // set to true if your using https
     httpOnly: true,
   })

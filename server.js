@@ -11,6 +11,7 @@ const redis = require('redis')
 const expressip = require('express-ip')
 const checkUrl = require('./utils/checkUrl')
 const utils = require('./utils')
+const apiRoutes = require('./server/routes/apiRoutes')
 dotenv.config()
 
 const DB = process.env.DATABASE_URI
@@ -40,8 +41,6 @@ const pathMatch = require('path-match')
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const { parse } = require('url')
-
-const apiRoutes = require('./server/routes/apiRoutes')
 
 app.prepare().then(() => {
   const server = express()
@@ -73,8 +72,9 @@ app.prepare().then(() => {
     })
   )
 
-  const route = pathMatch()
   server.use('/api', apiRoutes)
+
+  const route = pathMatch()
 
   server.get('/login', (req, res) => {
     return app.render(req, res, '/login', req.query)
@@ -82,6 +82,7 @@ app.prepare().then(() => {
 
   //TODO: Check protected route
   server.get('/profile', (req, res) => {
+    console.log('main burasi', req.cookies)
     return app.render(req, res, '/profile')
   });
 

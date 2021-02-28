@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const User = require("../models/User");
 const Link = require("../models/Link");
+const getUserIdFromToken = require('../../utils/getUserIdFromToken');
 
 //TODO: check response and return data
 class userController {
@@ -133,6 +134,26 @@ class userController {
   };
 
   static getUser = async (req, res) => {
+    const burless_token = req.cookies.burless;
+    console.log('getUser', req.headers)
+
+
+    const userId = await getUserIdFromToken(burless_token);
+    try {
+      const user = await User.findOne({ '_id': userId });
+      return res.json({ status: 200,
+        data: {
+          email: user.email,
+          username: user.username
+        }
+      });
+    } catch (e) {
+      res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. There was an error. Please try again later."}
+        ]
+      });
+    }
   };
 
   static async updateUserLinksWithSession(sessionId, userId) {

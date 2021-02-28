@@ -26,6 +26,7 @@ const BASE_URL = process.env.BASE_URL;
 //TODO: Move mongoose query to service.
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
+    console.log('new link', req.cookies)
     const burless_token = req.cookies.burless;
     const sessionId = req.session.id;
 
@@ -64,19 +65,20 @@ class linkController {
   };
 
   static getAllLink = async (req, res) => {
-    const burless = req.cookies.burless;
-    console.log('holaa', req.query.page)
+    const burless_token = req.cookies.burless;
+    console.log('getAll', req.cookies)
+    const sessionId = req.session.id;
+    console.log('holaa burless req.cookies', req.cookies)
 
     const perPage = 10;
     const curPage = req.query.page || 1;
 
-    // if (burless) {
-      if (false) {
-      const userId = await getUserIdFromToken(burless);
-
+    if (burless_token) {
+      const userId = await getUserIdFromToken(burless_token);
+      console.log('user', userId)
       Link.find({"user": ObjectId(userId)})
-        // .limit(perPage)
-        // .skip(perPage * page)
+        .limit(perPage)
+        .skip(perPage * page)
         .sort([['createdAt', -1]])
 
         .exec(function(err, result) {
@@ -117,7 +119,6 @@ class linkController {
       client.get(id, async (err, link) => {
         if (err) throw err;
         if (link) {
-          console.log('redis', link);
           res.redirect(JSON.parse(link));
           this.saveLinkAndStatisticInfo(req, id)
         } else {
@@ -242,6 +243,7 @@ class linkController {
   };
 
   static getLinkTotalInfo = async (req, res) => {
+    console.log('getLinkTotalInfo', req.cookies)
     //User'in bilgileri ile total info'u gormeli.
     const userId = 1;
 

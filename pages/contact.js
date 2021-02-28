@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import React from 'react'
+import cookies from "next-cookies";
 
 export default function Contact () {
   return (
