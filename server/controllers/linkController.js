@@ -20,13 +20,13 @@ const client = redis.createClient(REDIS_PORT);
 client.on("error", (err) => {
   console.log(err);
 });
+const LINK_PER_PAGE = 10;
 
 const BASE_URL = process.env.BASE_URL;
 
 //TODO: Move mongoose query to service.
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
-    console.log('new link', req.cookies)
     const burless_token = req.cookies.burless;
     const sessionId = req.session.id;
 
@@ -65,52 +65,82 @@ class linkController {
   };
 
   static getAllLink = async (req, res) => {
-    const burless_token = req.cookies.burless;
-    console.log('getAll', req.cookies)
-    const sessionId = req.session.id;
-    console.log('holaa burless req.cookies', req.cookies)
+    const token = req.cookies.burless;
+    console.log('getAllLink', req.cookies)
+    const sessionId = req.sessionID;
 
-    const perPage = 10;
+    // if (!!token && !!session) {
+    //   //TODO: handle here
+    //   return true
+    // }
+
     const curPage = req.query.page || 1;
-
-    if (burless_token) {
-      const userId = await getUserIdFromToken(burless_token);
-      console.log('user', userId)
-      Link.find({"user": ObjectId(userId)})
-        .limit(perPage)
-        .skip(perPage * page)
-        .sort([['createdAt', -1]])
-
-        .exec(function(err, result) {
-          if (err) {
-            return res.json({ 'status': 422, 'error': error.toString() });
-          } else {
-            res.json({ 'status': 200, 'data': result });
-          }
-        })
+    const userId = token && await getUserIdFromToken(token);
+    const totalLinksCount = await Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId});
+    const getAllLinkResponse = await this.getAllLinksWithTokenOrSession(userId, sessionId, curPage);
+    console.log('totalLinksCount', totalLinksCount)
+    if (!!getAllLinkResponse.error) {
+      console.log('err', getAllLinkResponse.error)
     } else {
-      const session = req.sessionID;
-      const totalLinks = await Link.countDocuments({session: "FrKNz5ap7vLyU49W0EF8Lv4ppuYUPZwq"});
-      Link.find({session: "FrKNz5ap7vLyU49W0EF8Lv4ppuYUPZwq"})
-        .limit(perPage)
-        .skip((curPage - 1) * perPage)
-        .sort({createdAt: -1})
-        .exec(function(err, result) {
-          if (err) {
-            return res.json({ 'status': 422, 'error': error.toString() });
-          } else {
-            res.json(
-              {
-                message: "Fetched links",
-                status: 200,
-                links: result,
-                curPage: curPage,
-                maxPage: Math.ceil(totalLinks / perPage),
-              });
-          }
-        })
+      res.json({
+        status: 200,
+        data: {
+          message: "Fetched links",
+          links: getAllLinkResponse,
+          curPage: curPage,
+          maxPage: Math.ceil(totalLinksCount / LINK_PER_PAGE),
+        }
+      });
     }
+    console.log('LINKS', getAllLinkResponse)
+    // if (token) {
+    //   const userId = await getUserIdFromToken(token);
+    //   const totalLinksForUser = await Link.countDocuments({session});
+    //   Link.find({"user": ObjectId(userId)})
+    //     .limit(perPage)
+    //     .skip(perPage * page)
+    //     .sort([['createdAt', -1]])
+    //     .exec(function(err, result) {
+    //       if (err) {
+    //         return res.json({ 'status': 422, 'error': error.toString() });
+    //       } else {
+    //         res.json(
+    //           {
+    //             status: 200,
+    //             data: {
+    //               message: "Fetched links",
+    //               links: result,
+    //               curPage: curPage,
+    //               maxPage: Math.ceil(totalLinksForUser / perPage),
+    //             }
+    //           });
+    //       }
+    //     })
+    // } else {
+    //   const session = req.sessionID;
+    //
+    // }
   };
+
+  static getAllLinksWithTokenOrSession (userId, sessionId, curPage){
+    const usersProjection = {
+      __v: false,
+      session: false,
+      user: false,
+      createdAt: false
+    };
+    return Link.find(userId ? {user: ObjectId(userId)} : {session: sessionId}, usersProjection)
+      .limit(LINK_PER_PAGE)
+      .skip((curPage - 1) * LINK_PER_PAGE)
+      .sort({createdAt: -1})
+      .exec()
+      .then((links) => {
+        return links;
+      })
+      .catch((err) => {
+        return {error: err};
+      });
+  }
 
   static getLink = (req, res, app) => {
     console.log('getLink')

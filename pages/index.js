@@ -10,29 +10,23 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import {Context} from "../context";
 
-export default function Home ({ id,
-                                session,
-                                token,
-                                linkData }) {
+export default function Home ({ id, session, token, data }) {
   const { state, dispatch } = useContext(Context);
+  const {links} = data;
   const router = useRouter();
-  console.log('data', id,
-    session,
-    token,
-    linkData)
   useEffect(() => {
     if (id) {
       router.push('/', undefined, { shallow: true })
     }
   }, [])
-  //TODO: gecerli bir token olup olmadigina bak. Gecerli degilse islem yap
+  //TODO: token var ama hic link yoksa uyari ver.
 
-  if (token || linkData.length > 0) {
+  if (token || (links && links.length > 0)) {
     return (
       <Layout>
         <div className="home-page">
           <div className="example">Hello World!</div>
-          <LinkList linkData={linkData} />
+          <LinkList linkData={data} />
         </div>
       </Layout>
     )
@@ -41,32 +35,33 @@ export default function Home ({ id,
   }
 }
 
-export const getServerSideProps = async (ctx) => {
-  const { query } = ctx
-  const token = cookies(ctx).burless ? cookies(ctx).burless : null;
-  console.log('ctx.query.id', ctx.query.id)
-  const id = ctx.query.id ? ctx.query.id : null;
-  const session = cookies(ctx).burless_session ? cookies(ctx).burless_session : null;
-
+export const getServerSideProps = async (context) => {
+  const { query } = context
+  const token = cookies(context).burless || null
+  const id = context.query.id || null
+  const session = cookies(context).burless_session || null
   const page = query.page || 1
-  let linkData = null
 
   try {
-    const res = await fetch(`http://localhost:8080/api/links?page=${page}`)
-    if (res.status !== 200) {
-      throw new Error('Failed to fetch')
-    }
-    linkData = await res.json()
-  } catch (err) {
-    linkData = { error: { message: err.message } }
-  }
-  //TODO: Handle catch
-  return {
-    props: {
+    const response = await fetch(`http://localhost:8080/api/links?page=${page}`, {
+      credentials: 'include',
+      ...(context.req
+        ? {
+          headers: {
+            Cookie: context.req.headers.cookie
+          },
+        }
+        : {}),
+    });
+    let result = await response.json();
+    const resultData = {
+      data: result.data || null,
       id,
       session,
       token,
-      linkData,
-    },
+    };
+    return { props: resultData };
+  } catch {
+    return { props: { data: null } };
   }
 }

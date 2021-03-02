@@ -3,6 +3,7 @@ import React from 'react'
 import {requirePageAuth} from "../lib/auth";
 import axios from 'axios';
 import cookies from 'next-cookies'
+import {redirectLogin} from "../utils";
 
 function Profile (props) {
   //TODO: Check whe data is null
@@ -13,13 +14,7 @@ export const getServerSideProps = async (context) => {
   const token = cookies(context).burless;
 
   if (!token) {
-    return {
-      props: {},
-      redirect: {
-        destination: '/',
-        permanent: false
-      }
-    };
+    redirectLogin();
   }
   try {
     const response = await fetch(`http://localhost:8080/api/users/me`, {
