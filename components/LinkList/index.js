@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import Router, { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const LinkList = ({ linkData }) => {
   const [links, setLinks] = useState([])
@@ -9,6 +10,7 @@ const LinkList = ({ linkData }) => {
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
   const router = useRouter()
+  console.log('linkss', links)
 
   useEffect(() => {
     setFirstRender(false)
@@ -50,7 +52,9 @@ const LinkList = ({ linkData }) => {
           links.map((link, i) => {
             return (
               <li key={i}>
-                <span>{link.linkCode}</span>
+                <Link href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                  <a>{link.linkCode}</a>
+                </Link>
               </li>
             )
           })}

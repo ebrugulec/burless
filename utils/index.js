@@ -41,9 +41,20 @@ const passwordValidation = password => {
   return null;
 };
 
+function redirectLogin() {
+  return {
+    props: {},
+    redirect: {
+      destination: '/',
+      permanent: false
+    }
+  };
+}
+
 module.exports = {
   checkLinkId,
   nameValidation,
   emailValidation,
-  passwordValidation
+  passwordValidation,
+  redirectLogin
 }

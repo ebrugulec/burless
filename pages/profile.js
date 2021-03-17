@@ -3,6 +3,7 @@ import React from 'react'
 import {requirePageAuth} from "../lib/auth";
 import axios from 'axios';
 import cookies from 'next-cookies'
+import {redirectLogin} from "../utils";
 
 function Profile (props) {
   //TODO: Check whe data is null
@@ -11,7 +12,6 @@ function Profile (props) {
 
 export const getServerSideProps = async (context) => {
   const token = cookies(context).burless;
-
   if (!token) {
     return {
       props: {},
@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
         : {}),
     });
     let result = await response.json()
-    return { props: { data: result.data } };
+    return { props: { data: result.data ? result.data : null } };
   } catch {
     return { props: { data: null } };
   }
