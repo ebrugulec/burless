@@ -28,7 +28,7 @@ const BASE_URL = process.env.BASE_URL;
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
     const burless_token = req.cookies.burless;
-    const sessionId = req.session.id;
+    const sessionId = req.sessionID;
 
     const userId = await getUserIdFromToken(burless_token);
 
@@ -198,14 +198,12 @@ class linkController {
     }
   };
 
-  static getCountry  = async (req, res) => {
-    const { id } = req.params;
-
-    Click.aggregate(
+  static getCountry  = async (urlId) => {
+    return Click.aggregate(
       [
         {
           $match: {
-            "_link": ObjectId(id),
+            "_link": ObjectId(urlId),
           },
         },
         {$group: {
@@ -216,23 +214,21 @@ class linkController {
           }},
         {$sort: {"count": -1} },
         { "$limit": 10 },
-      ]).exec(function(err, result){
-      if (err) {
-        console.log(err);
-      } else {
-        return res.json({ 'status': 200, 'data': result });
-      }
-    });
+      ]).exec()
+      .then((countries) => {
+        return countries;
+      })
+      .catch((err) => {
+        return {error: err};
+      });
   };
 
-  static getReferrer  = async (req, res) => {
-    const { id } = req.params;
-
-    Click.aggregate(
+  static getReferrer  = async (urlId) => {
+    return Click.aggregate(
       [
         {
           $match: {
-            "_link": ObjectId(id),
+            "_link": ObjectId(urlId),
             "referrer": {
               "$exists": true,
               "$ne": null
@@ -247,14 +243,13 @@ class linkController {
           }},
         {$sort: {"count": -1} },
         { "$limit": 10 },
-      ]).exec(function(err, result){
-      if (err) {
-        console.log('Error Fetching model');
-        console.log(err);
-      } else {
-        return res.json({ 'status': 200, 'data': result });
-      }
-    });
+      ]).exec()
+      .then((referrers) => {
+        return referrers;
+      })
+      .catch((err) => {
+        return {error: err};
+      });
   };
 
   static deleteUrl = async (req, res) => {
@@ -306,17 +301,16 @@ class linkController {
       }});
   };
 
-  static getLinkClickCount = async (req, res) => {
-    const { id } = req.params;
-    //TODO: Remove query this controller
-    let date = new Date();
-    date.setDate(date.getDate()-1);
-    Click.aggregate(
+  static getLinkClickCount = async (urlId) => {
+    // let date = new Date();
+    // date.setDate(date.getDate()-1);
+    //TODO: Get last 1 month data
+    return Click.aggregate(
       [
         {
           $match: {
-            "_link": ObjectId(id),
-            "createdAt": {'$gte': date}
+            "_link": ObjectId(urlId),
+            // "createdAt": {'$gte': date}
           },
         },
         {$group: {
@@ -332,16 +326,29 @@ class linkController {
             count: 1,
             _id: 0
           }},
-        {$sort: {"date": 1} }
-      ]).exec(function(err, result){
-        if (err) {
-          console.log('Error Fetching model');
-          console.log(err);
-        } else {
-          console.log(result);
-          return res.json({ 'status': 200, 'data': result });
-        }
-    });
+        {$sort: {"date": 1} },
+      ]).exec()
+      .then((clickInfo) => {
+        return clickInfo;
+      })
+      .catch((err) => {
+        return {error: err};
+      });
+  };
+
+  static getLinkStatistic = async (req, res) => {
+    const { urlId } = req.params;
+    const sessionId = req.sessionID;
+    const token = req.cookies.burless;
+    //TODO: Get Platform and browser
+    //TODO: GEt link total click, created date info
+
+    const referrers = await this.getReferrer(urlId);
+    const countries = await this.getCountry(urlId);
+    const groupedClickInfo = await this.getLinkClickCount(urlId);
+    console.log('referrers', referrers)
+    console.log('countries', countries)
+    console.log('getGroupedClickInfo', groupedClickInfo)
   }
 }
 

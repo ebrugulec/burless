@@ -41,7 +41,7 @@ const passwordValidation = password => {
   return null;
 };
 
-function redirectLogin(token) {
+function redirectLogin() {
   return {
     props: {},
     redirect: {
@@ -49,7 +49,6 @@ function redirectLogin(token) {
       permanent: false
     }
   };
-
 }
 
 module.exports = {

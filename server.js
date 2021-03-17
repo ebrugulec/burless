@@ -82,11 +82,10 @@ app.prepare().then(() => {
 
   //TODO: Check protected route
   server.get('/profile', (req, res) => {
-    console.log('main burasi', req.cookies)
     return app.render(req, res, '/profile')
   });
 
-  server.get('/statistic', (req, res) => {
+  server.get('/statistic/:id', (req, res) => {
     return app.render(req, res, '/statistic')
   });
 

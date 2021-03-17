@@ -10,7 +10,7 @@ router.get('/links/statistic/totalInfo', LinkController.getLinkTotalInfo)
 router.get('/users/me', UserController.getUser)
 router.delete('/links/:urlId', LinkController.deleteUrl)
 router.get('/links', LinkController.getAllLink)
-router.get('/links/statistic/:urlId', LinkController.getLinkClickCount)
+router.get('/links/statistic/:urlId', LinkController.getLinkStatistic)
 
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry)
