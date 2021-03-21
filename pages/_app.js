@@ -2,6 +2,7 @@ import React, {useReducer} from "react";
 import {Context, combineReducers} from "../context";
 import cookies from 'next-cookies'
 import {user} from "../context/reducers/user";
+import '../styles/reset.scss';
 
 if (typeof process.versions === 'undefined') process.versions = {};
 const initialState = {
