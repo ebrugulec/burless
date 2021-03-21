@@ -28,6 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.9",
     "next": "^10.0.7",
+    "next-compose-plugins": "^2.2.1",
     "next-cookies": "^2.0.3",
     "next-images": "^1.7.0",
     "next-routes": "^1.4.2",
