@@ -3,6 +3,7 @@ import {Context, combineReducers} from "../context";
 import cookies from 'next-cookies'
 import {user} from "../context/reducers/user";
 import '../styles/reset.scss';
+import HeadComponent from "../components/Head";
 
 if (typeof process.versions === 'undefined') process.versions = {};
 const initialState = {
@@ -22,6 +23,7 @@ export default function MyApp ({Component, pageProps, props}) {
 //TODO: res.writeHead(307, { Location: '/api/login' }); res.end();
   return (
     <Context.Provider value={value}>
+      <HeadComponent/>
       <Component {...pageProps} />
     </Context.Provider>
   )
