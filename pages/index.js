@@ -10,18 +10,19 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import {Context} from "../context";
 
-export default function Home ({ id, session, token, data }) {
-  const { state, dispatch } = useContext(Context);
-  const {links} = data;
-  const router = useRouter();
-  useEffect(() => {
-    if (id) {
-      router.push('/', undefined, { shallow: true })
-    }
-  }, [])
-  //TODO: token var ama hic link yoksa uyari ver.
+export default function Home () {
+  // const { state, dispatch } = useContext(Context);
+  // const {links} = data;
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (id) {
+  //     router.push('/', undefined, { shallow: true })
+  //   }
+  // }, [])
+  // //TODO: token var ama hic link yoksa uyari ver.
 
-  if (token || (links && links.length > 0)) {
+  // if (token || (links && links.length > 0)) {
+  if (false){
     return (
       <Layout>
         <div className="home-page">
@@ -35,33 +36,33 @@ export default function Home ({ id, session, token, data }) {
   }
 }
 
-export const getServerSideProps = async (context) => {
-  const { query } = context
-  const token = cookies(context).burless || null
-  const id = context.query.id || null
-  const session = cookies(context).burless_session || null
-  const page = query.page || 1
-
-  try {
-    const response = await fetch(`http://localhost:8080/api/links?page=${page}`, {
-      credentials: 'include',
-      ...(context.req
-        ? {
-          headers: {
-            Cookie: context.req.headers.cookie
-          },
-        }
-        : {}),
-    });
-    let result = await response.json();
-    const resultData = {
-      data: result.data || null,
-      id,
-      session,
-      token,
-    };
-    return { props: resultData };
-  } catch {
-    return { props: { data: null } };
-  }
-}
+// export const getServerSideProps = async (context) => {
+  // const { query } = context
+  // const token = cookies(context).burless || null
+  // const id = context.query.id || null
+  // const session = cookies(context).burless_session || null
+  // const page = query.page || 1
+  //
+  // try {
+  //   const response = await fetch(`http://localhost:8080/api/links?page=${page}`, {
+  //     credentials: 'include',
+  //     ...(context.req
+  //       ? {
+  //         headers: {
+  //           Cookie: context.req.headers.cookie
+  //         },
+  //       }
+  //       : {}),
+  //   });
+  //   let result = await response.json();
+  //   const resultData = {
+  //     data: result.data || null,
+  //     id,
+  //     session,
+  //     token,
+  //   };
+  //   return { props: resultData };
+  // } catch {
+  //   return { props: { data: null } };
+  // }
+// }
