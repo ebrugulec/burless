@@ -1,4 +1,4 @@
-import "../styles/Dashboard.scss"
+// import "../styles/Dashboard.scss"
 import Header from "../components/Layout/Header/Header";
 import React from "react";
 import Image from "next/image";
