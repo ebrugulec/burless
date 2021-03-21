@@ -25,10 +25,10 @@ export default function Home () {
   if (false){
     return (
       <Layout>
-        <div className="home-page">
-          <div className="example">Hello World!</div>
-          <LinkList linkData={data} />
-        </div>
+        {/*<div className="home-page">*/}
+        {/*  <div className="example">Hello World!</div>*/}
+        {/*  <LinkList linkData={data} />*/}
+        {/*</div>*/}
       </Layout>
     )
   } else {
