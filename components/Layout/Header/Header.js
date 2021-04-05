@@ -3,22 +3,21 @@ import Link from 'next/link'
 // import BurlessLogo from "../../../public/burless-logo.png";
 // import logo from "../../../public/logo.png";
 import Image from 'next/image'
-
-// import style from "./Header.module.scss";
+import "../../../styles/Header.scss"
 import React from 'react'
 
 function Header () {
   return (
     <div className="header">
       <Image src="/logo.svg"
-       width={77}
-       height={30}
+       width={80}
+       height={33}
       />
-      <Image
-        src="/hamburger.svg"
-       width={24}
-       height={24}
-      />
+      {/*<Image*/}
+      {/*  src="/hamburger.svg"*/}
+      {/* width={24}*/}
+      {/* height={24}*/}
+      {/*/>*/}
     </div>
   )
 }

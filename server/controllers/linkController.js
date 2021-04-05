@@ -93,33 +93,33 @@ class linkController {
       });
     }
     console.log('LINKS', getAllLinkResponse)
-    // if (token) {
-    //   const userId = await getUserIdFromToken(token);
-    //   const totalLinksForUser = await Link.countDocuments({session});
-    //   Link.find({"user": ObjectId(userId)})
-    //     .limit(perPage)
-    //     .skip(perPage * page)
-    //     .sort([['createdAt', -1]])
-    //     .exec(function(err, result) {
-    //       if (err) {
-    //         return res.json({ 'status': 422, 'error': error.toString() });
-    //       } else {
-    //         res.json(
-    //           {
-    //             status: 200,
-    //             data: {
-    //               message: "Fetched links",
-    //               links: result,
-    //               curPage: curPage,
-    //               maxPage: Math.ceil(totalLinksForUser / perPage),
-    //             }
-    //           });
-    //       }
-    //     })
-    // } else {
-    //   const session = req.sessionID;
-    //
-    // }
+    if (token) {
+      const userId = await getUserIdFromToken(token);
+      const totalLinksForUser = await Link.countDocuments({session});
+      Link.find({"user": ObjectId(userId)})
+        .limit(perPage)
+        .skip(perPage * page)
+        .sort([['createdAt', -1]])
+        .exec(function(err, result) {
+          if (err) {
+            return res.json({ 'status': 422, 'error': error.toString() });
+          } else {
+            res.json(
+              {
+                status: 200,
+                data: {
+                  message: "Fetched links",
+                  links: result,
+                  curPage: curPage,
+                  maxPage: Math.ceil(totalLinksForUser / perPage),
+                }
+              });
+          }
+        })
+    } else {
+      const session = req.sessionID;
+
+    }
   };
 
   static getAllLinksWithTokenOrSession (userId, sessionId, curPage){
