@@ -46,9 +46,7 @@ function LoginForm({
           </label>
         </div>
         <div className="form-group">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <input value="Send" type="submit" />
         </div>
       </form>
     </div>

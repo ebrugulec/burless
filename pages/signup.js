@@ -38,7 +38,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container">
+    <div className="form-wrapper">
       <FormWrapper onSignUpSubmit={onSignUpSubmit} validate={validate} initialValues={initialValues} isSignUp={true} />
       {errors && errors.map((error, i) => {
         return <div key={i}>{error.msg}</div>

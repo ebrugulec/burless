@@ -9,7 +9,7 @@ function RegisterForm({
   values
 }) {
   return (
-    <div>
+    <div className="register">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username-input">
@@ -63,9 +63,7 @@ function RegisterForm({
           </label>
         </div>
         <div className="form-group">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <input value="Send" type="submit" />
         </div>
       </form>
     </div>

@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
+    <div className="form-wrapper">
       <FormWrapper onLoginSubmit={onLoginSubmit} validate={validate} initialValues={initialValues} isSignUp={false} />
       {errors && errors.map((error, i) => {
         return <div key={i}>{error.msg}</div>
