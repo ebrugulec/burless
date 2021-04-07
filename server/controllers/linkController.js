@@ -33,18 +33,18 @@ class linkController {
     const userId = await getUserIdFromToken(burless_token);
 
     //TODO: Block with ip address
-    const current_user = userId || sessionId;
-    client.get(current_user, function(err, reply) {
-      if (!reply) {
-        if (current_user) {
-          client.setex(current_user, 3600, 1);
-        }
-      } else if (reply >= 3) {
-        return app.render(req, res, '/error');
-      } else {
-        client.incr(current_user);
-      }
-    });
+    // const current_user = userId || sessionId;
+    // client.get(current_user, function(err, reply) {
+    //   if (!reply) {
+    //     if (current_user) {
+    //       client.setex(current_user, 3600, 1);
+    //     }
+    //   } else if (reply >= 3) {
+    //     return app.render(req, res, '/error');
+    //   } else {
+    //     client.incr(current_user);
+    //   }
+    // });
 
     try {
       const linkCode = shortId.generate();
@@ -56,8 +56,9 @@ class linkController {
         user: userId ? userId : null,
         session: userId ? null : sessionId,
       });
-      await url.save();
-      return app.render(req, res, '/index', {id: '3532'});
+      const a = await url.save();
+      console.log('id: \'3532\'', a._id )
+      return app.render(req, res, '/index', {id: JSON.stringify(a._id)});
 
     } catch (err) {
       return res.status(500).json("Internal Server error " + err);

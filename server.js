@@ -123,13 +123,11 @@ app.prepare().then(() => {
     const reqUrl = req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {
-      res.status(301)
+      // res.status(301)
       await linkController.shortenLink(req, res, app, reqUrl)
     } else {
       return handle(req, res, next);
     }
-    return handle(req, res, next);
-
   })
 
   server.listen(PORT, (err) => {

@@ -4,7 +4,7 @@ import React from 'react'
 import Link from "next/link";
 
 const NavBar = (props) => (
-  <div>
+  <div className="nav-menu">
     {props.navButtons.map((button) => (
       <NavButton key={button.path} path={button.path} label={button.label} />
     ))}

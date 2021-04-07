@@ -4,6 +4,8 @@ import cookies from 'next-cookies'
 import {user} from "../context/reducers/user";
 import '../styles/reset.scss';
 import HeadComponent from "../components/Head";
+import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/app.scss'
 
 if (typeof process.versions === 'undefined') process.versions = {};
 const initialState = {

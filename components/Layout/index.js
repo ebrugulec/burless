@@ -21,13 +21,15 @@ const Layout = (props) => {
       <Head>
         <title>Burless</title>
       </Head>
-      <div className="row">
-        <div className={'col-3 ' + ''}>
-          {/*<Header appTitle={appTitle} />*/}
-          <NavBar navButtons={navButtons} />
-        </div>
-        <div className="col-9">
-          <div className="Content">{props.children}</div>
+      <div className="container-fluid layout">
+        <div className="row">
+          <div className="col-sm-2 nav-menu-wrapper">
+            <Header appTitle={appTitle} />
+            <NavBar navButtons={navButtons} />
+          </div>
+          <div className="col-sm-8">
+            <div className="Content">{props.children}</div>
+          </div>
         </div>
       </div>
     </div>
