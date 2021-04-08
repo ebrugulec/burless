@@ -1,0 +1,107 @@
+/** TO-DO, use filter to do drop shadow on triangle as this is better way  */
+
+:root {
+  --light-green: #43BA7F;
+  --dark-green: #0d7d46;
+  --light-grey: #F5F0E9;
+  --dark-grey: #E7DED2;
+  --lightest-grey: #faf9f8;
+}
+
+.envelope {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -200px;
+  border-radius: 2px;
+  //box-shadow: 4px 8px 16px 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  //background: var(--lightest-grey);
+}
+
+#e1 {
+  position: absolute;
+  height: 65px;
+  width: 100px;
+  background: linear-gradient(
+                  to bottom,
+                  var(--dark-green),
+                  var(--light-green) 40%
+  );
+  border-radius: 5px;
+  top: 45%;
+  left: 38%;
+  transform: rotate(-15deg);
+  z-index: 1;
+}
+
+#e1:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin-left: -3.1em;
+  bottom: -0.34em;
+  left: 50%;
+  border-radius: 3px 3px;
+  box-sizing: border-box;
+  border: 35px solid var(--light-green);
+  border-color: transparent transparent var(--light-green) var(--light-green);
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -9px 9px 9px 0 var(--dark-green);
+}
+
+#e2 {
+  position: absolute;
+  height: 55px;
+  width: 90px;
+  background: linear-gradient(
+                  to bottom,
+                  var(--light-grey),
+                  var(--dark-grey) 40%
+  );
+  border-radius: 5px;
+  top: 31%;
+  left: 48%;
+  transform: rotate(15deg);
+  z-index: 0;
+}
+
+#e2:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  margin-left: -2.6em;
+  bottom: -0.3em;
+  left: 50%;
+  border-radius: 3px 3px;
+  box-sizing: border-box;
+  border: 30px solid var(--light-grey);
+  border-color: transparent transparent var(--dark-grey) var(--dark-grey);
+  transform-origin: 0 0;
+  transform: rotate(-45deg);
+  box-shadow: -9px 9px 9px 0 #cfcdcb;
+}
+
+/* Microsoft uses Segoe UI font which is registered to them, I will use Open Sans a a close enough replacement */
+
+p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  user-select: none;
+  text-align: center;
+  padding: 250px 0;
+}
+
+p {
+  margin-top: 10px;
+  span {
+    font-weight: bold;
+  }
+}

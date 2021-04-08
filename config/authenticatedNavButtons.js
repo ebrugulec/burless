@@ -6,10 +6,6 @@ const authenticatedNavButtons = [
     path: '/',
   },
   {
-    label: 'Statistic',
-    path: '/statistic',
-  },
-  {
     label: 'Profile',
     path: '/profile',
   },
