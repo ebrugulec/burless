@@ -21,10 +21,16 @@ $purple-color-lighter: #d9c5e6;
   list-style: none;
   margin: 1rem 0 0 0;
   padding: 0.5rem 1rem;
-  border-radius: 3px;
   max-width: 100%;
   flex-wrap: wrap;
-  background: #ccc;
+  border-radius: 0.6rem;
+  background: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  justify-content: flex-end;
+
+  ul {
+    list-style-type: none;
+  }
   body.light & {
     background: #fafafa;
   }
@@ -37,9 +43,9 @@ $purple-color-lighter: #d9c5e6;
     &:focus {
       outline: 0;
     }
+    color: #2d4848;
     &:hover {
-      background: $purple-color;
-      background: $purple-color-lighter;
+      color: #009879;
     }
   }
   .paginate-li {
@@ -47,12 +53,21 @@ $purple-color-lighter: #d9c5e6;
   }
   .paginate-next-a,
   .paginate-prev-a {
-    color: $purple-color;
+    color: #009879;
     margin: 0 0.3rem;
   }
   .paginate-active {
-    border: 2px solid $purple-color-lighter;
-    background: $purple-color-lighter;
+    border: 2px solid #009879;
+    background: #009879;
+    border-radius: 5px;
+
+     a {
+       color: white;
+
+       &:hover {
+         color: white;
+       }
+     }
   }
   .paginate-disabled > a {
     cursor: not-allowed;
@@ -70,5 +85,56 @@ $purple-color-lighter: #d9c5e6;
 .link-list {
   .click {
     text-align: center;
+  }
+}
+
+.content-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  //font-weight: bold;
+
+  .link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.content-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+  //font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+.content-table > tbody > tr:hover {
+  color: #009879;
+  background-color: #f3f3f3;
+
+  a {
+    color: #009879;
   }
 }

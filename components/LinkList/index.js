@@ -69,7 +69,7 @@ const LinkList = ({ linkData, id }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
-      <table className="table table-bordered table-hover table-curved">
+      <table className="table content-table">
         <thead>
         <tr>
           <th scope="col">Clicks</th>
@@ -87,13 +87,13 @@ const LinkList = ({ linkData, id }) => {
               <th className="click">
                   {link.totalClickCount}
               </th>
-              <th className="link" key={i}>
-                <Link href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+              <th key={i}>
+                <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
                   <a>{link.shortLink}</a>
                 </Link>
               </th>
               <th>
-                <a>{link.longLink}</a>
+                <a className="link">{link.longLink}</a>
               </th>
               <th>
                 12.2.2222
@@ -121,8 +121,8 @@ const LinkList = ({ linkData, id }) => {
       <ReactPaginate
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        previousLabel={'<<'}
-        nextLabel={'>>'}
+        previousLabel={'<'}
+        nextLabel={'>'}
         breakLabel={'...'}
         initialPage={linkData.curPage - 1}
         pageCount={linkData.maxPage}
