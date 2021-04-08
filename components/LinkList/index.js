@@ -3,6 +3,10 @@ import ReactPaginate from 'react-paginate'
 import Router, { useRouter } from 'next/router'
 import Link from 'next/link'
 import '../../styles/LinkList.scss'
+import { faChartBar } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import windowSize from "../../lib/windowSize";
 
 const LinkList = ({ linkData, id }) => {
   const userListRef = useRef(null)
@@ -12,7 +16,10 @@ const LinkList = ({ linkData, id }) => {
   const [matchedIdStyle, setMatchedIdStyle] = useState(false);
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
+  const size = windowSize();
   const router = useRouter()
+
+  let isLargeScreen = size.width > 768;
   console.log('id', id)
 
   useEffect(() => {
@@ -69,13 +76,14 @@ const LinkList = ({ linkData, id }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
+      {size.width}px / {size.height}px
       <table className="table content-table">
         <thead>
         <tr>
-          <th scope="col">Clicks</th>
+          {isLargeScreen && <th scope="col">Clicks</th>}
           <th scope="col">Short Link</th>
-          <th scope="col">Long Link</th>
-          <th scope="col">Created Date</th>
+          {isLargeScreen && <th scope="col">Long Link</th>}
+          {isLargeScreen && <th scope="col">Created Date</th>}
           <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -84,22 +92,33 @@ const LinkList = ({ linkData, id }) => {
         links.map((link, i) => {
           return (
             <tr key={i} className={link._id === id ? 'table-success' : ''}>
-              <th className="click">
+              {isLargeScreen &&
+                <th className="click">
                   {link.totalClickCount}
-              </th>
+                </th>
+              }
               <th key={i}>
                 <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
                   <a>{link.shortLink}</a>
                 </Link>
               </th>
+              {isLargeScreen &&
+                <th>
+                  <div className="long-link">
+                    <a className="link">{link.longLink}</a>
+                  </div>
+                </th>
+              }
+              {isLargeScreen &&
+                <th>
+                  12.2.2222
+                </th>
+              }
               <th>
-                <a className="link">{link.longLink}</a>
-              </th>
-              <th>
-                12.2.2222
-              </th>
-              <th>
-                <a>{12/21/2222}</a>
+                <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                  <a><FontAwesomeIcon icon={faChartBar} /></a>
+                </Link>
+                <a><FontAwesomeIcon icon={faTrash} /></a>
               </th>
             </tr>
           )

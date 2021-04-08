@@ -88,6 +88,13 @@ $purple-color-lighter: #d9c5e6;
   }
 }
 
+.long-link {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 200px;
+}
+
 .content-table {
   border-collapse: collapse;
   margin: 25px 0;
@@ -131,10 +138,22 @@ $purple-color-lighter: #d9c5e6;
 }
 
 .content-table > tbody > tr:hover {
-  color: #009879;
+  //color: #009879;
   background-color: #f3f3f3;
+  //
+  //a {
+  //  color: #009879;
+  //}
+}
 
-  a {
-    color: #009879;
+@media (min-width: 574px) {
+  .long-link {
+    width: 300px;
+  }
+}
+
+@media (min-width: 768px) {
+  .long-link {
+    width: 400px;
   }
 }
