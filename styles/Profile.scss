@@ -1,0 +1,62 @@
+#text {
+  display: inline-block;
+  position: relative;
+}
+#text:before {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -18px;
+  left: 80%;
+  background-image: url(https://png.pngtree.com/svg/20170904/the_golden_crown_309708.png);
+  background-size: 100%;
+  content: "";
+}
+
+.profile {
+  .profile-card {
+    display: flex;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin: 30px;
+
+    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+
+    .img-div {
+      width: 200px;
+      background-image: url(https://i.pinimg.com/originals/12/4b/6e/124b6e8cc55f86fcda25364f948383e9.png);
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+    }
+
+    .content-div {
+      height: 200px;
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      background-color: whitesmoke;
+      border-bottom: 2px solid #FCC232;
+      padding-left: 10px;
+
+      .title {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .desc-div {
+        width: 90%;
+      }
+      .desc-text {
+        font-family: "IBM Plex Sans Condensed", sans-serif;
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: #494949;
+      }
+    }
+  }
+}

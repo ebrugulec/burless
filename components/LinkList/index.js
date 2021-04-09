@@ -20,7 +20,6 @@ const LinkList = ({ linkData, id }) => {
   const router = useRouter()
 
   let isLargeScreen = size.width > 768;
-  console.log('id', id)
 
   useEffect(() => {
     setFirstRender(false)
@@ -65,7 +64,6 @@ const LinkList = ({ linkData, id }) => {
     }
   }, []);
 
-  // console.log('ma', matchedIdStyle)
 
   return (
     <div className="link-list">
@@ -76,7 +74,6 @@ const LinkList = ({ linkData, id }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
-      {size.width}px / {size.height}px
       <table className="table content-table">
         <thead>
         <tr>
@@ -118,25 +115,13 @@ const LinkList = ({ linkData, id }) => {
                 <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
                   <a><FontAwesomeIcon icon={faChartBar} /></a>
                 </Link>
-                <a><FontAwesomeIcon icon={faTrash} /></a>
+                {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}
               </th>
             </tr>
           )
         })}
         </tbody>
       </table>
-      {/*<ul className="user-list" ref={userListRef}>*/}
-      {/*  {links && links.length > 0 &&*/}
-      {/*    links.map((link, i) => {*/}
-      {/*      return (*/}
-      {/*        <li className="user" key={i}>*/}
-      {/*          <Link href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
-      {/*            <a>{link.linkCode}</a>*/}
-      {/*          </Link>*/}
-      {/*        </li>*/}
-      {/*      )*/}
-      {/*    })}*/}
-      {/*</ul>*/}
       <ReactPaginate
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
@@ -155,14 +140,6 @@ const LinkList = ({ linkData, id }) => {
         previousLinkClassName={'paginate-prev-a'}
         breakLinkClassName={'paginate-break-a'}
       />
-      <style jsx>{`
-        .container {
-          background: #ccc;
-        }
-        p {
-          color: blue;
-        }
-      `}</style>
     </div>
   )
 }
