@@ -97,6 +97,7 @@
     padding: 20px 0 20px 0;
     font-family: 'DM Sans', sans-serif;
     line-height: 1.8em;
+    margin-top: 60px;
 
     .started-button {
       color: white;
@@ -197,7 +198,7 @@
           width: 17px;
           height: 25px;
           top: 6%;
-          left: 18%;
+          left: 22%;
         }
 
         .browser-text {
@@ -337,10 +338,6 @@
     text-align: center;
     margin-top: 25px;
   }
-}
-
-.bottom-section {
-
 }
 
 @media (min-width: 768px) {

@@ -9,7 +9,7 @@ export default function Dashboard ({ id }) {
     <div className="dashboard">
       <Header />
       <div className="welcoming-text">
-        The best way to create a short links from <br/> <span>the address bar</span> and much more.
+        The easiest way to shorten the link from<br/> <span>the address bar</span> and much more.
       </div>
       <div className="section browser-section">
         <div className="section-wrapper">
@@ -131,7 +131,7 @@ export default function Dashboard ({ id }) {
       <div className="section without-bg">
         <div className="section-content-wrapper">
           <div className="section-title">
-            Analytics
+            Statistics
           </div>
           <div className="section-content">
             Track each shortened link in real-time. Detailed analytics provides you information about clicks, page referrer, devices, browsers, systems, geolocation. Pretty cool. huh?
@@ -151,17 +151,17 @@ export default function Dashboard ({ id }) {
         <div className="section-image-wrapper">
           <div className="section-image">
             <Image
-              src="/works-everywhere.svg"
+              src="/login.svg"
               layout="fill"
             />
           </div>
         </div>
         <div className="section-content-wrapper">
           <div className="section-title">
-            Works Everywhere
+            Access anytime
           </div>
           <div className="section-content">
-            Switching between tabs and devices is no longer necessary. Compatible with smartphones, tablets and desktop.
+            You can save your links anonymously, but you must register to access these links later.
           </div>
         </div>
       </div>
@@ -169,10 +169,10 @@ export default function Dashboard ({ id }) {
       <div className="section without-bg">
         <div className="section-content-wrapper">
           <div className="section-title">
-            Stay at URL
+            Stay at link
           </div>
           <div className="section-content">
-            It's easy too if you want to shorten the link and stay on the same page. Just write burless.com/r before the url.
+            It's easy too if you want to shorten the link and stay on the same page. Just write burless.com/s before the url.
           </div>
         </div>
         <div className="section-image-wrapper">
@@ -185,9 +185,28 @@ export default function Dashboard ({ id }) {
         </div>
       </div>
 
+      <div className="section image-area-bg">
+        <div className="section-image-wrapper">
+          <div className="section-image">
+            <Image
+              src="/works-everywhere.svg"
+              layout="fill"
+            />
+          </div>
+        </div>
+        <div className="section-content-wrapper">
+          <div className="section-title">
+            Works every device
+          </div>
+          <div className="section-content">
+            Switching between tabs and devices is no longer necessary. Compatible with smartphones, tablets and desktop.
+          </div>
+        </div>
+      </div>
+
       <div className="bottom-section">
         <span className="section-title">
-          Stop use hard-to-use shoterner apps!
+          Start using burless
         </span>
         <span className="section-content">
           Add "burless.com/" to the beginning of the any links.
