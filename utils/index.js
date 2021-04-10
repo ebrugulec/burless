@@ -58,6 +58,16 @@ function parseIp (req) {
   || (req.connection && req.connection.socket && req.connection.socket.remoteAddress);
 }
 
+function getDatesBetweenDates (startDate, endDate) {
+  let dates = []
+  const theDate = new Date(startDate)
+  while (theDate <= endDate) {
+    dates = [...dates, new Date(theDate)]
+    theDate.setDate(theDate.getDate() + 1)
+  }
+  return dates
+}
+
 module.exports = {
   checkLinkId,
   nameValidation,
@@ -65,4 +75,5 @@ module.exports = {
   passwordValidation,
   redirectLogin,
   parseIp,
+  getDatesBetweenDates
 };

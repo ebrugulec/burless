@@ -217,8 +217,8 @@ class linkController {
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
       const geo = geoip.lookup(parseIp(req));
-      const country = geo && geo['country'] || 'a country in the universe';
-      const city = geo && geo['city'] || 'a country in the city';
+      const country = geo && geo['country'] || 'A country in the universe';
+      const city = geo && geo['city'] || 'A city in the universe';
       const referrer = req.get('Referrer');
       let totalClickCount = link.totalClickCount;
       totalClickCount++;
@@ -230,7 +230,6 @@ class linkController {
         country,
         city,
       });
-      console.log('cl', click)
       await click.save();
       await link.update({totalClickCount});
     }
@@ -362,33 +361,27 @@ class linkController {
         });
       }});
   };
-
+//TODO: tarihleri asc mi desc mi getiriyor
   static getLinkClickCount = async (linkCode) => {
-    // let date = new Date();
-    // date.setDate(date.getDate()-1);
+    let date = new Date();
+    date.setDate(date.getDate()-50);
     //TODO: Get last 1 month data
     return Click.aggregate(
       [
         {
           $match: {
             "linkCode": linkCode,
-            // "createdAt": {'$gte': date}
+            "createdAt": {'$gte': date}
           },
         },
-        {$group: {
-            _id: {
-              year: {$year: "$createdAt"},
-              month: {$month: "$createdAt"},
-              day: {$dayOfMonth: "$createdAt"}
-            },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
             count: {$sum: 1}
-          }},
-        {$project: {
-            date: "$_id",
-            count: 1,
-            _id: 0
-          }},
-        {$sort: {"date": 1} },
+          }
+      },
+        {$sort: {"_id": -1} },
+        // { "$limit": 3 },
       ]).exec()
       .then((clickInfo) => {
         return clickInfo;
@@ -406,17 +399,17 @@ class linkController {
     //TODO: Get Platform and browser
     //TODO: GEt link total click, created date info
 
-    const referrers = await this.getReferrer(id);
-    const countries = await this.getCountry(id);
-    const cities = await this.getCity(id);
+    // const referrers = await this.getReferrer(id);
+    // const countries = await this.getCountry(id);
+    // const cities = await this.getCity(id);
     const groupedClickInfo = await this.getLinkClickCount(id);
 
     return res.json({
       status: 200,
       data: {
-        referrers,
-        countries,
-        cities,
+        // referrers,
+        // countries,
+        // cities,
         clickInfo: groupedClickInfo
       }
     });
