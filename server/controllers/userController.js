@@ -135,8 +135,6 @@ class userController {
 
   static getUser = async (req, res) => {
     const burless_token = req.cookies.burless;
-    console.log('getUser', req.headers)
-
 
     const userId = await getUserIdFromToken(burless_token);
     try {

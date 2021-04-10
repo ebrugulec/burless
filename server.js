@@ -86,7 +86,8 @@ app.prepare().then(() => {
   });
 
   server.get('/statistic/:id', (req, res) => {
-    return app.render(req, res, '/statistic')
+    const params = route('/statistic/:id')(parse(req.url).pathname);
+    return app.render(req, res, '/statistic', params);
   });
 
   server.get('/contact', (req, res) => {

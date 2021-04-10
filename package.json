@@ -29,6 +29,7 @@
     "express": "^4.17.1",
     "express-ip": "^1.0.4",
     "express-session": "^1.17.1",
+    "express-useragent": "^1.0.15",
     "express-validator": "^6.9.0",
     "geoip-lite": "^1.4.2",
     "iplocate": "^1.0.7",
@@ -39,7 +40,6 @@
     "next-cookies": "^2.0.3",
     "next-images": "^1.7.0",
     "next-routes": "^1.4.2",
-    "node-fetch": "^2.6.1",
     "node-sass": "^5.0.0",
     "path": "^0.12.7",
     "path-match": "^1.2.4",
@@ -52,6 +52,7 @@
     "sass": "^1.32.8",
     "shortid": "^2.2.16",
     "tailwindcss": "^2.0.3",
+    "ua-parser-js": "^0.7.27",
     "urlencoded-body-parser": "^3.0.0",
     "valid-url": "^1.0.9"
   },

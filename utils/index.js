@@ -1,6 +1,5 @@
 const checkLinkId = (id) => {
   let numberAndStringR = /^[a-zA-Z0-9_.-]*$/;
-  console.log('id.match(numberAndStringR)', numberAndStringR.test(id))
   return numberAndStringR.test(id);
 }
 

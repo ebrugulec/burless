@@ -3,6 +3,7 @@ const validUrl = require('valid-url');
 const Link = require('../models/Link');
 const TotalClick = require('../models/TotalClick');
 // const Click = require('../models/click');
+var UAParser = require('ua-parser-js');
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
@@ -19,7 +20,7 @@ const client = redis.createClient(REDIS_PORT);
 const {parseIp} = require("../../utils");
 const checkUrl = require('../../utils/checkUrl');
 const {checkLinkId} = require("../../utils");
-
+const useragent = require('express-useragent')
 //TODO: butun error lari ayni formatta duzenle
 client.on("error", (err) => {
   console.log(err);
@@ -142,6 +143,7 @@ class linkController {
           session: userId ? null : sessionId,
         });
         const savedUrl = await url.save();
+
         const newLink = {
           _id: savedUrl._id,
           createdAt: savedUrl.createdAt,
@@ -215,27 +217,31 @@ class linkController {
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
       const geo = geoip.lookup(parseIp(req));
-      const country = geo && geo['country'];
+      const country = geo && geo['country'] || 'a country in the universe';
+      const city = geo && geo['city'] || 'a country in the city';
       const referrer = req.get('Referrer');
       let totalClickCount = link.totalClickCount;
       totalClickCount++;
 
       let click = new Click({
         _link: link._id,
-        referrer: referrer,
-        country: country,
+        linkCode: linkCode,
+        referrer,
+        country,
+        city,
       });
+      console.log('cl', click)
       await click.save();
       await link.update({totalClickCount});
     }
   };
 
-  static getCountry  = async (urlId) => {
+  static getCountry  = async (linkCode) => {
     return Click.aggregate(
       [
         {
           $match: {
-            "_link": ObjectId(urlId),
+            "linkCode": linkCode,
           },
         },
         {$group: {
@@ -255,12 +261,38 @@ class linkController {
       });
   };
 
-  static getReferrer  = async (urlId) => {
+  static getCity  = async (linkCode) => {
     return Click.aggregate(
       [
         {
           $match: {
-            "_link": ObjectId(urlId),
+            "linkCode": linkCode,
+          },
+        },
+        {$group: {
+            _id: {
+              country: "$city",
+            },
+            count: {$sum: 1}
+          }},
+        {$sort: {"count": -1} },
+        { "$limit": 10 },
+      ]).exec()
+      .then(($cities) => {
+        return $cities;
+      })
+      .catch((err) => {
+        return {error: err};
+      });
+  };
+
+  static getReferrer  = async (linkCode) => {
+    console.log('getReferrer', linkCode)
+    return Click.aggregate(
+      [
+        {
+          $match: {
+            "linkCode": linkCode,
             "referrer": {
               "$exists": true,
               "$ne": null
@@ -300,7 +332,6 @@ class linkController {
   };
 
   static getLinkTotalInfo = async (req, res) => {
-    console.log('getLinkTotalInfo', req.cookies)
     //User'in bilgileri ile total info'u gormeli.
     const userId = 1;
 
@@ -318,7 +349,6 @@ class linkController {
       }
     ]).exec(function(err, result){
       if (err) {
-        console.log('Error Fetching model');
         console.log(err);
       } else {
         const findQuery = Link.find({"user": ObjectId("5fe9088de4828d65f0afa941")}).sort({totalClickCount : -1}).limit(1);
@@ -333,7 +363,7 @@ class linkController {
       }});
   };
 
-  static getLinkClickCount = async (urlId) => {
+  static getLinkClickCount = async (linkCode) => {
     // let date = new Date();
     // date.setDate(date.getDate()-1);
     //TODO: Get last 1 month data
@@ -341,7 +371,7 @@ class linkController {
       [
         {
           $match: {
-            "_link": ObjectId(urlId),
+            "linkCode": linkCode,
             // "createdAt": {'$gte': date}
           },
         },
@@ -369,18 +399,27 @@ class linkController {
   };
 
   static getLinkStatistic = async (req, res) => {
-    const { urlId } = req.params;
+    console.log('getLinkStatistic')
+    const { id } = req.params;
     const sessionId = req.sessionID;
     const token = req.cookies.burless;
     //TODO: Get Platform and browser
     //TODO: GEt link total click, created date info
 
-    const referrers = await this.getReferrer(urlId);
-    const countries = await this.getCountry(urlId);
-    const groupedClickInfo = await this.getLinkClickCount(urlId);
-    console.log('referrers', referrers)
-    console.log('countries', countries)
-    console.log('getGroupedClickInfo', groupedClickInfo)
+    const referrers = await this.getReferrer(id);
+    const countries = await this.getCountry(id);
+    const cities = await this.getCity(id);
+    const groupedClickInfo = await this.getLinkClickCount(id);
+
+    return res.json({
+      status: 200,
+      data: {
+        referrers,
+        countries,
+        cities,
+        clickInfo: groupedClickInfo
+      }
+    });
   }
 }
 

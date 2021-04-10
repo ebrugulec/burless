@@ -10,6 +10,10 @@ const ClickSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Link',
   },
+  linkCode: {
+    type: String,
+    required: true,
+  },
   referrer: {
     type: String,
     default: 'Direct',
@@ -17,6 +21,9 @@ const ClickSchema = new Schema({
   country: {
     type: String,
   },
-})
+  city: {
+    type: String,
+  },
+});
 
 module.exports = mongoose.model('Click', ClickSchema)
