@@ -1,7 +1,7 @@
 const checkLinkId = (id) => {
-  let numberAndStringR = "^(?![A-Za-z]+$)[0-9A-Za-z]+$";
-  let stringR = "^[a-zA-Z]+$";
-  return id.match(numberAndStringR) || id.match(stringR)
+  let numberAndStringR = /^[a-zA-Z0-9_.-]*$/;
+  console.log('id.match(numberAndStringR)', numberAndStringR.test(id))
+  return numberAndStringR.test(id);
 }
 
 const nameValidation = (fieldName, fieldValue) => {
@@ -51,10 +51,19 @@ function redirectLogin() {
   };
 }
 
+function parseIp (req) {
+  return (typeof req.headers['x-forwarded-for'] === 'string'
+    && req.headers['x-forwarded-for'].split(',').shift())
+  || (req.connection && req.connection.remoteAddress)
+  || (req.socket && req.socket.remoteAddress)
+  || (req.connection && req.connection.socket && req.connection.socket.remoteAddress);
+}
+
 module.exports = {
   checkLinkId,
   nameValidation,
   emailValidation,
   passwordValidation,
-  redirectLogin
-}
+  redirectLogin,
+  parseIp,
+};

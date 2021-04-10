@@ -7,6 +7,7 @@ import { faChartBar } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import windowSize from "../../lib/windowSize";
+import NewLink from "../NewLink";
 
 const LinkList = ({ linkData, id }) => {
   const userListRef = useRef(null)
@@ -14,6 +15,7 @@ const LinkList = ({ linkData, id }) => {
   const [loading, setLoading] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [matchedIdStyle, setMatchedIdStyle] = useState(false);
+  const [newLinkId, setNewLinkId] = useState(null)
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
   const size = windowSize();
@@ -64,6 +66,15 @@ const LinkList = ({ linkData, id }) => {
     }
   }, []);
 
+  const addedNewLink = (responseData) => {
+    setNewLinkId(responseData.data.link._id)
+    setLinks([responseData.data.link, ...links])
+  };
+
+  function returnNewAddedLinkStyle (linkId) {
+    return linkId === newLinkId ? 'table-success'
+      : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
+  }
 
   return (
     <div className="link-list">
@@ -88,7 +99,7 @@ const LinkList = ({ linkData, id }) => {
         {links && links.length > 0 &&
         links.map((link, i) => {
           return (
-            <tr key={i} className={link._id === id ? 'table-success' : ''}>
+            <tr key={i} className={returnNewAddedLinkStyle(link._id)}>
               {isLargeScreen &&
                 <th className="click">
                   {link.totalClickCount}
@@ -140,6 +151,7 @@ const LinkList = ({ linkData, id }) => {
         previousLinkClassName={'paginate-prev-a'}
         breakLinkClassName={'paginate-break-a'}
       />
+      <NewLink addedNewLink={addedNewLink}/>
     </div>
   )
 }

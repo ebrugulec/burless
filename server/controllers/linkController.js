@@ -16,7 +16,11 @@ dotenv.config();
 const getUserIdFromToken = require('../../utils/getUserIdFromToken');
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const client = redis.createClient(REDIS_PORT);
+const {parseIp} = require("../../utils");
+const checkUrl = require('../../utils/checkUrl');
+const {checkLinkId} = require("../../utils");
 
+//TODO: butun error lari ayni formatta duzenle
 client.on("error", (err) => {
   console.log(err);
 });
@@ -29,20 +33,19 @@ class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
     const burless_token = req.cookies.burless;
     const sessionId = req.sessionID;
-
     const userId = await getUserIdFromToken(burless_token);
 
-    //TODO: Block with ip address
-    // const current_user = userId || sessionId;
-    // client.get(current_user, function(err, reply) {
+    // // Block with ip address
+    // const requestIpAddress = JSON.stringify(parseIp(req));
+    // client.get(requestIpAddress, function(err, reply) {
     //   if (!reply) {
-    //     if (current_user) {
-    //       client.setex(current_user, 3600, 1);
+    //     if (requestIpAddress) {
+    //       client.setex(requestIpAddress, 3600, 1);
     //     }
-    //   } else if (reply >= 3) {
+    //   } else if (reply >= 300) {
     //     return app.render(req, res, '/error');
     //   } else {
-    //     client.incr(current_user);
+    //     client.incr(requestIpAddress);
     //   }
     // });
 
@@ -56,10 +59,8 @@ class linkController {
         user: userId ? userId : null,
         session: userId ? null : sessionId,
       });
-      const a = await url.save();
-      console.log('id: \'3532\'', a._id )
-      return app.render(req, res, '/index', {id: JSON.stringify(a._id)});
-
+      const savedUrl = await url.save();
+      return app.render(req, res, '/index', {id: JSON.stringify(savedUrl._id)});
     } catch (err) {
       return res.status(500).json("Internal Server error " + err);
     }
@@ -67,21 +68,27 @@ class linkController {
 
   static getAllLink = async (req, res) => {
     const token = req.cookies.burless;
-    console.log('getAllLink', req.cookies)
     const sessionId = req.sessionID;
 
-    // if (!!token && !!session) {
-    //   //TODO: handle here
-    //   return true
-    // }
+    if (!token && !sessionId) {
+     return res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. There was an error. Please try again later."}
+        ]
+      });
+    }
 
     const curPage = req.query.page || 1;
     const userId = token && await getUserIdFromToken(token);
     const totalLinksCount = await Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId});
     const getAllLinkResponse = await this.getAllLinksWithTokenOrSession(userId, sessionId, curPage);
-    console.log('totalLinksCount', totalLinksCount)
+
     if (!!getAllLinkResponse.error) {
-      console.log('err', getAllLinkResponse.error)
+      res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. There was an error. Please try again later."}
+        ]
+      });
     } else {
       res.json({
         status: 200,
@@ -93,34 +100,71 @@ class linkController {
         }
       });
     }
-    console.log('LINKS', getAllLinkResponse)
-    // if (token) {
-    //   const userId = await getUserIdFromToken(token);
-    //   const totalLinksForUser = await Link.countDocuments({session: sessionId});
-    //   Link.find({"user": ObjectId(userId)})
-    //     .limit(perPage)
-    //     .skip(perPage * page)
-    //     .sort([['createdAt', -1]])
-    //     .exec(function(err, result) {
-    //       if (err) {
-    //         return res.json({ 'status': 422, 'error': error.toString() });
-    //       } else {
-    //         res.json(
-    //           {
-    //             status: 200,
-    //             data: {
-    //               message: "Fetched links",
-    //               links: result,
-    //               curPage: curPage,
-    //               maxPage: Math.ceil(totalLinksForUser / perPage),
-    //             }
-    //           });
-    //       }
-    //     })
-    // } else {
-    //   const session = req.sessionID;
-    //
-    // }
+  };
+
+  static createNewLinkWithCustomName = async (req, res) => {
+    const burless_token = req.cookies.burless;
+    const sessionId = req.sessionID;
+    const userId = await getUserIdFromToken(burless_token);
+    const {link, linkCode} = req.body;
+
+    if (!checkUrl(link)) {
+      return res.status(400).send({
+        errors: [
+          {msg: "Url could not be shortened. Check url."}
+        ]
+      });
+    } else if (!checkLinkId(linkCode)) {
+      return res.status(400).send({
+        errors: [
+          {msg: "Url could not be shortened. Check custom name."}
+        ]
+      });
+    }
+
+    const generatedLink = await Link.findOne({ linkCode });
+
+    if (generatedLink) {
+      return res.status(409).send({
+        errors: [
+          {msg: "That custom hash is already in use"}
+        ]
+      });
+    } else {
+      try {
+        const newLinkCode = linkCode ? linkCode : shortId.generate();
+        const shortLink = `${BASE_URL}/${newLinkCode}`;
+        let url = new Link({
+          longLink: link,
+          shortLink,
+          linkCode: newLinkCode,
+          user: userId ? userId : null,
+          session: userId ? null : sessionId,
+        });
+        const savedUrl = await url.save();
+        const newLink = {
+          _id: savedUrl._id,
+          createdAt: savedUrl.createdAt,
+          linkCode: savedUrl.linkCode,
+          longLink: savedUrl.longLink,
+          shortLink: savedUrl.shortLink,
+          totalClickCount: savedUrl.totalClickCount
+        };
+        return res.json({
+          status: 200,
+          data: {
+            message: "Url shortened",
+            link: newLink,
+          }
+        });
+      } catch (err) {
+        return res.status(500).send({
+          errors: [
+            {msg: "Internal Server error "}
+          ]
+        });
+      }
+    }
   };
 
   static getAllLinksWithTokenOrSession (userId, sessionId, curPage){
@@ -144,7 +188,6 @@ class linkController {
   }
 
   static getLink = (req, res, app) => {
-    console.log('getLink')
     const { id } = req.params;
     try {
       client.get(id, async (err, link) => {
@@ -156,33 +199,21 @@ class linkController {
           const link = await Link.findOne({ 'linkCode': id });
           if (link) {
             client.setex(id, 600, JSON.stringify(link.longLink));
-            console.log(' db redis');
             this.saveLinkAndStatisticInfo(req, id)
             res.redirect(link.longLink);
           } else {
             return app.render(req, res, '/error')
           }
-          //TODO: Handle Url doesn't exists.
         }
-
       });
     } catch (err) {
-      //HandleCatch
-      return res.status(500).json("Internal error.");
+      return app.render(req, res, '/error');
     }
   };
 
   static saveLinkAndStatisticInfo = async (req, linkCode) => {
-    console.log('saveLinkAndStatisticInfo');
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
-      const parseIp = (req) =>
-        (typeof req.headers['x-forwarded-for'] === 'string'
-          && req.headers['x-forwarded-for'].split(',').shift())
-        || (req.connection && req.connection.remoteAddress)
-        || (req.socket && req.socket.remoteAddress)
-        || (req.connection && req.connection.socket && req.connection.socket.remoteAddress);
-
       const geo = geoip.lookup(parseIp(req));
       const country = geo && geo['country'];
       const referrer = req.get('Referrer');
