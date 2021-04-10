@@ -20,7 +20,9 @@ const client = redis.createClient(REDIS_PORT);
 const {parseIp} = require("../../utils");
 const checkUrl = require('../../utils/checkUrl');
 const {checkLinkId} = require("../../utils");
-const useragent = require('express-useragent')
+const useragent = require('express-useragent');
+const {getDatesBetweenDates, handleDaysForStatistic} = require("../../utils");
+
 //TODO: butun error lari ayni formatta duzenle
 client.on("error", (err) => {
   console.log(err);
@@ -364,7 +366,7 @@ class linkController {
 //TODO: tarihleri asc mi desc mi getiriyor
   static getLinkClickCount = async (linkCode) => {
     let date = new Date();
-    date.setDate(date.getDate()-50);
+    date.setDate(date.getDate()-15);
     //TODO: Get last 1 month data
     return Click.aggregate(
       [
@@ -376,15 +378,22 @@ class linkController {
         },
         {
           $group: {
-            _id: { $dateToString: { format: "%d-%m-%Y", date: "$createdAt" } },
+            _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
             count: {$sum: 1}
           }
       },
-        {$sort: {"_id": -1} },
+        {$sort: {"_id": 1} },
+        {
+          $project: {
+            _id: 0,
+            date: "$_id",
+            count: '$count',
+          }
+        }
         // { "$limit": 3 },
       ]).exec()
       .then((clickInfo) => {
-        return clickInfo;
+        return handleDaysForStatistic(clickInfo);
       })
       .catch((err) => {
         return {error: err};
@@ -392,24 +401,23 @@ class linkController {
   };
 
   static getLinkStatistic = async (req, res) => {
-    console.log('getLinkStatistic')
     const { id } = req.params;
     const sessionId = req.sessionID;
     const token = req.cookies.burless;
     //TODO: Get Platform and browser
     //TODO: GEt link total click, created date info
 
-    // const referrers = await this.getReferrer(id);
-    // const countries = await this.getCountry(id);
-    // const cities = await this.getCity(id);
+    const referrers = await this.getReferrer(id);
+    const countries = await this.getCountry(id);
+    const cities = await this.getCity(id);
     const groupedClickInfo = await this.getLinkClickCount(id);
 
     return res.json({
       status: 200,
       data: {
-        // referrers,
-        // countries,
-        // cities,
+        referrers,
+        countries,
+        cities,
         clickInfo: groupedClickInfo
       }
     });

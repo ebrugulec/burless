@@ -62,10 +62,35 @@ function getDatesBetweenDates (startDate, endDate) {
   let dates = []
   const theDate = new Date(startDate)
   while (theDate <= endDate) {
-    dates = [...dates, new Date(theDate)]
+    let newDate = {
+      date:new Date(theDate).toJSON().slice(0,10),
+      count: 0,
+    };
+    dates = [...dates, newDate]
     theDate.setDate(theDate.getDate() + 1)
   }
   return dates
+}
+
+function handleDaysForStatistic (clickInfoArray) {
+  const today = new Date()
+  const fifteenDaysFromNow = new Date(today)
+  fifteenDaysFromNow.setDate( fifteenDaysFromNow.getDate() - 15);
+
+  const days = getDatesBetweenDates(fifteenDaysFromNow, today)
+
+  let concatDays = [...days, ...clickInfoArray]
+  let result = [];
+  concatDays.reduce(function(res, value) {
+    if (!res[value.date]) {
+      res[value.date] = { date: value.date, count: 0 };
+      result.push(res[value.date])
+    }
+    res[value.date].count += value.count;
+    return res;
+  }, {});
+
+  return result;
 }
 
 module.exports = {
@@ -75,5 +100,6 @@ module.exports = {
   passwordValidation,
   redirectLogin,
   parseIp,
-  getDatesBetweenDates
+  getDatesBetweenDates,
+  handleDaysForStatistic
 };
