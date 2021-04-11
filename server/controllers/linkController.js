@@ -21,7 +21,7 @@ const {parseIp} = require("../../utils");
 const checkUrl = require('../../utils/checkUrl');
 const {checkLinkId} = require("../../utils");
 const useragent = require('express-useragent');
-const {getDatesBetweenDates, handleDaysForStatistic} = require("../../utils");
+const {getDatesBetweenDates, handleDaysForStatistic, handleMonthsForStatistic} = require("../../utils");
 
 //TODO: butun error lari ayni formatta duzenle
 client.on("error", (err) => {
@@ -363,11 +363,10 @@ class linkController {
         });
       }});
   };
-//TODO: tarihleri asc mi desc mi getiriyor
+
   static getLinkClickCount = async (linkCode) => {
     let date = new Date();
     date.setDate(date.getDate()-15);
-    //TODO: Get last 1 month data
     return Click.aggregate(
       [
         {
@@ -390,7 +389,6 @@ class linkController {
             count: '$count',
           }
         }
-        // { "$limit": 3 },
       ]).exec()
       .then((clickInfo) => {
         return handleDaysForStatistic(clickInfo);
@@ -402,8 +400,6 @@ class linkController {
 
   static getLinkStatistic = async (req, res) => {
     const { id } = req.params;
-    const sessionId = req.sessionID;
-    const token = req.cookies.burless;
     //TODO: Get Platform and browser
     //TODO: GEt link total click, created date info
 
@@ -418,9 +414,45 @@ class linkController {
         referrers,
         countries,
         cities,
-        clickInfo: groupedClickInfo
+        clickInfo: groupedClickInfo,
       }
     });
+  };
+
+  static getMonthlyStatistic = async (linkCode) => {
+    // let date = new Date();
+    // date.setDate(date.getDate()-95);
+    //TODO: Get last 1 month data
+    return Click.aggregate(
+      [
+        {
+          $match: {
+            "linkCode": linkCode,
+            // "createdAt": {'$gte': date}
+          },
+        },
+        { "$group": {
+            "_id": {
+              "month": { "$substr": [ "$createdAt", 0, 7 ] }
+            },
+            "count": { "$sum": 1 }
+          }
+        },
+        {$sort: {"_id": 1} },
+        {
+          $project: {
+            _id: 0,
+            date: "$_id.month",
+            count: '$count',
+          }
+        }
+      ]).exec()
+      .then((clickInfo) => {
+        return handleMonthsForStatistic(clickInfo);
+      })
+      .catch((err) => {
+        return {error: err};
+      });
   }
 }
 

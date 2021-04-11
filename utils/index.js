@@ -72,14 +72,8 @@ function getDatesBetweenDates (startDate, endDate) {
   return dates
 }
 
-function handleDaysForStatistic (clickInfoArray) {
-  const today = new Date()
-  const fifteenDaysFromNow = new Date(today)
-  fifteenDaysFromNow.setDate( fifteenDaysFromNow.getDate() - 15);
-
-  const days = getDatesBetweenDates(fifteenDaysFromNow, today)
-
-  let concatDays = [...days, ...clickInfoArray]
+function concatAndSumTwoArray(arrayData, clickInfoArray) {
+  let concatDays = [...arrayData, ...clickInfoArray];
   let result = [];
   concatDays.reduce(function(res, value) {
     if (!res[value.date]) {
@@ -89,8 +83,54 @@ function handleDaysForStatistic (clickInfoArray) {
     res[value.date].count += value.count;
     return res;
   }, {});
+  return result
+}
+const monthsObj = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
 
-  return result;
+function handleDaysForStatistic (clickInfoArray) {
+  const today = new Date()
+  const fifteenDaysFromNow = new Date(today)
+  fifteenDaysFromNow.setDate( fifteenDaysFromNow.getDate() - 15);
+  const days = getDatesBetweenDates(fifteenDaysFromNow, today)
+
+  let concatDays = concatAndSumTwoArray(days, clickInfoArray);
+
+  concatDays.map((day, i) => {
+    let splitMonth = day.date.split('-')[1]
+    let changeMonthNumberWithName = concatDays[i].date.replace(splitMonth, monthsObj[splitMonth])
+    concatDays[i].date = reverse(changeMonthNumberWithName);
+  });
+
+  return concatDays
+}
+
+String.prototype.replaceAt = function(index, replacement) {
+  return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+};
+
+function reverse(s){
+  return s.split("-").reverse().join("-");
+}
+
+function handleMonthsForStatistic (clickInfoArray) {
+  const monthDate = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  let d = new Date();
+  d.setDate(1);
+  let months = [];
+  //TODO: Change map
+  for (let i=0; i<=11; i++) {
+    const newDate = `${d.getFullYear()}-${monthDate[d.getMonth()]}`;
+    months.push({date: newDate, count: 0});
+    d.setMonth(d.getMonth() - 1);
+  }
+  let concatArray = concatAndSumTwoArray(months, clickInfoArray);
+
+  for (let j=0; j<=11; j++) {
+    let splitMonth = concatArray[j].date.split('-')[1];
+    concatArray[j].date = reverse(concatArray[j].date.replaceAt(5, monthsObj[splitMonth]))
+  }
+
+  return concatArray;
 }
 
 module.exports = {
@@ -101,5 +141,6 @@ module.exports = {
   redirectLogin,
   parseIp,
   getDatesBetweenDates,
-  handleDaysForStatistic
+  handleDaysForStatistic,
+  handleMonthsForStatistic
 };
