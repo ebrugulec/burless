@@ -11,13 +11,14 @@ router.get('/users/me', UserController.getUser)
 router.delete('/links/:urlId', LinkController.deleteUrl)
 router.get('/links', LinkController.getAllLink)
 router.post('/links', LinkController.createNewLinkWithCustomName)
-router.get('/links/search', LinkController.search);
 
-router.get('/links/report', LinkController.report);
 
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry)
 router.get('/links/referrer/:id', LinkController.getReferrer)
+router.get('/links/search', LinkController.search);
+
+router.get('/links/report', LinkController.report);
 // router.get('/links/statistic/:id', LinkController.getLinkClickCount)
 router.get('/links/statistic/:id', LinkController.getLinkStatistic)
 

@@ -3,7 +3,6 @@ import React from 'react'
 import cookies from "next-cookies";
 
 function Report (props) {
-  console.log('props', props);
   return (
     <Layout>
       <div className="report">

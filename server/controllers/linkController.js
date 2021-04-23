@@ -36,7 +36,6 @@ const usersProjection = {
   __v: false,
   session: false,
   user: false,
-  createdAt: false
 };
 
 //TODO: Move mongoose query to service.
@@ -405,6 +404,14 @@ class linkController {
     //TODO: Get Platform and browser
     //TODO: GEt link total click, created date info
 
+    // const link = Link.find(
+    //   {
+    //     "linkCode": id,
+    //     // user: `${ObjectId(userId)}`
+    //   },
+    //   usersProjection
+    // );
+    const link = await Link.findOne({ 'linkCode': id }, usersProjection);
     const referrers = await this.getReferrer(id);
     const countries = await this.getCountry(id);
     const cities = await this.getCity(id);
@@ -413,6 +420,7 @@ class linkController {
     return res.json({
       status: 200,
       data: {
+        link,
         referrers,
         countries,
         cities,

@@ -1,15 +1,81 @@
 import Layout from '../components/Layout'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {requirePageAuth} from "../lib/auth";
 import cookies from "next-cookies";
 import {redirectLogin} from "../utils";
 import {Line} from 'react-chartjs-2';
 
-const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+const options = {
+  responsive: true,
+  // tooltips: {
+  //   mode: 'index',
+  //   intersect: true
+  // },
+  // annotation: {
+  //   annotations: [{
+  //     type: 'line',
+  //     mode: 'horizontal',
+  //     scaleID: 'y-axis-0',
+  //     value: 5,
+  //     borderColor: 'rgb(75, 192, 192)',
+  //     borderWidth: 4,
+  //     label: {
+  //       enabled: false,
+  //       content: 'Test label'
+  //     }
+  //   }]
+  // },
+  scales: {
+    yAxes: [{
+      ticks: {
+        precision: 0,
+        beginAtZero: true,
+      },
+      // gridLines: {
+      //   display: false
+      // },
+    }],
+    xAxes: [{
+      ticks: {
+        precision: 0,
+        beginAtZero: true,
+      },
+      gridLines: {
+        display: false
+      },
+    }]
+  },
+  // options: {
+  //   responsive: true,
+  //   title: {
+  //     display: true,
+  //     text: 'Chart.js Drsw Line on Chart'
+  //   },
+  //   tooltips: {
+  //     mode: 'index',
+  //     intersect: true
+  //   },
+  //   annotation: {
+  //     annotations: [{
+  //       type: 'line',
+  //       mode: 'horizontal',
+  //       scaleID: 'y-axis-0',
+  //       value: 5,
+  //       borderColor: 'rgb(75, 192, 192)',
+  //       borderWidth: 4,
+  //       label: {
+  //         enabled: false,
+  //         content: 'Test label'
+  //       }
+  //     }]
+  //   }
+  // }
+}
+const graphData = {
+  labels: [],
   datasets: [
     {
-      label: 'My First dataset',
+      // label: 'My First dataset',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -19,30 +85,50 @@ const data = {
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
       pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: '#fff',
-      pointBorderWidth: 1,
-      pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
-      pointHoverBorderWidth: 2,
-      pointRadius: 1,
-      pointHitRadius: 10,
-      data: [2, 3, 4, 5, 6, 55, 40]
+      // pointBackgroundColor: 'pink',
+      // pointBorderWidth: 1,
+      // pointHoverRadius: 5,
+      // pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      // pointHoverBorderColor: 'rgba(220,220,220,1)',
+      // pointHoverBorderWidth: 2,
+      // pointRadius: 1,
+      // pointHitRadius: 10,
+      data: []
     }
   ]
 };
 
-export default function Statistic () {
-  return <Layout>
-    <div>
-      {/*<h2>Line Example</h2>*/}
-      {/*<Line*/}
-      {/*  data={data}*/}
-      {/*  width={400}*/}
-      {/*  height={400}*/}
-      {/*/>*/}
-    </div>
-  </Layout>
+export default function Statistic (props) {
+
+  const [statisticData, setStatisticData] = useState({})
+
+  useEffect(() => {
+    const {clickInfo} = props.data;
+    if (props.data && clickInfo) {
+      clickInfo.map((click) => {
+        graphData.labels.push(click.date);
+        graphData.datasets[0].data.push(click.count)
+      })
+
+    }
+    console.log('props', props)
+    setStatisticData(graphData);
+  }, []);
+  return (
+    <Layout>
+      {statisticData &&
+      <div>
+        <h2>Line Example</h2>
+        <Line
+          data={statisticData}
+          options={options}
+          width={900}
+          height={300}
+        />
+      </div>
+      }
+    </Layout>
+  )
 }
 
 export const getServerSideProps = async (context) => {
