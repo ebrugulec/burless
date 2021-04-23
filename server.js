@@ -94,6 +94,10 @@ app.prepare().then(() => {
     return app.render(req, res, '/contact')
   });
 
+  server.get('/report', (req, res) => {
+    return app.render(req, res, '/report')
+  });
+
   server.get('/signup', (req, res) => {
     return app.render(req, res, '/signup')
   });

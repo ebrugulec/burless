@@ -455,7 +455,47 @@ class linkController {
       .catch((err) => {
         return {error: err};
       });
-  }
+  };
+
+  static report = async (req, res) => {
+    const token = req.cookies.burless;
+    const userId = token && await getUserIdFromToken(token);
+
+    Promise.all([
+      Link.aggregate([
+        {
+          $match : {"user": ObjectId(userId) },
+        },
+        {
+          $group : {
+            _id : null,
+            totalClickCount : {
+              $sum : "$totalClickCount"
+            }
+          }
+        }
+      ]),
+      Link.find({"user": ObjectId(userId)}).sort({totalClickCount : -1}).limit(1),
+      Link.countDocuments({"user": ObjectId(userId)}),
+
+    ]).then( ([ totalClickCount, mostClicked, totalLinks ]) => {
+      return res.json({
+        status: 200,
+        data: {
+          message: "Fetched report links",
+          totalClickCount,
+          mostClicked,
+          totalLinks
+        }
+      });
+    }).catch(() => {
+      return res.status(500).send({
+        errors: [
+          {msg: "Internal Server error "}
+        ]
+      });
+    })
+  };
 
   static search = async (req, res) => {
     const {linkCode} = req.query;

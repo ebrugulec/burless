@@ -6,6 +6,10 @@ const authenticatedNavButtons = [
     path: '/',
   },
   {
+    label: 'Report',
+    path: '/report',
+  },
+  {
     label: 'Profile',
     path: '/profile',
   },

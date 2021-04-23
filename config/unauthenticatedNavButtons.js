@@ -2,8 +2,12 @@ import React from 'react'
 
 const authenticatedNavButtons = [
   {
-    label: 'Links',
+    label: 'All Links',
     path: '/',
+  },
+  {
+    label: 'Report',
+    path: '/report',
   },
   {
     label: 'Profile',

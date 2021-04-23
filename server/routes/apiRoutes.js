@@ -13,6 +13,8 @@ router.get('/links', LinkController.getAllLink)
 router.post('/links', LinkController.createNewLinkWithCustomName)
 router.get('/links/search', LinkController.search);
 
+router.get('/links/report', LinkController.report);
+
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry)
 router.get('/links/referrer/:id', LinkController.getReferrer)
