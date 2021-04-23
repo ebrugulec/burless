@@ -8,6 +8,9 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import windowSize from "../../lib/windowSize";
 import NewLink from "../NewLink";
+import axios from "axios";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const LinkList = ({ linkData, id }) => {
   const userListRef = useRef(null)
@@ -77,9 +80,16 @@ const LinkList = ({ linkData, id }) => {
       : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
   }
 
-  function handleSearch (searchString) {
+  const handleSearch = async (searchString) => {
+    axios.get(`${BASE_URL}/api/links/search?linkCode=${searchString}`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log('err', err)
+      });
     setSearchVal(searchString)
-  }
+  };
 
   console.log('searchString', searchVal)
 

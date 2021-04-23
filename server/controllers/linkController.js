@@ -28,9 +28,16 @@ client.on("error", (err) => {
   console.log(err);
 });
 const LINK_PER_PAGE = 10;
-const SEARCH_LIMIT = 10;
+const SEARCH_LIMIT = 5;
 
 const BASE_URL = process.env.BASE_URL;
+
+const usersProjection = {
+  __v: false,
+  session: false,
+  user: false,
+  createdAt: false
+};
 
 //TODO: Move mongoose query to service.
 class linkController {
@@ -173,12 +180,6 @@ class linkController {
   };
 
   static getAllLinksWithTokenOrSession (userId, sessionId, curPage){
-    const usersProjection = {
-      __v: false,
-      session: false,
-      user: false,
-      createdAt: false
-    };
     return Link.find(userId ? {user: ObjectId(userId)} : {session: sessionId}, usersProjection)
       .limit(LINK_PER_PAGE)
       .skip((curPage - 1) * LINK_PER_PAGE)
@@ -460,19 +461,25 @@ class linkController {
     const {linkCode} = req.query;
 
     const token = req.cookies.burless;
-    // const userId = token && await getUserIdFromToken(token);
+    const userId = token && await getUserIdFromToken(token);
 
     Link.find(
       {
         "linkCode": { "$regex": linkCode, "$options": "i" },
-        // user: `${ObjectId(userId)}`
+        user: `${ObjectId(userId)}`
       },
-      function(err,docs) {
-      }
-    ).limit(SEARCH_LIMIT)
+      usersProjection
+    )
+      .limit(SEARCH_LIMIT)
+      .exec()
       .then((links) => {
-      console.log('lin',linkCode,  links)
-      return links;
+        return res.json({
+          status: 200,
+          data: {
+            message: "Fetched search links",
+            links: links,
+          }
+        });
     }).catch((err) => {
         return {error: err};
       });

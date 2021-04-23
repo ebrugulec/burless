@@ -42,8 +42,6 @@ export const getServerSideProps = async (context) => {
   const session = cookies(context).burless_session || null
   const page = query.page || 1
 
-  console.log('context.query', id)
-
   try {
     const response = await fetch(`http://localhost:8080/api/links?page=${page}`, {
       credentials: 'include',
