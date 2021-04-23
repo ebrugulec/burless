@@ -11,6 +11,7 @@ router.get('/users/me', UserController.getUser)
 router.delete('/links/:urlId', LinkController.deleteUrl)
 router.get('/links', LinkController.getAllLink)
 router.post('/links', LinkController.createNewLinkWithCustomName)
+router.get('/links/search', LinkController.search);
 
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry)

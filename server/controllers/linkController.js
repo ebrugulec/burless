@@ -28,6 +28,7 @@ client.on("error", (err) => {
   console.log(err);
 });
 const LINK_PER_PAGE = 10;
+const SEARCH_LIMIT = 10;
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -453,6 +454,29 @@ class linkController {
       .catch((err) => {
         return {error: err};
       });
+  }
+
+  static search = async (req, res) => {
+    const {linkCode} = req.query;
+
+    const token = req.cookies.burless;
+    // const userId = token && await getUserIdFromToken(token);
+
+    Link.find(
+      {
+        "linkCode": { "$regex": linkCode, "$options": "i" },
+        // user: `${ObjectId(userId)}`
+      },
+      function(err,docs) {
+      }
+    ).limit(SEARCH_LIMIT)
+      .then((links) => {
+      console.log('lin',linkCode,  links)
+      return links;
+    }).catch((err) => {
+        return {error: err};
+      });
+
   }
 }
 

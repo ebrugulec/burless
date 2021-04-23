@@ -19,7 +19,8 @@ const LinkList = ({ linkData, id }) => {
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
   const size = windowSize();
-  const router = useRouter()
+  const router = useRouter();
+  const [searchVal, setSearchVal] = useState('');
 
   let isLargeScreen = size.width > 768;
 
@@ -76,6 +77,12 @@ const LinkList = ({ linkData, id }) => {
       : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
   }
 
+  function handleSearch (searchString) {
+    setSearchVal(searchString)
+  }
+
+  console.log('searchString', searchVal)
+
   return (
     <div className="link-list">
       {loading && <h1>Loading..</h1>}
@@ -85,6 +92,9 @@ const LinkList = ({ linkData, id }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
+      <div>
+        <input type="text" onChange={(e) => handleSearch(e.target.value)} />
+      </div>
       <table className="table content-table">
         <thead>
         <tr>
