@@ -4,6 +4,9 @@ import {requirePageAuth} from "../lib/auth";
 import cookies from "next-cookies";
 import {redirectLogin} from "../utils";
 import {Line} from 'react-chartjs-2';
+import axios from "axios";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const options = {
   responsive: true,
@@ -75,7 +78,7 @@ const graphData = {
   labels: [],
   datasets: [
     {
-      // label: 'My First dataset',
+      label: 'Click Count',
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
@@ -85,40 +88,68 @@ const graphData = {
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
       pointBorderColor: 'rgba(75,192,192,1)',
-      // pointBackgroundColor: 'pink',
-      // pointBorderWidth: 1,
-      // pointHoverRadius: 5,
-      // pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      // pointHoverBorderColor: 'rgba(220,220,220,1)',
-      // pointHoverBorderWidth: 2,
-      // pointRadius: 1,
-      // pointHitRadius: 10,
+      pointBackgroundColor: 'pink',
+      pointBorderWidth: 1,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBorderWidth: 2,
+      pointRadius: 1,
+      pointHitRadius: 10,
       data: []
     }
   ]
 };
 
 export default function Statistic (props) {
-
-  const [statisticData, setStatisticData] = useState({})
+  const [statisticData, setStatisticData] = useState({});
+  const [selectedVal, setSelectedValue] = useState('');
 
   useEffect(() => {
     const {clickInfo} = props.data;
     if (props.data && clickInfo) {
       clickInfo.map((click) => {
         graphData.labels.push(click.date);
-        graphData.datasets[0].data.push(click.count)
-      })
 
+        graphData.datasets[0] && graphData.datasets[0].data.push(click.count)
+      })
     }
-    console.log('props', props)
+
     setStatisticData(graphData);
   }, []);
+
+  const handleOnchangeSelect = (val) => {
+    setSelectedValue(val);
+    if (props.id && val !== setSelectedValue) {
+      axios.get(`${BASE_URL}/api/links/statistic/${props.id}/${val}`)
+        .then((res) => {
+          if (res.data && res.data.data && res.data.data.clickInfo) {
+            setStatisticData({});
+            graphData.labels = [];
+            graphData.datasets[0].data = [];
+            res.data.data.clickInfo.map((click) => {
+              graphData.labels.push(click.date);
+              graphData.datasets[0].data.push(click.count)
+            });
+            setStatisticData(graphData);
+          }
+        })
+        .catch((err) => {
+          console.log('err', err)
+        });
+    }
+  };
+
   return (
     <Layout>
       {statisticData &&
       <div>
-        <h2>Line Example</h2>
+        <div className="dropdown">
+          <select name="select-choice" value={selectedVal} onChange={(e) => handleOnchangeSelect(e.target.value)}>
+            <option value="days">15 Days</option>
+            <option value="months">Months</option>
+          </select>
+        </div>
         <Line
           data={statisticData}
           options={options}
@@ -151,7 +182,12 @@ export const getServerSideProps = async (context) => {
           : {}),
       });
       let result = await response.json()
-      return { props: { data: result.data ? result.data : null } };
+      return {
+        props: {
+          data: result.data ? result.data : null,
+          id,
+        }
+      };
     } catch {
     return { props: { data: null } };
     }
@@ -159,7 +195,6 @@ export const getServerSideProps = async (context) => {
     //Todo: id yoksa islem yap ona gore.
   }
 
-  //
   // if (!token) {
   //   return {
   //     props: {},

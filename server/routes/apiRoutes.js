@@ -8,6 +8,7 @@ const UserController = require('../controllers/userController')
 router.get('/links/statistic/totalInfo', LinkController.getLinkTotalInfo)
 
 router.get('/users/me', UserController.getUser)
+router.get('/links/statistic/:id/:date', LinkController.getChartData)
 router.delete('/links/:urlId', LinkController.deleteUrl)
 router.get('/links', LinkController.getAllLink)
 router.post('/links', LinkController.createNewLinkWithCustomName)
@@ -21,6 +22,7 @@ router.get('/links/search', LinkController.search);
 router.get('/links/report', LinkController.report);
 // router.get('/links/statistic/:id', LinkController.getLinkClickCount)
 router.get('/links/statistic/:id', LinkController.getLinkStatistic)
+
 
 router.post(
   '/signup',

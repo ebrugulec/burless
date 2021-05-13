@@ -97,9 +97,10 @@ function handleDaysForStatistic (clickInfoArray) {
 
   concatDays.map((day, i) => {
     let splitMonth = day.date.split('-')[1]
-    let changeMonthNumberWithName = concatDays[i].date.replace(splitMonth, monthsObj[splitMonth])
-    concatDays[i].date = reverse(changeMonthNumberWithName);
+    let splitDay = day.date.split('-')[2]
+    concatDays[i].date = `${monthsObj[splitMonth]} ${splitDay}`
   });
+
 
   return concatDays
 }
@@ -124,11 +125,13 @@ function handleMonthsForStatistic (clickInfoArray) {
     d.setMonth(d.getMonth() - 1);
   }
   let concatArray = concatAndSumTwoArray(months, clickInfoArray);
+  console.log('concatArray', concatArray)
 
   for (let j=0; j<=11; j++) {
     let splitMonth = concatArray[j].date.split('-')[1];
     concatArray[j].date = reverse(concatArray[j].date.replaceAt(5, monthsObj[splitMonth]))
   }
+  console.log('concatArray2', concatArray)
 
   return concatArray;
 }

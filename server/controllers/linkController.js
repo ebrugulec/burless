@@ -429,10 +429,34 @@ class linkController {
     });
   };
 
+  static getChartData  = async (req, res) => {
+    const { id, date } = req.params;
+
+    let clickInfo;
+    if (date === 'months') {
+      clickInfo = await this.getMonthlyStatistic(id);
+    } else if (date === 'days') {
+      clickInfo = await this.getLinkClickCount(id);
+    } else {
+      return res.status(500).send({
+        errors: [
+          {msg: "We are so sorry. We couldn't fetch data. Please try again later."}
+        ]
+      });
+    }
+
+    return res.json({
+      status: 200,
+      data: {
+        clickInfo
+      }
+    });
+  };
+
   static getMonthlyStatistic = async (linkCode) => {
     // let date = new Date();
     // date.setDate(date.getDate()-95);
-    //TODO: Get last 1 month data
+    //TODO: must be auth
     return Click.aggregate(
       [
         {
@@ -458,6 +482,7 @@ class linkController {
         }
       ]).exec()
       .then((clickInfo) => {
+        console.log('clickInfo', clickInfo)
         return handleMonthsForStatistic(clickInfo);
       })
       .catch((err) => {
