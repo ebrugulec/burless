@@ -3,7 +3,7 @@ const validUrl = require('valid-url');
 const Link = require('../models/Link');
 const TotalClick = require('../models/TotalClick');
 // const Click = require('../models/click');
-var UAParser = require('ua-parser-js');
+const UAParser = require('ua-parser-js');
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
@@ -21,7 +21,11 @@ const {parseIp} = require("../../utils");
 const checkUrl = require('../../utils/checkUrl');
 const {checkLinkId} = require("../../utils");
 const useragent = require('express-useragent');
-const {getDatesBetweenDates, handleDaysForStatistic, handleMonthsForStatistic} = require("../../utils");
+const {
+  getDatesBetweenDates,
+  handleDaysForStatistic,
+  handleMonthsForStatistic
+} = require("../../utils");
 
 //TODO: butun error lari ayni formatta duzenle
 client.on("error", (err) => {
@@ -41,9 +45,10 @@ const usersProjection = {
 //TODO: Move mongoose query to service.
 class linkController {
   static shortenLink = async (req, res, app, reqUrl) => {
-    const burless_token = req.cookies.burless;
+    const burless = req.cookies.burless;
     const sessionId = req.sessionID;
-    const userId = await getUserIdFromToken(burless_token);
+    const userId = await getUserIdFromToken(burless);
+    console.log('shortlink userId', userId)
 
     // // Block with ip address
     // const requestIpAddress = JSON.stringify(parseIp(req));
@@ -90,6 +95,8 @@ class linkController {
 
     const curPage = req.query.page || 1;
     const userId = token && await getUserIdFromToken(token);
+    console.log('token', token)
+    console.log('userIdddddddddddd', userId)
     const totalLinksCount = await Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId});
     const getAllLinkResponse = await this.getAllLinksWithTokenOrSession(userId, sessionId, curPage);
 

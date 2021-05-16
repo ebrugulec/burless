@@ -181,7 +181,7 @@ export const getServerSideProps = async (context) => {
           }
           : {}),
       });
-      let result = await response.json()
+      let result = await response.json();
       return {
         props: {
           data: result.data ? result.data : null,

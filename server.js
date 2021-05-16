@@ -70,59 +70,59 @@ app.prepare().then(() => {
         maxAge: 300000 * 24 * 60 * 60 * 1000,
       },
     })
-  )
+  );
 
-  server.use('/api', apiRoutes)
+  server.use('/api', apiRoutes);
 
-  const route = pathMatch()
+  const route = pathMatch();
 
-  server.get('/login', (req, res) => {
-    return app.render(req, res, '/login', req.query)
-  });
-
-  //TODO: Check protected route
-  server.get('/profile', (req, res) => {
-    return app.render(req, res, '/profile')
-  });
-
-  server.get('/statistic/:id', (req, res) => {
-    const params = route('/statistic/:id')(parse(req.url).pathname);
-    return app.render(req, res, '/statistic', params);
-  });
-
-  server.get('/contact', (req, res) => {
-    return app.render(req, res, '/contact')
-  });
-
-  server.get('/report', (req, res) => {
-    return app.render(req, res, '/report')
-  });
-
-  server.get('/signup', (req, res) => {
-    return app.render(req, res, '/signup')
-  });
-
-  server.get('/signout', (req, res) => {
-    req.session.destroy((err) => {
-      //TODO: Handle err
-      res.clearCookie("burless");
-      res.clearCookie("burless_session");
-      res.redirect('/')
-    });
-  });
+  // server.get('/login', (req, res) => {
+  //   return app.render(req, res, '/login', req.query)
+  // });
+  //
+  // //TODO: Check protected route
+  // server.get('/profile', (req, res) => {
+  //   return app.render(req, res, '/profile')
+  // });
+  //
+  // server.get('/statistic/:id', (req, res) => {
+  //   const params = route('/statistic/:id')(parse(req.url).pathname);
+  //   return app.render(req, res, '/statistic', params);
+  // });
+  //
+  // server.get('/contact', (req, res) => {
+  //   return app.render(req, res, '/contact')
+  // });
+  //
+  // server.get('/report', (req, res) => {
+  //   return app.render(req, res, '/report')
+  // });
+  //
+  // server.get('/signup', (req, res) => {
+  //   return app.render(req, res, '/signup')
+  // });
+  //
+  // server.get('/signout', (req, res) => {
+  //   req.session.destroy((err) => {
+  //     //TODO: Handle err
+  //     res.clearCookie("burless");
+  //     res.clearCookie("burless_session");
+  //     res.redirect('/')
+  //   });
+  // });
 
   server.get('/', (req, res) => {
     return app.render(req, res, '/index', req.query)
   });
 
-  server.get('/:id', (req, res) => {
-    const paramsId = req.params.id
-    if (utils.checkLinkId(paramsId)) {
-      return linkController.getLink(req, res, app)
-    } else {
-      return app.render(req, res, '/link')
-    }
-  });
+  // server.get('/:id', (req, res) => {
+  //   const paramsId = req.params.id
+  //   if (utils.checkLinkId(paramsId)) {
+  //     return linkController.getLink(req, res, app)
+  //   } else {
+    //     return app.render(req, res, '/link')
+  //   }
+  // });
 
   server.get('*', async (req, res, next) => {
     const reqUrl = req.url.substring(1)

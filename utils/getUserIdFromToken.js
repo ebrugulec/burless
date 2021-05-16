@@ -3,12 +3,13 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const getUserIdFromToken = async (token) => {
-  if (token) {
-    const decrypt = await jwt.verify(token, process.env.JWT_SECRET)
-    return decrypt.id
-  } else {
-    return null
-  }
-}
+  return await jwt.verify(token, process.env.JWT_SECRET, function (err, decrypt) {
+    if(err) {
+      return false
+    } else {
+      return decrypt.id
+    }
+  });
+};
 
-module.exports = getUserIdFromToken
+module.exports = getUserIdFromToken;

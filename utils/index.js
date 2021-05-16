@@ -101,7 +101,6 @@ function handleDaysForStatistic (clickInfoArray) {
     concatDays[i].date = `${monthsObj[splitMonth]} ${splitDay}`
   });
 
-
   return concatDays
 }
 
@@ -109,8 +108,8 @@ String.prototype.replaceAt = function(index, replacement) {
   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 };
 
-function reverse(s){
-  return s.split("-").reverse().join("-");
+function reverseOperation(s){
+  return s.split("-").reverse().join(" ");
 }
 
 function handleMonthsForStatistic (clickInfoArray) {
@@ -125,15 +124,13 @@ function handleMonthsForStatistic (clickInfoArray) {
     d.setMonth(d.getMonth() - 1);
   }
   let concatArray = concatAndSumTwoArray(months, clickInfoArray);
-  console.log('concatArray', concatArray)
 
   for (let j=0; j<=11; j++) {
     let splitMonth = concatArray[j].date.split('-')[1];
-    concatArray[j].date = reverse(concatArray[j].date.replaceAt(5, monthsObj[splitMonth]))
+    concatArray[j].date = reverseOperation(concatArray[j].date.replaceAt(5, monthsObj[splitMonth]))
   }
-  console.log('concatArray2', concatArray)
 
-  return concatArray;
+  return concatArray.reverse();
 }
 
 module.exports = {

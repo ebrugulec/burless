@@ -5,23 +5,23 @@ const auth = require('../middleware/auth')
 const LinkController = require('../controllers/linkController')
 const UserController = require('../controllers/userController')
 
-router.get('/links/statistic/totalInfo', LinkController.getLinkTotalInfo)
+router.get('/links/statistic/totalInfo', LinkController.getLinkTotalInfo);
 
-router.get('/users/me', UserController.getUser)
-router.get('/links/statistic/:id/:date', LinkController.getChartData)
-router.delete('/links/:urlId', LinkController.deleteUrl)
-router.get('/links', LinkController.getAllLink)
-router.post('/links', LinkController.createNewLinkWithCustomName)
+router.get('/users/me', UserController.getUser);
+router.get('/links/statistic/:id/:date', LinkController.getChartData);
+router.delete('/links/:urlId', LinkController.deleteUrl);
+router.get('/links', LinkController.getAllLink);
+router.post('/links', LinkController.createNewLinkWithCustomName);
 
 
 //must be auth
-router.get('/links/country/:id', LinkController.getCountry)
-router.get('/links/referrer/:id', LinkController.getReferrer)
+router.get('/links/country/:id', LinkController.getCountry);
+router.get('/links/referrer/:id', LinkController.getReferrer);
 router.get('/links/search', LinkController.search);
 
 router.get('/links/report', LinkController.report);
-// router.get('/links/statistic/:id', LinkController.getLinkClickCount)
-router.get('/links/statistic/:id', LinkController.getLinkStatistic)
+router.get('/links/statistic/:id', LinkController.getLinkClickCount);
+router.get('/links/statistic/:id', LinkController.getLinkStatistic);
 
 
 router.post(
@@ -34,7 +34,7 @@ router.post(
     }),
   ],
   UserController.signUp
-)
+);
 
 router.post(
   '/login',
@@ -45,7 +45,7 @@ router.post(
     }),
   ],
   UserController.signIn
-)
+);
 
 router.post('/signout', (req, res) => {
   req.session.destroy((err) => {
@@ -54,6 +54,6 @@ router.post('/signout', (req, res) => {
     res.clearCookie("burless_session");
     res.redirect('/')
   });
-})
+});
 
 module.exports = router
