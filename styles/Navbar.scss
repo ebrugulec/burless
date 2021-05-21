@@ -1,3 +1,22 @@
 .nav-menu {
+  display: flex;
+  justify-content: center;
+  color: #2C374D;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 15px;
 
+  .icon {
+    margin-right: 7px;
+  }
+
+  .menu{
+    &:not(:last-child){
+      margin-right: 30px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

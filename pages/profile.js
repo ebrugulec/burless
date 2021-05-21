@@ -10,7 +10,7 @@ function Profile (props) {
   //TODO: Check whe data is null
   return <Layout>
     <div className="profile">
-      <main>
+      <div className="card-wrapper">
         <div className="profile-card">
           <div className="img-div">
           </div>
@@ -25,7 +25,7 @@ function Profile (props) {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   </Layout>
 }

@@ -6,6 +6,9 @@ import '../styles/reset.scss';
 import HeadComponent from "../components/Head";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../styles/app.scss'
+import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 if (typeof process.versions === 'undefined') process.versions = {};
 const initialState = {

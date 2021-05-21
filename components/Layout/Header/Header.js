@@ -9,7 +9,7 @@ import React from 'react'
 function Header () {
   return (
     <div className="header">
-      <Image src="/logo.svg"
+      <Image src="/burless_is_more.svg"
        width={80}
        height={33}
       />

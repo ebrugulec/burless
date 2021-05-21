@@ -4,6 +4,7 @@ const authenticatedNavButtons = [
   {
     label: 'All Links',
     path: '/',
+    icon: 'fas fa-glass-cheers'
   },
   {
     label: 'Report',

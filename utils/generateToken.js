@@ -6,7 +6,7 @@ const generateToken = async (res, payload) => {
   const expiration = 3600 * 1000 * 24 * 365 * 10;
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '2m',
+    expiresIn: '1y',
   });
 
   res.cookie('burless', token, {

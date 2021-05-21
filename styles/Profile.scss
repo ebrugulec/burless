@@ -14,6 +14,16 @@
 }
 
 .profile {
+  width: 60%;
+  border: 3px solid #FCC231;
+  border-radius: 3px;
+  min-height: 500px;
+
+  .card-wrapper {
+    justify-content: center;
+    display: flex;
+  }
+
   .profile-card {
     display: flex;
     border-top-right-radius: 20px;
@@ -25,6 +35,8 @@
     0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
     0 100px 80px rgba(0, 0, 0, 0.12);
     overflow: hidden;
+    width: 60%;
+    justify-content: center;
 
     .img-div {
       width: 200px;

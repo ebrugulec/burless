@@ -12,41 +12,6 @@
     }
   }
 
-  .footer {
-    margin-top: 25px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    margin-bottom: 20px;
-    flex-direction: column;
-    flex-wrap: wrap;
-
-    .footer-section-img-wrapper {
-      position: relative;
-    }
-
-    .footer-img {
-      width: 77px;
-      height: 30px;
-      display: flex;
-    }
-
-    .social-links {
-      margin-top: 17px;
-    }
-
-    .copyright {
-      text-align: center;
-      align-items: center;
-      margin-top: 17px;
-      margin-bottom: 10px;
-      .img {
-        position: absolute;
-      }
-    }
-  }
-
   .section-content-wrapper {
     max-width: 350px;
     text-align: center;

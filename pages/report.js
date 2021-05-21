@@ -1,28 +1,17 @@
 import Layout from '../components/Layout'
 import React from 'react'
-import cookies from "next-cookies";
 
 function Report (props) {
+  console.log('props', props.data)
   return (
     <Layout>
       <div className="report">
-
       </div>
     </Layout>
   )
 }
 
 export const getServerSideProps = async (context) => {
-  const token = cookies(context).burless;
-  if (!token) {
-    return {
-      props: {},
-      redirect: {
-        destination: '/login',
-        permanent: false
-      }
-    };
-  }
   try {
     const response = await fetch(`http://localhost:8080/api/links/report`, {
       credentials: 'include',

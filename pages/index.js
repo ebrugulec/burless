@@ -24,9 +24,7 @@ export default function Home (props) {
   if (props.data && (props.data.token || (props.data.links && props.data.links.length > 0))) {
     return (
       <Layout>
-        <div className="home-page">
-          <LinkList linkData={props.data} id={props.id} />
-        </div>
+        <LinkList linkData={props.data} id={props.id} />
       </Layout>
     )
   } else {

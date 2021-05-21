@@ -20,7 +20,7 @@ router.get('/links/referrer/:id', LinkController.getReferrer);
 router.get('/links/search', LinkController.search);
 
 router.get('/links/report', LinkController.report);
-router.get('/links/statistic/:id', LinkController.getLinkClickCount);
+// router.get('/links/statistic/:id', LinkController.getLinkClickCount);
 router.get('/links/statistic/:id', LinkController.getLinkStatistic);
 
 

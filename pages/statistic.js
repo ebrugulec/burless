@@ -6,10 +6,13 @@ import {redirectLogin} from "../utils";
 import {Line} from 'react-chartjs-2';
 import axios from "axios";
 
+import '../styles/Statistic.scss'
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   // tooltips: {
   //   mode: 'index',
   //   intersect: true
@@ -39,10 +42,6 @@ const options = {
       // },
     }],
     xAxes: [{
-      ticks: {
-        precision: 0,
-        beginAtZero: true,
-      },
       gridLines: {
         display: false
       },
@@ -105,6 +104,9 @@ export default function Statistic (props) {
   const [statisticData, setStatisticData] = useState({});
   const [selectedVal, setSelectedValue] = useState('');
 
+  const {link} = props?.data;
+  console.log('props', props)
+
   useEffect(() => {
     const {clickInfo} = props.data;
     if (props.data && clickInfo) {
@@ -142,22 +144,41 @@ export default function Statistic (props) {
 
   return (
     <Layout>
-      {statisticData &&
-      <div>
-        <div className="dropdown">
-          <select name="select-choice" value={selectedVal} onChange={(e) => handleOnchangeSelect(e.target.value)}>
-            <option value="days">15 Days</option>
-            <option value="months">Months</option>
-          </select>
+      <div className="statistic">
+        {link &&
+          <div>
+            <div className="link-info">
+              burlessed for {link.shortLink}
+            </div>
+            <div>
+              <span>
+                Total Click: {link.totalClickCount}
+              </span>
+              Created: {link.createdAt}
+              Long Link: {link.longLink}
+            </div>
+          </div>
+        }
+
+        {statisticData &&
+        <div>
+          <div className="dropdown">
+            <select name="select-choice" value={selectedVal} onChange={(e) => handleOnchangeSelect(e.target.value)}>
+              <option value="days">15 Days</option>
+              <option value="months">Months</option>
+            </select>
+          </div>
+          <div style={{width: '400px'}}>
+            <Line
+              data={statisticData}
+              options={options}
+              height={200}
+              width={400}
+            />
+          </div>
         </div>
-        <Line
-          data={statisticData}
-          options={options}
-          width={900}
-          height={300}
-        />
+        }
       </div>
-      }
     </Layout>
   )
 }
@@ -166,8 +187,7 @@ export const getServerSideProps = async (context) => {
   const token = cookies(context).burless;
   //Todo: user agent browser vs
   // const userAgent = context.req ? context.req.headers['user-agent'] : ''
-  //   console.log('agent', userAgent)
-  const { id } = context.req.params || null
+  const { id } = context.req.params || null;
 
   if (id) {
     try {
@@ -188,11 +208,12 @@ export const getServerSideProps = async (context) => {
           id,
         }
       };
-    } catch {
-    return { props: { data: null } };
+    } catch(err) {
+      return { props: { data: null } };
     }
   } else {
     //Todo: id yoksa islem yap ona gore.
+    return { props: { data: null } };
   }
 
   // if (!token) {

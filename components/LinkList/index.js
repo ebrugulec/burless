@@ -90,9 +90,7 @@ const LinkList = ({ linkData, id }) => {
       });
     setSearchVal(searchString)
   };
-
-  console.log('searchString', searchVal)
-
+//TODO: Font check
   return (
     <div className="link-list">
       {loading && <h1>Loading..</h1>}
@@ -102,76 +100,133 @@ const LinkList = ({ linkData, id }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
-      <div>
-        <input type="text" onChange={(e) => handleSearch(e.target.value)} />
+        <div className="link-header-text">
+          <h3>Links</h3>
+        </div>
+
+      <div className="link-header">
+        <div className="count">
+          CLICK
+        </div>
+        <div className="short-link">
+          SHORT LINK
+        </div>
+        <div className="date">
+          CREATED
+        </div>
+        <div className="long-link">
+          LONG LINK
+        </div>
+        <div className="operations">
+          OPERATIONS
+        </div>
       </div>
-      <table className="table content-table">
-        <thead>
-        <tr>
-          {isLargeScreen && <th scope="col">Clicks</th>}
-          <th scope="col">Short Link</th>
-          {isLargeScreen && <th scope="col">Long Link</th>}
-          {isLargeScreen && <th scope="col">Created Date</th>}
-          <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {links && links.length > 0 &&
-        links.map((link, i) => {
-          return (
-            <tr key={i} className={returnNewAddedLinkStyle(link._id)}>
-              {isLargeScreen &&
-                <th className="click">
-                  {link.totalClickCount}
-                </th>
-              }
-              <th key={i}>
-                <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                  <a>{link.shortLink}</a>
-                </Link>
-              </th>
-              {isLargeScreen &&
-                <th>
-                  <div className="long-link">
-                    <a className="link">{link.longLink}</a>
-                  </div>
-                </th>
-              }
-              {isLargeScreen &&
-                <th>
-                  12.2.2222
-                </th>
-              }
-              <th>
-                <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                  <a><FontAwesomeIcon icon={faChartBar} /></a>
-                </Link>
-                {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}
-              </th>
-            </tr>
-          )
-        })}
-        </tbody>
-      </table>
-      <ReactPaginate
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        previousLabel={'<'}
-        nextLabel={'>'}
-        breakLabel={'...'}
-        initialPage={linkData.curPage - 1}
-        pageCount={linkData.maxPage}
-        onPageChange={handlePagination}
-        containerClassName={'paginate-wrap'}
-        subContainerClassName={'paginate-inner'}
-        pageClassName={'paginate-li'}
-        pageLinkClassName={'paginate-a'}
-        activeClassName={'paginate-active'}
-        nextLinkClassName={'paginate-next-a'}
-        previousLinkClassName={'paginate-prev-a'}
-        breakLinkClassName={'paginate-break-a'}
-      />
-      <NewLink addedNewLink={addedNewLink}/>
+
+      {links.map((link, i) => {
+        return (
+          <div className="link">
+            {isLargeScreen &&
+              <div className="count">
+                {link.totalClickCount}
+              </div>
+            }
+            <div className="short-link">
+              <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                <a>{link.shortLink}</a>
+              </Link>
+            </div>
+            <div className="date">
+              Apr, 11 2021
+            </div>
+            {isLargeScreen &&
+              <div className="long-link">
+                <a className="">{link.longLink}</a>
+              </div>
+            }
+            <div className="operations">
+              <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                <a><FontAwesomeIcon icon={faChartBar} /></a>
+              </Link>
+              {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}
+            </div>
+          </div>
+        )
+      }
+      )}
+
+      <div>
+
+      </div>
+      {/*<div>*/}
+      {/*  <input type="text" onChange={(e) => handleSearch(e.target.value)} />*/}
+      {/*</div>*/}
+      {/*<table className="table content-table">*/}
+      {/*  <thead>*/}
+      {/*  <tr>*/}
+      {/*    {isLargeScreen && <th scope="col">Clicks</th>}*/}
+      {/*    <th scope="col">Short Link</th>*/}
+      {/*    {isLargeScreen && <th scope="col">Long Link</th>}*/}
+      {/*    {isLargeScreen && <th scope="col">Created Date</th>}*/}
+      {/*    <th scope="col">Actions</th>*/}
+      {/*  </tr>*/}
+      {/*  </thead>*/}
+      {/*  <tbody>*/}
+      {/*  {links && links.length > 0 &&*/}
+      {/*  links.map((link, i) => {*/}
+      {/*    return (*/}
+      {/*      <tr key={i} className={returnNewAddedLinkStyle(link._id)}>*/}
+      {/*        {isLargeScreen &&*/}
+      {/*          <th className="click">*/}
+      {/*            {link.totalClickCount}*/}
+      {/*          </th>*/}
+      {/*        }*/}
+      {/*        <th key={i}>*/}
+      {/*          <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
+      {/*            <a>{link.shortLink}</a>*/}
+      {/*          </Link>*/}
+      {/*        </th>*/}
+      {/*        {isLargeScreen &&*/}
+      {/*          <th>*/}
+      {/*            <div className="long-link">*/}
+      {/*              <a className="link">{link.longLink}</a>*/}
+      {/*            </div>*/}
+      {/*          </th>*/}
+      {/*        }*/}
+      {/*        {isLargeScreen &&*/}
+      {/*          <th>*/}
+      {/*            12.2.2222*/}
+      {/*          </th>*/}
+      {/*        }*/}
+      {/*        <th>*/}
+      {/*          <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
+      {/*            <a><FontAwesomeIcon icon={faChartBar} /></a>*/}
+      {/*          </Link>*/}
+      {/*          {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}*/}
+      {/*        </th>*/}
+      {/*      </tr>*/}
+      {/*    )*/}
+      {/*  })}*/}
+      {/*  </tbody>*/}
+      {/*</table>*/}
+      {/*<ReactPaginate*/}
+      {/*  marginPagesDisplayed={2}*/}
+      {/*  pageRangeDisplayed={5}*/}
+      {/*  previousLabel={'<'}*/}
+      {/*  nextLabel={'>'}*/}
+      {/*  breakLabel={'...'}*/}
+      {/*  initialPage={linkData.curPage - 1}*/}
+      {/*  pageCount={linkData.maxPage}*/}
+      {/*  onPageChange={handlePagination}*/}
+      {/*  containerClassName={'paginate-wrap'}*/}
+      {/*  subContainerClassName={'paginate-inner'}*/}
+      {/*  pageClassName={'paginate-li'}*/}
+      {/*  pageLinkClassName={'paginate-a'}*/}
+      {/*  activeClassName={'paginate-active'}*/}
+      {/*  nextLinkClassName={'paginate-next-a'}*/}
+      {/*  previousLinkClassName={'paginate-prev-a'}*/}
+      {/*  breakLinkClassName={'paginate-break-a'}*/}
+      {/*/>*/}
+      {/*<NewLink addedNewLink={addedNewLink}/>*/}
     </div>
   )
 }

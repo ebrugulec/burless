@@ -9,7 +9,7 @@ export default function Dashboard ({ id }) {
     <div className="dashboard">
       <Header />
       <div className="welcoming-text">
-        The easiest way to shorten the link from<br/> <span>the address bar</span> and much more.
+        The easiest way to shorten the from <span>the <br/> address bar</span> and much more.
       </div>
       <div className="section browser-section">
         <div className="section-wrapper">
@@ -216,25 +216,25 @@ export default function Dashboard ({ id }) {
         </button>
       </div>
 
-      <div className="footer">
-        <div className="footer-section-img-wrapper">
-          <div className="footer-img">
-            <Image
-              src="/burless-is-more.svg"
-              layout="fill"
-            />
-          </div>
-        </div>
-        <div className="social-links">
-          <Image
-            src="/twitter.png"
-            layout="fill"
-          />
-        </div>
-        <div className="copyright">
-          © {dt.getFullYear()} Burless
-        </div>
-      </div>
+      {/*<div className="footer">*/}
+      {/*  <div className="footer-section-img-wrapper">*/}
+      {/*    <div className="footer-img">*/}
+      {/*      <Image*/}
+      {/*        src="/burless-is-more.svg"*/}
+      {/*        layout="fill"*/}
+      {/*      />*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*  <div className="social-links">*/}
+      {/*    <Image*/}
+      {/*      src="/twitter.png"*/}
+      {/*      layout="fill"*/}
+      {/*    />*/}
+      {/*  </div>*/}
+      {/*  <div className="copyright">*/}
+      {/*    © {dt.getFullYear()} Burless*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   )
 }

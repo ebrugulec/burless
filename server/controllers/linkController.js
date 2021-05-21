@@ -95,8 +95,6 @@ class linkController {
 
     const curPage = req.query.page || 1;
     const userId = token && await getUserIdFromToken(token);
-    console.log('token', token)
-    console.log('userIdddddddddddd', userId)
     const totalLinksCount = await Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId});
     const getAllLinkResponse = await this.getAllLinksWithTokenOrSession(userId, sessionId, curPage);
 
@@ -373,6 +371,7 @@ class linkController {
   };
 
   static getLinkClickCount = async (linkCode) => {
+    // console.log('linkCode', linkCode)
     let date = new Date();
     date.setDate(date.getDate()-15);
     return Click.aggregate(
@@ -489,7 +488,6 @@ class linkController {
         }
       ]).exec()
       .then((clickInfo) => {
-        console.log('clickInfo', clickInfo)
         return handleMonthsForStatistic(clickInfo);
       })
       .catch((err) => {
@@ -499,12 +497,13 @@ class linkController {
 
   static report = async (req, res) => {
     const token = req.cookies.burless;
+    const sessionId = res.sessionID;
     const userId = token && await getUserIdFromToken(token);
 
     Promise.all([
       Link.aggregate([
         {
-          $match : {"user": ObjectId(userId) },
+          $match : userId ? {user: ObjectId(userId)} : {session: sessionId},
         },
         {
           $group : {
@@ -515,8 +514,8 @@ class linkController {
           }
         }
       ]),
-      Link.find({"user": ObjectId(userId)}).sort({totalClickCount : -1}).limit(1),
-      Link.countDocuments({"user": ObjectId(userId)}),
+      Link.find(userId ? {user: ObjectId(userId)} : {session: sessionId}).sort({totalClickCount : -1}).limit(1),
+      Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId}),
 
     ]).then( ([ totalClickCount, mostClicked, totalLinks ]) => {
       return res.json({
