@@ -1,5 +1,4 @@
 // import style from './NavBar.module.scss'
-import NavButton from '../../NavButton'
 import React, {useState} from 'react'
 import Link from "next/link";
 

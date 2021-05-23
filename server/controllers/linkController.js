@@ -252,13 +252,18 @@ class linkController {
           },
         },
         {$group: {
-            _id: {
-              country: "$country",
-            },
+            _id: "$country",
             count: {$sum: 1}
           }},
+        {
+          $project: {
+            "country": "$_id",
+            count: 1,
+            "_id": 0
+          }
+        },
         {$sort: {"count": -1} },
-        { "$limit": 10 },
+        { "$limit": 5 },
       ]).exec()
       .then((countries) => {
         return countries;
@@ -277,16 +282,21 @@ class linkController {
           },
         },
         {$group: {
-            _id: {
-              country: "$city",
-            },
+            _id: "$city",
             count: {$sum: 1}
           }},
+        {
+          $project: {
+            "city": "$_id",
+            count: 1,
+            "_id": 0
+          }
+        },
         {$sort: {"count": -1} },
-        { "$limit": 10 },
+        { "$limit": 5 },
       ]).exec()
-      .then(($cities) => {
-        return $cities;
+      .then((countries) => {
+        return countries;
       })
       .catch((err) => {
         return {error: err};
@@ -307,13 +317,18 @@ class linkController {
           },
         },
         {$group: {
-            _id: {
-              referrer: "$referrer",
-            },
+            _id: "$referrer",
             count: {$sum: 1}
           }},
+        {
+          $project: {
+            "referrer": "$_id",
+            count: 1,
+            "_id": 0
+          }
+        },
         {$sort: {"count": -1} },
-        { "$limit": 10 },
+        { "$limit": 5 },
       ]).exec()
       .then((referrers) => {
         return referrers;

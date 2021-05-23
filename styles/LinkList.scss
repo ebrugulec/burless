@@ -158,106 +158,114 @@
 //  }
 //}
 
-.content {
-  //display: flex;
-  //justify-content: center;
-  //margin-top: 15px;
-}
-
-.link-header-text {
-  color: #1B1A18;
-  padding: 10px 0 10px 15px;
-
-  h2 {
-    //font-size: 16px;
-  }
-}
-
-.link-header {
-  display: flex;
-  color: #717273;
-  font-weight: bold;
-  padding-bottom: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #F8F7F7;
-
-  .count {
-
-  }
-
-  .long-link {
-    color: #717273;
-  }
-}
-
 .link-list {
   border: 3px solid #000;
   border-radius: 3px;
   width: 60%;
-}
-
-.link {
-  display: flex;
-  padding-bottom: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #F8F7F7;
-}
-
-.count {
-  width: 8%;
-  text-align: center;
-
-  &:hover {
-    cursor: default;
-  }
-}
-
-.short-link {
-  width: 29%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.date {
-  width: 13%;
-  &:hover {
-    cursor: default;
-  }
-}
-
-.long-link {
-  width: 43%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  color: #43BA7F;
-
-  &:hover {
-    cursor: pointer;
+  
+  .content {
+    //display: flex;
+    //justify-content: center;
+    //margin-top: 15px;
   }
 
-  a {
-    color: #43BA7F;
+  .link-header-text {
+    color: #1B1A18;
+    padding: 10px 0 10px 15px;
+
+    h2 {
+      //font-size: 16px;
+    }
+  }
+
+  .link-header {
+    display: flex;
+    color: #717273;
     font-weight: bold;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #F8F7F7;
+
+    .count {
+
+    }
+
+    .long-link {
+      //color: #717273;
+    }
+
+    .short-link {
+      color: #717273;
+    }
   }
-}
 
-.operations {
-  width: 12%;
-  display: flex;
-  justify-content: space-evenly;
-  color: #2C374C;
+  .link {
+    display: flex;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #F8F7F7;
+  }
 
-  a {
+  .count {
+    width: 8%;
+    text-align: center;
+
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  .short-link {
+    width: 29%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    a {
+      color: #43BA7F;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .date {
+    width: 13%;
+    &:hover {
+      cursor: default;
+    }
+  }
+
+  .long-link {
+    width: 43%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #43BA7F;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    //a {
+    //  color: #43BA7F;
+    //  font-weight: bold;
+    //}
+  }
+
+  .operations {
+    width: 12%;
+    display: flex;
+    justify-content: space-evenly;
     color: #2C374C;
-  }
 
-  &:hover {
-    cursor: pointer;
+    a {
+      color: #2C374C;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

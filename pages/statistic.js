@@ -10,6 +10,8 @@ import '../styles/Statistic.scss'
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -21,21 +23,24 @@ const options = {
   //   annotations: [{
   //     type: 'line',
   //     mode: 'horizontal',
-  //     scaleID: 'y-axis-0',
-  //     value: 5,
-  //     borderColor: 'rgb(75, 192, 192)',
+  //     // scaleID: 'y-axis-0',
+  //     // value: 5,
+  //     borderColor: 'black',
   //     borderWidth: 4,
   //     label: {
   //       enabled: false,
-  //       content: 'Test label'
+  //       // content: 'Test label'
   //     }
   //   }]
   // },
   scales: {
+    display: true,
     yAxes: [{
       ticks: {
         precision: 0,
         beginAtZero: true,
+        // step: 3,
+        maxTicksLimit: 6,
       },
       // gridLines: {
       //   display: false
@@ -81,19 +86,19 @@ const graphData = {
       fill: false,
       lineTension: 0.1,
       backgroundColor: 'rgba(75,192,192,0.4)',
-      borderColor: 'rgba(75,192,192,1)',
+      borderColor: '#263238',
       borderCapStyle: 'butt',
       borderDash: [],
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
-      pointBorderColor: 'rgba(75,192,192,1)',
-      pointBackgroundColor: 'pink',
+      pointBorderColor: '#263238',
+      pointBackgroundColor: '#263238',
       pointBorderWidth: 1,
       pointHoverRadius: 5,
-      pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      pointHoverBorderColor: 'rgba(220,220,220,1)',
+      pointHoverBackgroundColor: '#FCC232',
+      pointHoverBorderColor: '#FCC232',
       pointHoverBorderWidth: 2,
-      pointRadius: 1,
+      pointRadius: 2,
       pointHitRadius: 10,
       data: []
     }
@@ -104,8 +109,9 @@ export default function Statistic (props) {
   const [statisticData, setStatisticData] = useState({});
   const [selectedVal, setSelectedValue] = useState('');
 
-  const {link} = props?.data;
-  console.log('props', props)
+  const {link, referrers, countries, cities} = props?.data;
+  // const {referrers} = link;
+  console.log('props?.data', props?.data)
 
   useEffect(() => {
     const {clickInfo} = props.data;
@@ -142,42 +148,113 @@ export default function Statistic (props) {
     }
   };
 
+  let date = link && new Date(link.createdAt);
+
   return (
     <Layout>
       <div className="statistic">
         {link &&
-          <div>
-            <div className="link-info">
-              burlessed for {link.shortLink}
+          <div className="statistic-row row-info">
+            <div className="statistic-link">
+              Burlessed for <span>{link.shortLink}</span>
             </div>
-            <div>
-              <span>
-                Total Click: {link.totalClickCount}
-              </span>
-              Created: {link.createdAt}
-              Long Link: {link.longLink}
+            <div className="link-info">
+              <div>
+                <span className="info-wrapper">
+                  <span className="text">Total Click:</span><span className="info">{link.totalClickCount}</span>
+                </span>
+                <span className="info-wrapper">
+                  <span className="text">Created:</span>
+                  <span className="info">
+                      {date.toLocaleDateString("en-US", dateOptions)}
+                    </span>
+                </span>
+              </div>
+              <div className="statistic-long-link">
+                <span className="header-text">Long Link: </span><a target="_blank" href={link.longLink} className="link">{link.longLink}</a>
+              </div>
             </div>
           </div>
         }
 
         {statisticData &&
-        <div>
+        <div className="statistic-row">
           <div className="dropdown">
             <select name="select-choice" value={selectedVal} onChange={(e) => handleOnchangeSelect(e.target.value)}>
               <option value="days">15 Days</option>
               <option value="months">Months</option>
             </select>
           </div>
-          <div style={{width: '400px'}}>
+          <div className="chart-wrapper">
             <Line
               data={statisticData}
               options={options}
-              height={200}
-              width={400}
+              height={250}
+              width={1000}
             />
           </div>
         </div>
         }
+
+        <div className="click-info-wrapper statistic-row">
+          {referrers && countries.length > 0 &&
+          <div className="click-info referrer">
+            <div className="click-info-header">
+              Referrers
+            </div>
+            {referrers.map((data, i) => {
+              return (
+                <div className="click-info-content" key={i}>
+                  <span className="count">
+                    {data.count}
+                  </span>
+                      <span className="data">
+                    {data.referrer}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+          }
+          {countries && countries.length > 0 &&
+            <div className="click-info country">
+              <div className="click-info-header">
+                Countries
+              </div>
+              {countries.map((data, i) => {
+                return (
+                  <div className="click-info-content" >
+                  <span className="count">
+                    {data.count}
+                  </span>
+                    <span className="data">
+                    {data.country}
+                  </span>
+                  </div>
+                )
+              })}
+            </div>
+          }
+          {cities && countries.length > 0 &&
+          <div className="click-info city">
+            <div className="click-info-header">
+              Cities
+            </div>
+            {cities.map((data, i) => {
+              return (
+                <div className="click-info-content" key={i}>
+                  <span className="count">
+                    {data.count}
+                  </span>
+                  <span className="data">
+                    {data.city}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+          }
+        </div>
       </div>
     </Layout>
   )

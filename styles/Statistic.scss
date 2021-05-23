@@ -2,5 +2,162 @@
   width: 60%;
   border: 3px solid #cab295;
   border-radius: 3px;
-  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  padding-top: 25px;
+
+  .statistic-link {
+    color: #1B1A18;
+    margin-bottom: 5px;
+
+    span {
+      color: #717273;
+    }
+  }
+
+  .link-info {
+    color: #1B1A18;
+
+    .header-text {
+      margin-right: 5px;
+    }
+
+    .info-wrapper {
+      margin-right: 15px;
+
+      .text {
+        margin-right: 6px;
+      }
+
+      .info {
+        color: #717273;
+      }
+    }
+
+    .statistic-long-link {
+      margin-top: 10px;
+      display: flex;
+
+      .link {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 450px;
+      }
+    }
+  }
+
+  .chart-wrapper {
+    //width: 80%;
+  }
+
+  .click-info-wrapper {
+    display: flex;
+    text-align: left;
+
+    .referrer {
+      width: 40%;
+      margin-right: 15px;
+    }
+
+    .country {
+      width: 25%;
+      margin-right: 15px;
+    }
+
+    .city {
+      width: 20%;
+    }
+
+    .click-info-header {
+      background-color: #FCC232;
+      padding: 5px;
+      border-radius: 4px 4px 0 0;
+      color: white;
+    }
+  }
+
+  .click-info {
+  }
+
+  .click-info-content {
+    border-bottom: 1px solid #F8F7F7;
+    padding: 10px;
+
+    .count {
+      margin-right: 8px;
+      width: 20px;
+      display: inline-block;
+    }
+  }
+
+  .statistic-row {
+    width: 90%;
+    margin-bottom: 20px;
+
+  }
+
+  .row-info {
+    padding-left: 10px;
+  }
+
+  .dropdown {
+    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    border-color: white;
+
+    select {
+      padding: 5px;
+      border-radius: 3px;
+      color: #253239;
+      border-color: #253239;
+      //font-weight: bold;
+    }
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .statistic {
+    width: 90%;
+
+    .click-info-wrapper {
+      flex-direction: column;
+
+      .referrer {
+        width: 100%;
+      }
+
+      .country {
+        width: 100%;
+      }
+
+      .city {
+        width: 100%;
+      }
+    }
+
+    .link-info {
+      .statistic-long-link {
+        .link {
+          width: 250px;
+        }
+      }
+    }
+
+
+      .statistic-row {
+      .link-info {
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
 }
