@@ -1,11 +1,54 @@
 import Layout from '../components/Layout'
 import React from 'react'
+import '../styles/Report.scss';
+import {faLink, faMousePointer, faUser, faEnvelope, faSignOutAlt, faChartBar} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function Report (props) {
-  console.log('props', props.data)
+  const { totalLinks, totalClickCount, mostClicked } = props?.data;
   return (
     <Layout>
       <div className="report">
+        <div className="report-wrapper">
+          <div className="card">
+            <div className="icon">
+              <FontAwesomeIcon icon={faLink}/>
+            </div>
+            <div className="text">
+              Total Link Count
+            </div>
+            <div className="card-info">
+              {totalLinks}
+            </div>
+          </div>
+          <div className="card">
+            <div className="icon">
+              <FontAwesomeIcon icon={faMousePointer}/>
+            </div>
+            <div className="text">
+              Total Click Count
+            </div>
+            <div className="card-info">
+              {totalClickCount[0]?.totalClickCount}
+            </div>
+          </div>
+          <div className="card">
+            <div className="icon">
+              <FontAwesomeIcon icon={faChartBar}/>
+            </div>
+            <div className="text">
+              Most Clicked Link
+            </div>
+            <div className="card-info">
+              <Link className="" href={`/statistic/${encodeURIComponent(mostClicked[0]?.linkCode)}`}>
+                <a>{mostClicked[0]?.linkCode}</a>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </Layout>
   )
@@ -13,7 +56,7 @@ function Report (props) {
 
 export const getServerSideProps = async (context) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/links/report`, {
+    const response = await fetch(`${BASE_URL}/api/links/report`, {
       credentials: 'include',
       ...(context.req
         ? {

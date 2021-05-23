@@ -527,7 +527,7 @@ class linkController {
               $sum : "$totalClickCount"
             }
           }
-        }
+        },
       ]),
       Link.find(userId ? {user: ObjectId(userId)} : {session: sessionId}).sort({totalClickCount : -1}).limit(1),
       Link.countDocuments(userId ? {user: ObjectId(userId)} : {session: sessionId}),

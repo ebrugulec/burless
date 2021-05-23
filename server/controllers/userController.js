@@ -133,6 +133,12 @@ class userController {
     }
   };
 
+  static resetPassword = async (req, res) => {
+    return res.json({
+      status: 200,
+    });
+  };
+
   static getUser = async (req, res) => {
     const burless_token = req.cookies.burless;
 

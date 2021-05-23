@@ -9,7 +9,8 @@ import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
 import Link from 'next/link'
 import {Context} from "../context";
-import {error} from "next/dist/build/output/log";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Home (props) {
   const { state, dispatch } = useContext(Context);
@@ -40,7 +41,7 @@ export const getServerSideProps = async (context) => {
   const page = query.page || 1;
 
   try {
-    const response = await fetch(`http://localhost:8080/api/links?page=${page}`, {
+    const response = await fetch(`${BASE_URL}/api/links?page=${page}`, {
       credentials: 'include',
       ...(context.req
         ? {

@@ -85,6 +85,11 @@ app.prepare().then(() => {
     return app.render(req, res, '/profile')
   });
 
+  server.get('/password-reset', (req, res) => {
+    return app.render(req, res, '/reset')
+  });
+
+
   server.get('/statistic/:id', (req, res) => {
     const params = route('/statistic/:id')(parse(req.url).pathname);
     return app.render(req, res, '/statistic', params);

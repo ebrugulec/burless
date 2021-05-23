@@ -12,7 +12,7 @@ router.get('/links/statistic/:id/:date', LinkController.getChartData);
 router.delete('/links/:urlId', LinkController.deleteUrl);
 router.get('/links', LinkController.getAllLink);
 router.post('/links', LinkController.createNewLinkWithCustomName);
-
+router.post('/users/reset-password', UserController.resetPassword);
 
 //must be auth
 router.get('/links/country/:id', LinkController.getCountry);
@@ -22,7 +22,6 @@ router.get('/links/search', LinkController.search);
 router.get('/links/report', LinkController.report);
 // router.get('/links/statistic/:id', LinkController.getLinkClickCount);
 router.get('/links/statistic/:id', LinkController.getLinkStatistic);
-
 
 router.post(
   '/signup',
@@ -56,4 +55,4 @@ router.post('/signout', (req, res) => {
   });
 });
 
-module.exports = router
+module.exports = router;

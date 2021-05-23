@@ -6,6 +6,8 @@ import cookies from 'next-cookies'
 import {redirectLogin} from "../utils";
 import '../styles/Profile.scss'
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 function Profile (props) {
   //TODO: Check whe data is null
   return <Layout>
@@ -42,7 +44,7 @@ export const getServerSideProps = async (context) => {
     };
   }
   try {
-    const response = await fetch(`http://localhost:8080/api/users/me`, {
+    const response = await fetch(`${BASE_URL}/api/users/me`, {
       credentials: 'include',
       ...(context.req
         ? {

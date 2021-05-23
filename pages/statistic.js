@@ -268,7 +268,7 @@ export const getServerSideProps = async (context) => {
 
   if (id) {
     try {
-      const response = await fetch(`http://localhost:8080/api/links/statistic/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/links/statistic/${id}`, {
         credentials: 'include',
         ...(context.req
           ? {
