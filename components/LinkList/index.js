@@ -131,9 +131,9 @@ const LinkList = ({ linkData, id }) => {
               </div>
             }
             <div className="short-link">
-              <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                <a>{link.shortLink}</a>
-              </Link>
+              {/*<Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
+              {/*  <a>{link.shortLink}</a>*/}
+              {/*</Link>*/}
             </div>
             <div className="date">
               Apr, 11 2021
@@ -144,9 +144,9 @@ const LinkList = ({ linkData, id }) => {
               </div>
             }
             <div className="operations">
-              <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                <a><FontAwesomeIcon icon={faChartBar} /></a>
-              </Link>
+              {/*<Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
+              {/*  <a><FontAwesomeIcon icon={faChartBar} /></a>*/}
+              {/*</Link>*/}
               {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}
             </div>
           </div>

@@ -25,12 +25,12 @@ const UnAuthenticateLayout = (props) => {
       </Head>
       <Header appTitle={appTitle} />
       <div className="action-button">
-        <Link className="action-link" href="/login">
-          <a className="login">Login</a>
-        </Link>
-        <Link className="action-link" href="/signup">
-          <a className="signup">Register</a>
-        </Link>
+        {/*<Link className="action-link" href="/login">*/}
+        {/*  <a className="login">Login</a>*/}
+        {/*</Link>*/}
+        {/*<Link className="action-link" href="/signup">*/}
+        {/*  <a className="signup">Register</a>*/}
+        {/*</Link>*/}
       </div>
       <div className="content">
         {props.children}

@@ -43,9 +43,9 @@ function Report (props) {
               Most Clicked Link
             </div>
             <div className="card-info">
-              <Link className="" href={`/statistic/${encodeURIComponent(mostClicked[0]?.linkCode)}`}>
-                <a>{mostClicked[0]?.linkCode}</a>
-              </Link>
+              {/*<Link className="" href={`/statistic/${encodeURIComponent(mostClicked[0]?.linkCode)}`}>*/}
+              {/*  <a>{mostClicked[0]?.linkCode}</a>*/}
+              {/*</Link>*/}
             </div>
           </div>
         </div>
