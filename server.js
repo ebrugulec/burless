@@ -1,13 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const session = require('express-session')
-const path = require('path')
+// const session = require('express-session')
+// const path = require('path')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 // const mongoose = require('mongoose')
-const MongoDBSession = require('connect-mongodb-session')(session)
+// const MongoDBSession = require('connect-mongodb-session')(session)
 const dotenv = require('dotenv')
-const redis = require('redis')
+// const redis = require('redis')
 const expressip = require('express-ip')
 const checkUrl = require('./utils/checkUrl')
 const utils = require('./utils')
@@ -60,71 +60,72 @@ app.prepare().then(() => {
 
   // server.use('/api', apiRoutes);
 
-  const route = pathMatch();
-
-  server.get('/login', (req, res) => {
-    return app.render(req, res, '/login', req.query)
-  });
-
-  //TODO: Check protected route
-  server.get('/profile', (req, res) => {
-    return app.render(req, res, '/profile')
-  });
-
-  server.get('/password-reset', (req, res) => {
-    return app.render(req, res, '/reset')
-  });
-
-
-  server.get('/statistic/:id', (req, res) => {
-    const params = route('/statistic/:id')(parse(req.url).pathname);
-    return app.render(req, res, '/statistic', params);
-  });
-
-  server.get('/contact', (req, res) => {
-    return app.render(req, res, '/contact')
-  });
-
-  server.get('/report', (req, res) => {
-    return app.render(req, res, '/report')
-  });
-
-  server.get('/signup', (req, res) => {
-    return app.render(req, res, '/signup')
-  });
-
-  server.get('/signout', (req, res) => {
-    req.session.destroy((err) => {
-      //TODO: Handle err
-      res.clearCookie("burless");
-      res.clearCookie("burless_session");
-      res.redirect('/')
-    });
-  });
+  // const route = pathMatch();
+  //
+  // server.get('/login', (req, res) => {
+  //   return app.render(req, res, '/login', req.query)
+  // });
+  //
+  // //TODO: Check protected route
+  // server.get('/profile', (req, res) => {
+  //   return app.render(req, res, '/profile')
+  // });
+  //
+  // server.get('/password-reset', (req, res) => {
+  //   return app.render(req, res, '/reset')
+  // });
+  //
+  //
+  // server.get('/statistic/:id', (req, res) => {
+  //   const params = route('/statistic/:id')(parse(req.url).pathname);
+  //   return app.render(req, res, '/statistic', params);
+  // });
+  //
+  // server.get('/contact', (req, res) => {
+  //   return app.render(req, res, '/contact')
+  // });
+  //
+  // server.get('/report', (req, res) => {
+  //   return app.render(req, res, '/report')
+  // });
+  //
+  // server.get('/signup', (req, res) => {
+  //   return app.render(req, res, '/signup')
+  // });
+  //
+  // server.get('/signout', (req, res) => {
+  //   req.session.destroy((err) => {
+  //     //TODO: Handle err
+  //     res.clearCookie("burless");
+  //     res.clearCookie("burless_session");
+  //     res.redirect('/')
+  //   });
+  // });
 
   server.get('/', (req, res) => {
     return app.render(req, res, '/index', req.query)
   });
 
-  server.get('/:id', (req, res) => {
-    const paramsId = req.params.id
-    if (utils.checkLinkId(paramsId)) {
-      // return linkController.getLink(req, res, app)
-    } else {
-        return app.render(req, res, '/link')
-    }
-  });
+  // server.get('/:id', (req, res) => {
+  //   const paramsId = req.params.id
+  //   if (utils.checkLinkId(paramsId)) {
+  //     // return linkController.getLink(req, res, app)
+  //   } else {
+  //       return app.render(req, res, '/link')
+  //   }
+  // });
 
   server.get('*', async (req, res, next) => {
-    const reqUrl = req.url.substring(1)
-    //TODO: Check here
-    if (checkUrl(reqUrl)) {
-      // res.status(301)
-      // await linkController.shortenLink(req, res, app, reqUrl)
-    } else {
-      return handle(req, res, next);
-    }
-  })
+    // const reqUrl = req.url.substring(1)
+    // //TODO: Check here
+    // if (checkUrl(reqUrl)) {
+    //   // res.status(301)
+    //   // await linkController.shortenLink(req, res, app, reqUrl)
+    // } else {
+    //   return handle(req, res, next);
+    // }
+    return handle(req, res, next);
+  });
 
   server.listen(PORT, (err) => {
     if (err) throw err
