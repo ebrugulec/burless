@@ -138,9 +138,9 @@ const LinkList = ({ linkData, id }) => {
               </div>
             }
             <div className="short-link">
-              <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                <a>{link.shortLink}</a>
-              </Link>
+              {/*<Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
+              {/*  <a>{link.shortLink}</a>*/}
+              {/*</Link>*/}
             </div>
 
             {isLargeScreen &&

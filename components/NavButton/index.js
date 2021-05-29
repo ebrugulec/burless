@@ -9,6 +9,7 @@ const NavButton = (props) => (
       <span>{props.label}</span>
     </div>
   </Link>
+
 );
 
 export default NavButton
