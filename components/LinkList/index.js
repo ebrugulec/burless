@@ -105,21 +105,28 @@ const LinkList = ({ linkData, id }) => {
         </div>
 
       <div className="link-header">
-        <div className="count">
-          CLICK
-        </div>
+        {isLargeScreen &&
+          <div className="count">
+            CLICK
+          </div>
+        }
         <div className="short-link">
           SHORT LINK
         </div>
-        <div className="date">
-          CREATED
-        </div>
-        <div className="long-link">
-          LONG LINK
-        </div>
+        {isLargeScreen &&
+          <div className="date">
+            CREATED
+          </div>
+        }
+        {isLargeScreen &&
+          <div className="long-link">
+            LONG LINK
+          </div>
+        }
         <div className="operations">
           OPERATIONS
         </div>
+
       </div>
 
       {links.map((link, i) => {
@@ -135,9 +142,12 @@ const LinkList = ({ linkData, id }) => {
                 <a>{link.shortLink}</a>
               </Link>
             </div>
+
+            {isLargeScreen &&
             <div className="date">
               Apr, 11 2021
             </div>
+            }
             {isLargeScreen &&
               <div className="long-link">
                 <a className="">{link.longLink}</a>
@@ -147,8 +157,9 @@ const LinkList = ({ linkData, id }) => {
               <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
                 <a><FontAwesomeIcon icon={faChartBar} /></a>
               </Link>
-              {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}
+              <a><FontAwesomeIcon icon={faTrash} /></a>
             </div>
+
           </div>
         )
       }

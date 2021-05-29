@@ -1,0 +1,14 @@
+.layout {
+  .hamburger-button-wrapper {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+
+
+    button {
+      font-size: 18px;
+    }
+  }
+}

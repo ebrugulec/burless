@@ -269,3 +269,21 @@
     }
   }
 }
+
+@media (max-width:768px)  {
+  .link-list {
+    width: 92%;
+
+    .short-link {
+      width: 49%;
+    }
+
+    .link-header {
+      justify-content: space-around;
+    }
+
+    .link {
+      justify-content: space-around;
+    }
+  }
+}
