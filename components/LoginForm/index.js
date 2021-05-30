@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function LoginForm({
   errors,
@@ -45,8 +46,17 @@ function LoginForm({
             {touched.password && errors.password}
           </label>
         </div>
-        <div className="form-group">
-          <input value="Send" type="submit" />
+        <div className="form-group action-buttons">
+          <Link
+            href={{
+              pathname: '/password-reset',
+            }}
+          >
+            <a>Forgot your password?</a>
+          </Link>
+          <button type="submit">
+            Login
+          </button>
         </div>
       </form>
     </div>

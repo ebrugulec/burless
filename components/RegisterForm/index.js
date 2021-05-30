@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function RegisterForm({
   errors,
@@ -13,12 +14,12 @@ function RegisterForm({
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username-input">
-            Username
+            Username *
             <input
               type="text"
               className="form-control"
               id="username-input"
-              placeholder="Enter first name"
+              placeholder="Enter username"
               value={values.username}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -62,8 +63,10 @@ function RegisterForm({
             {touched.password && errors.password}
           </label>
         </div>
-        <div className="form-group">
-          <input value="Send" type="submit" />
+        <div className="form-group action-buttons">
+          <button type="submit">
+            Register
+          </button>
         </div>
       </form>
     </div>

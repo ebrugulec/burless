@@ -7,6 +7,7 @@ import {useContext, useEffect, useState} from "react";
 import {Context} from "../../context";
 import Footer from "../Layout/Footer/Footer";
 import Link from "@material-ui/core/Link";
+import DashboardHeader from "../Layout/DashboardHeader";
 
 const UnAuthenticateLayout = (props) => {
   const appTitle = 'Burless';
@@ -23,7 +24,7 @@ const UnAuthenticateLayout = (props) => {
       <Head>
         <title>Burless</title>
       </Head>
-      <Header appTitle={appTitle} />
+      <DashboardHeader />
       <div className="action-button">
         {/*<Link className="action-link" href="/login">*/}
         {/*  <a className="login">Login</a>*/}

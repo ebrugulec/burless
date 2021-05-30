@@ -76,6 +76,7 @@ class userController {
   };
 
   static signIn = async (req, res) => {
+    console.log(';sgin in')
     const sessionId = req.sessionID;
     const errors = validationResult(req);
 

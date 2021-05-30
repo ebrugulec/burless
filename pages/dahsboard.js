@@ -2,14 +2,15 @@ import "../styles/Dashboard.scss"
 import Header from "../components/Layout/Header/Header";
 import React from "react";
 import Image from "next/image";
+import DashboardHeader from "../components/Layout/DashboardHeader";
 
 export default function Dashboard ({ id }) {
   const dt = new Date();
   return (
     <div className="dashboard">
-      <Header />
+      <DashboardHeader />
       <div className="welcoming-text">
-        The easiest way to shorten the from <span>the <br/> address bar</span> and much more.
+        The easiest way to shorten url from <span>the <br/> address bar</span> and much more.
       </div>
       <div className="section browser-section">
         <div className="section-wrapper">

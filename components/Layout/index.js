@@ -11,6 +11,8 @@ import '../../styles/Layout.scss';
 import {faTimes, faBars} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import windowSize from "../../lib/windowSize";
+import Link from "next/link";
+import NavButton from "../NavButton";
 
 
 const styleToggleButton = {
@@ -46,7 +48,7 @@ const Layout = (props) => {
     enter: {
       opacity: 1,
       transform: "scale(1)",
-      backgroundImage: "linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)",
+      backgroundColor: "#ffffff",
       position: "absolute",
       maxHeight: "100vh",
       top: 0,
@@ -127,26 +129,51 @@ const Layout = (props) => {
         ({ item, key, props }) =>
           item && (
             <animated.div key={key} style={props}>
-              <ul
+              <div
+                className="hamburger-menu"
                 style={{
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  // justifyContent: "center",
                   alignItems: "center",
-                  fontSize: "8vw",
+                  fontSize: "14px",
                   padding: 0,
-                  margin: 0,
+                  marginTop: "150px",
                   listStyle: "none",
                   overflow: "hidden",
                   textAlign: "left"
                 }}
               >
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-              </ul>
+                {navButtons.map((button) => (
+                  <NavButton
+                    key={button.path}
+                    path={button.path}
+                    label={button.label}
+                    icon={button.icon}
+                  />
+                ))}
+              </div>
+              {/*<ul*/}
+              {/*  style={{*/}
+              {/*    height: "100%",*/}
+              {/*    display: "flex",*/}
+              {/*    flexDirection: "column",*/}
+              {/*    justifyContent: "center",*/}
+              {/*    alignItems: "center",*/}
+              {/*    fontSize: "8vw",*/}
+              {/*    padding: 0,*/}
+              {/*    margin: 0,*/}
+              {/*    listStyle: "none",*/}
+              {/*    overflow: "hidden",*/}
+              {/*    textAlign: "left"*/}
+              {/*  }}*/}
+              {/*>*/}
+              {/*  <li>Link 1</li>*/}
+              {/*  <li>Link 2</li>*/}
+              {/*  <li>Link 3</li>*/}
+              {/*  <li>Link 4</li>*/}
+              {/*</ul>*/}
             </animated.div>
           )
       )}

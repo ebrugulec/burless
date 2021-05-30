@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from "axios";
-import UnAuthenticateLayout from "../components/UnAuthenticateLayout/UnAuthenticateLayout";
+import DashboardHeader from "../components/Layout/DashboardHeader";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -19,7 +19,8 @@ export default function Reset () {
   }
 
   return (
-    <UnAuthenticateLayout>
+    <>
+      <DashboardHeader/>
       <div className="reset">
         <div>
           <input value={email} onChange={event => setEmail(event.target.value)} />
@@ -31,6 +32,6 @@ export default function Reset () {
         </div>
         }
       </div>
-    </UnAuthenticateLayout>
+    </>
   )
 }

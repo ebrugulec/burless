@@ -1,27 +1,28 @@
-import React, { useState, useEffect, useContext } from 'react'
-import Router from 'next/router'
+import React, { useState, useContext } from 'react'
 import { Context } from "../context";
-import {emailValidation, passwordValidation} from "../utils"
-import { login } from './api/userApi'
+import {nameValidation, emailValidation, passwordValidation} from "../utils"
+import { register } from './api/userApi'
 import FormWrapper from "../components/FormWrapper";
-import {tokenControl} from '../lib/tokenControl'
+import {tokenControl} from "../lib/tokenControl";
 import DashboardHeader from "../components/Layout/DashboardHeader";
 
 const validate = {
+  username: username => nameValidation("Username", username),
   email: emailValidation,
   password: passwordValidation
 };
+
 const initialValues = {
   email: null,
   password: null,
 };
 
-const Login = () => {
-  const [errors, setErrors] = useState([])
+const Register = () => {
   const { dispatch } = useContext(Context);
+  const [errors, setErrors] = useState([])
 
-  const onLoginSubmit = async (loginValues) => {
-    login(loginValues)
+  const onSignUpSubmit = async (signupValues) => {
+    register(signupValues)
       .then((res) => {
         if (res && res.data) {
           dispatch({
@@ -29,7 +30,6 @@ const Login = () => {
             payload: res.data.email,
           })
         }
-        Router.replace("/");
       })
       .catch((err) => {
         if(err.response && err.response.data && err.response.data.errors){
@@ -42,7 +42,7 @@ const Login = () => {
     <>
       <DashboardHeader/>
       <div className="form-wrapper">
-        <FormWrapper onLoginSubmit={onLoginSubmit} validate={validate} initialValues={initialValues} isSignUp={false} />
+        <FormWrapper onSignUpSubmit={onSignUpSubmit} validate={validate} initialValues={initialValues} isSignUp={true} />
         {errors && errors.map((error, i) => {
           return <div key={i}>{error.msg}</div>
         })}
@@ -53,4 +53,4 @@ const Login = () => {
 
 export const getServerSideProps = tokenControl;
 
-export default Login
+export default Register

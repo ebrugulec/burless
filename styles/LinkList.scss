@@ -186,16 +186,30 @@
     padding-top: 15px;
     border-top: 1px solid #F8F7F7;
 
+
     .count {
 
     }
 
     .long-link {
-      //color: #717273;
+      color: #717273;
+      &:hover {
+        cursor: default;
+      }
     }
 
     .short-link {
       color: #717273;
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    .operations {
+      color: #717273;
+      &:hover {
+        cursor: default;
+      }
     }
   }
 
@@ -242,7 +256,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    color: #43BA7F;
+    //color: #43BA7F;
 
     &:hover {
       cursor: pointer;

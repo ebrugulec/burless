@@ -1,0 +1,19 @@
+.dashboard-header {
+  padding-top: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 16px;
+
+  a {
+    color: #2C374D;
+    cursor: pointer;
+  }
+
+  .register {
+    margin-left: 25px;
+    border: 1px solid #2C374D;
+    padding: 10px 20px 10px 20px;
+    border-radius: 4px;
+  }
+}

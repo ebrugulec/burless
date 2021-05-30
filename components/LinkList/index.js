@@ -93,7 +93,7 @@ const LinkList = ({ linkData, id }) => {
 //TODO: Font check
   return (
     <div className="link-list">
-      {loading && <h1>Loading..</h1>}
+      {/*{loading && <h1>Loading..</h1>}*/}
       {
         matchedIdStyle &&
         <div className="alert alert-info" role="alert">
@@ -138,9 +138,9 @@ const LinkList = ({ linkData, id }) => {
               </div>
             }
             <div className="short-link">
-              {/*<Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
-              {/*  <a>{link.shortLink}</a>*/}
-              {/*</Link>*/}
+              <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                <a>{link.shortLink}</a>
+              </Link>
             </div>
 
             {isLargeScreen &&
