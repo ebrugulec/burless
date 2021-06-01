@@ -18,19 +18,27 @@ const DB = process.env.DATABASE_URI
 const SESSION_SECRET = process.env.SESSION_SECRET
 const PORT = process.env.PORT || 8080
 
-// mongoose
-//   .connect(DB, {
-//     useNestedStrict: true,
-//     useCreateIndex: true,
-//   })
-//   .then((res) => {
-//     console.log('Mongo Connected')
-//   });
-//
-// const store = new MongoDBSession({
-//   uri: DB,
-//   collection: 'session',
-// })
+const MONGO_USERNAME = 'ebrugulec';
+const MONGO_PASSWORD = 'StoryOrigin*1029';
+const MONGO_HOSTNAME = '127.0.0.1';
+const MONGO_PORT = '27017';
+const MONGO_DB = 'urlDb';
+
+const url = `mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}?authSource=admin`;
+
+mongoose
+   .connect(DB, {
+     useNestedStrict: true,
+     useCreateIndex: true,
+   })
+   .then((res) => {
+     console.log('Mongo Connected')
+   });
+
+ const store = new MongoDBSession({
+   uri: DB,
+   collection: 'session',
+ })
 
 const linkController = require('./server/controllers/linkController')
 
@@ -57,22 +65,22 @@ app.prepare().then(() => {
   server.use(cors(corsOptions))
   server.use(express.json())
 
-  // server.use(
-  //   session({
-  //     secret: SESSION_SECRET,
-  //     resave: false,
-  //     saveUninitialized: true,
-  //     unset: 'destroy',
-  //     name: 'burless_session',
-  //     store: store,
-  //     secure: true,
-  //     cookie: {
-  //       maxAge: 300000 * 24 * 60 * 60 * 1000,
-  //     },
-  //   })
-  // );
+   server.use(
+     session({
+       secret: SESSION_SECRET,
+       resave: false,
+       saveUninitialized: true,
+       unset: 'destroy',
+       name: 'burless_session',
+       store: store,
+       secure: true,
+       cookie: {
+         maxAge: 300000 * 24 * 60 * 60 * 1000,
+       },
+     })
+   );
 
-  server.use('/api', apiRoutes);
+ server.use('/api', apiRoutes);
 
   const route = pathMatch();
 
