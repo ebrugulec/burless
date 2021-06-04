@@ -61,7 +61,7 @@ app.prepare().then(() => {
   const corsOptions = {
     origin: '*',
     credentials: true,
-  }
+  };
   server.use(cors(corsOptions))
   server.use(express.json())
 
@@ -127,8 +127,18 @@ app.prepare().then(() => {
     return app.render(req, res, '/index', req.query)
   });
 
+  server.get('/s/*', (req, res) => {
+    const reqUrl = req.url.substring(2)
+    console.log('req ss', reqUrl)
+    if (checkUrl(reqUrl)) {
+      return linkController.stayLink(req, res, app)
+    } else {
+      return app.render(req, res, '/error')
+    }
+  });
+
   server.get('/:id', (req, res) => {
-    const paramsId = req.params.id
+    const paramsId = req.params.id;
     if (utils.checkLinkId(paramsId)) {
       return linkController.getLink(req, res, app)
     } else {
@@ -140,12 +150,11 @@ app.prepare().then(() => {
     const reqUrl = req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {
-      res.status(301)
+      res.status(301);
       await linkController.shortenLink(req, res, app, reqUrl)
     } else {
       return handle(req, res, next);
     }
-    return handle(req, res, next);
   });
 
   server.listen(PORT, (err) => {

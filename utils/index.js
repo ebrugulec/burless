@@ -1,7 +1,7 @@
 const checkLinkId = (id) => {
   let numberAndStringR = /^[a-zA-Z0-9_.-]*$/;
   return numberAndStringR.test(id);
-}
+};
 
 const nameValidation = (fieldName, fieldValue) => {
   if (fieldValue.trim() === "") {
@@ -133,6 +133,16 @@ function handleMonthsForStatistic (clickInfoArray) {
   return concatArray.reverse();
 }
 
+function checkEnvironmentAndGetUrl() {
+  const stage = process.env.NEXT_PUBLIC_STAGE_BASE_URL;
+  const prod = process.env.NEXT_PUBLIC_BASE_URL;
+  if(process.env.NEXT_PUBLIC_ENVIRONMENT === 'stage') {
+    return stage
+  } else {
+    return prod;
+  }
+}
+
 module.exports = {
   checkLinkId,
   nameValidation,
@@ -142,5 +152,6 @@ module.exports = {
   parseIp,
   getDatesBetweenDates,
   handleDaysForStatistic,
-  handleMonthsForStatistic
+  handleMonthsForStatistic,
+  checkEnvironmentAndGetUrl
 };

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import {checkEnvironmentAndGetUrl} from "../../utils";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 export const login = async ({ email, password }) => {
-  const response = await axios.post(`${BASE_URL}/api/login`, {
+  console.log('checkEnvironmentAndGetUrl()', checkEnvironmentAndGetUrl())
+  const response = await axios.post(`/api/login`, {
     email,
     password,
   })
@@ -12,19 +13,19 @@ export const login = async ({ email, password }) => {
 };
 
 export const register = async ({ username, email, password }) => {
-  const response = await axios.post('/api/signup', {
+  const response = await axios.post(`/api/signup`, {
     username,
     email,
     password,
-  })
+  });
   return new Promise(async (resolve, reject) => {
     response && response.data ? resolve(response) : reject(response)
   });
-}
+};
 
 export const getUser = async () => {
   try {
-    let res = await axios.get('/api/me')
+    let res = await axios.get(`/api/me`);
 
     return res.data.user
   } catch (error) {
@@ -35,7 +36,7 @@ export const getUser = async () => {
 
 export const logout = async () => {
   try {
-    await axios.get('/api/auth/logout')
+    await axios.get(`/api/auth/logout`)
   } catch (error) {
     console.log(error)
   }

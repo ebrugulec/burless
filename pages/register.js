@@ -5,6 +5,7 @@ import { register } from './api/userApi'
 import FormWrapper from "../components/FormWrapper";
 import {tokenControl} from "../lib/tokenControl";
 import DashboardHeader from "../components/Layout/DashboardHeader";
+import Router from "next/router";
 
 const validate = {
   username: username => nameValidation("Username", username),
@@ -29,6 +30,7 @@ const Register = () => {
             type: "LOGGED_IN_USER",
             payload: res.data.email,
           })
+          Router.replace("/");
         }
       })
       .catch((err) => {

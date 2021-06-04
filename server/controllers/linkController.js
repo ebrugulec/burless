@@ -48,7 +48,6 @@ class linkController {
     const burless = req.cookies.burless;
     const sessionId = req.sessionID;
     const userId = await getUserIdFromToken(burless);
-    console.log('shortlink userId', userId)
 
     // // Block with ip address
     // const requestIpAddress = JSON.stringify(parseIp(req));
@@ -76,6 +75,30 @@ class linkController {
       });
       const savedUrl = await url.save();
       return app.render(req, res, '/index', {id: JSON.stringify(savedUrl._id)});
+    } catch (err) {
+      return res.status(500).json("Internal Server error " + err);
+    }
+  };
+
+  static stayLink = async (req, res) => {
+    const burless = req.cookies.burless;
+    const sessionId = req.sessionID;
+    const userId = await getUserIdFromToken(burless);
+    const reqUrl = req.params.id;
+    console.log('reqUrl', reqUrl)
+
+    try {
+      const linkCode = shortId.generate();
+      const shortLink = `${BASE_URL}/${linkCode}`;
+      let url = new Link({
+        longLink: reqUrl,
+        shortLink,
+        linkCode,
+        user: userId ? userId : null,
+        session: userId ? null : sessionId,
+      });
+      await url.save();
+      res.redirect(reqUrl);
     } catch (err) {
       return res.status(500).json("Internal Server error " + err);
     }
@@ -203,7 +226,7 @@ class linkController {
       client.get(id, async (err, link) => {
         if (err) throw err;
         if (link) {
-          res.redirect(JSON.parse(link));
+          res.redirect(link);
           this.saveLinkAndStatisticInfo(req, id)
         } else {
           const link = await Link.findOne({ 'linkCode': id });
