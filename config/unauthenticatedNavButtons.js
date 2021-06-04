@@ -1,27 +1,33 @@
 import React from 'react'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelope, faGlassCheers, faPollH, faUser, faSignInAlt} from "@fortawesome/free-solid-svg-icons";
 
 const authenticatedNavButtons = [
   {
-    label: 'All Links',
+    label: 'Links',
     path: '/',
-    icon: 'fas fa-glass-cheers'
+    icon: <FontAwesomeIcon icon={faGlassCheers}/>
   },
   {
     label: 'Report',
     path: '/report',
+    icon: <FontAwesomeIcon icon={faPollH}/>
   },
   {
     label: 'Profile',
     path: '/profile',
+    icon: <FontAwesomeIcon icon={faUser}/>
   },
   {
     label: 'Contact',
     path: '/contact',
+    icon: <FontAwesomeIcon icon={faEnvelope}/>
   },
   {
     label: 'Login',
     path: '/login',
+    icon: <FontAwesomeIcon icon={faSignInAlt}/>
   },
-]
+];
 
 export default authenticatedNavButtons

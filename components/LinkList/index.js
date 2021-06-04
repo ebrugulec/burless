@@ -7,10 +7,7 @@ import { faChartBar } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import windowSize from "../../lib/windowSize";
-import NewLink from "../NewLink";
 import axios from "axios";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const LinkList = ({ linkData, id }) => {
   const userListRef = useRef(null)
@@ -95,17 +92,15 @@ const LinkList = ({ linkData, id }) => {
 //TODO: Font check
   return (
     <div className="link-list">
-      {/*{loading && <h1>Loading..</h1>}*/}
       {
         matchedIdStyle &&
         <div className="alert alert-info" role="alert">
           You have created a new short link. Copy and start use. 💃
         </div>
       }
-        <div className="link-header-text">
-          <h3>Links</h3>
-        </div>
-
+      <div className="link-header-text">
+        <h3>Links</h3>
+      </div>
       <div className="link-header">
         {isLargeScreen &&
           <div className="count">
@@ -133,9 +128,7 @@ const LinkList = ({ linkData, id }) => {
         <div className="operations">
           OPERATIONS
         </div>
-
       </div>
-
       {links.map((link, i) => {
         return (
           <div className="link">
@@ -145,9 +138,7 @@ const LinkList = ({ linkData, id }) => {
               </div>
             }
             <div className="short-link">
-              <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                <a>{link.shortLink}</a>
-              </Link>
+              <a className="" target="_blank" href={link.linkCode}>{link.shortLink}</a>
             </div>
 
             {isLargeScreen &&
@@ -171,7 +162,6 @@ const LinkList = ({ linkData, id }) => {
         )
       }
       )}
-
       <div>
       </div>
       <ReactPaginate

@@ -80,16 +80,15 @@ class linkController {
     }
   };
 
-  static stayLink = async (req, res) => {
+  static stayLink = async (req, res, reqUrl) => {
     const burless = req.cookies.burless;
     const sessionId = req.sessionID;
-    const userId = await getUserIdFromToken(burless);
-    const reqUrl = req.params.id;
+    const userId = burless && await getUserIdFromToken(burless);
     console.log('reqUrl', reqUrl)
 
     try {
       const linkCode = shortId.generate();
-      const shortLink = `${BASE_URL}/${linkCode}`;
+      const shortLink = `burless.com/${linkCode}`;
       let url = new Link({
         longLink: reqUrl,
         shortLink,

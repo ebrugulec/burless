@@ -128,10 +128,10 @@ app.prepare().then(() => {
   });
 
   server.get('/s/*', (req, res) => {
-    const reqUrl = req.url.substring(2)
-    console.log('req ss', reqUrl)
+    const reqUrl = req.url && req.url.substring(2).substring(1)
+    console.log('req ss', reqUrl.substring(1))
     if (checkUrl(reqUrl)) {
-      return linkController.stayLink(req, res, app)
+      return linkController.stayLink(req, res, reqUrl)
     } else {
       return app.render(req, res, '/error')
     }

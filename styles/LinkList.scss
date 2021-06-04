@@ -93,6 +93,7 @@ $purple-color-lighter: #d9c5e6;
   overflow: hidden;
   white-space: nowrap;
   width: 200px;
+  color: #0d6efd;
 }
 
 .content-table {
@@ -103,7 +104,6 @@ $purple-color-lighter: #d9c5e6;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  //font-weight: bold;
 
   .link {
     &:hover {
