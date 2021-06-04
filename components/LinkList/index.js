@@ -81,9 +81,11 @@ const LinkList = ({ linkData, id }) => {
   }
 
   const handleSearch = async (searchString) => {
-    axios.get(`${BASE_URL}/api/links/search?linkCode=${searchString}`)
+    axios.get(`/api/links/search?linkCode=${searchString}`)
       .then((res) => {
-        console.log(res)
+        if (res && res.data && res.data.data) {
+          setLinks(res.data.data.links)
+        }
       })
       .catch((err) => {
         console.log('err', err)
@@ -111,7 +113,12 @@ const LinkList = ({ linkData, id }) => {
           </div>
         }
         <div className="short-link">
-          SHORT LINK
+          <span>
+            SHORT LINK
+          </span>
+          <span>
+            <input className="search" type="text" onChange={(e) => handleSearch(e.target.value)} />
+          </span>
         </div>
         {isLargeScreen &&
           <div className="date">
@@ -166,8 +173,25 @@ const LinkList = ({ linkData, id }) => {
       )}
 
       <div>
-
       </div>
+      <ReactPaginate
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        previousLabel={'<'}
+        nextLabel={'>'}
+        breakLabel={'...'}
+        initialPage={linkData.curPage - 1}
+        pageCount={linkData.maxPage}
+        onPageChange={handlePagination}
+        containerClassName={'paginate-wrap'}
+        subContainerClassName={'paginate-inner'}
+        pageClassName={'paginate-li'}
+        pageLinkClassName={'paginate-a'}
+        activeClassName={'paginate-active'}
+        nextLinkClassName={'paginate-next-a'}
+        previousLinkClassName={'paginate-prev-a'}
+        breakLinkClassName={'paginate-break-a'}
+      />
       {/*<div>*/}
       {/*  <input type="text" onChange={(e) => handleSearch(e.target.value)} />*/}
       {/*</div>*/}
@@ -219,24 +243,7 @@ const LinkList = ({ linkData, id }) => {
       {/*  })}*/}
       {/*  </tbody>*/}
       {/*</table>*/}
-      {/*<ReactPaginate*/}
-      {/*  marginPagesDisplayed={2}*/}
-      {/*  pageRangeDisplayed={5}*/}
-      {/*  previousLabel={'<'}*/}
-      {/*  nextLabel={'>'}*/}
-      {/*  breakLabel={'...'}*/}
-      {/*  initialPage={linkData.curPage - 1}*/}
-      {/*  pageCount={linkData.maxPage}*/}
-      {/*  onPageChange={handlePagination}*/}
-      {/*  containerClassName={'paginate-wrap'}*/}
-      {/*  subContainerClassName={'paginate-inner'}*/}
-      {/*  pageClassName={'paginate-li'}*/}
-      {/*  pageLinkClassName={'paginate-a'}*/}
-      {/*  activeClassName={'paginate-active'}*/}
-      {/*  nextLinkClassName={'paginate-next-a'}*/}
-      {/*  previousLinkClassName={'paginate-prev-a'}*/}
-      {/*  breakLinkClassName={'paginate-break-a'}*/}
-      {/*/>*/}
+
       {/*<NewLink addedNewLink={addedNewLink}/>*/}
     </div>
   )
