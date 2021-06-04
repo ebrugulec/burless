@@ -65,7 +65,7 @@ class linkController {
 
     try {
       const linkCode = shortId.generate();
-      const shortLink = `${BASE_URL}/${linkCode}`;
+      const shortLink = `burless.com/${linkCode}`;
       let url = new Link({
         longLink: reqUrl,
         shortLink,
@@ -84,7 +84,6 @@ class linkController {
     const burless = req.cookies.burless;
     const sessionId = req.sessionID;
     const userId = burless && await getUserIdFromToken(burless);
-    console.log('reqUrl', reqUrl)
 
     try {
       const linkCode = shortId.generate();

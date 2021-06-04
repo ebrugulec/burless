@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import windowSize from "../../lib/windowSize";
 import axios from "axios";
 
-const LinkList = ({ linkData, id }) => {
+const LinkList = ({ linkData, id, isSignedIn }) => {
   const userListRef = useRef(null)
   const [links, setLinks] = useState([])
   const [loading, setLoading] = useState(false)
@@ -77,6 +77,17 @@ const LinkList = ({ linkData, id }) => {
       : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
   }
 
+  function handleDeleteLink(linkId) {
+    axios.delete(`/api/links/${linkId}`)
+      .then((res) => {
+        console.log('links.filter(link => link.id !== linkId)', links.filter(link => link.id !== linkId))
+        setLinks(links.filter(link => link._id !== linkId))
+      })
+      .catch((err) => {
+        console.log('err', err)
+      });
+  }
+
   const handleSearch = async (searchString) => {
     axios.get(`/api/links/search?linkCode=${searchString}`)
       .then((res) => {
@@ -111,9 +122,11 @@ const LinkList = ({ linkData, id }) => {
           <span>
             SHORT LINK
           </span>
-          <span>
-            <input className="search" type="text" onChange={(e) => handleSearch(e.target.value)} />
-          </span>
+          {isSignedIn &&
+            <span>
+              <input className="search" type="text" onChange={(e) => handleSearch(e.target.value)} />
+            </span>
+          }
         </div>
         {isLargeScreen &&
           <div className="date">
@@ -155,33 +168,37 @@ const LinkList = ({ linkData, id }) => {
               <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
                 <a><FontAwesomeIcon icon={faChartBar} /></a>
               </Link>
-              <a><FontAwesomeIcon icon={faTrash} /></a>
+              <span onClick={() => handleDeleteLink(link._id)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
             </div>
-
           </div>
         )
       }
       )}
       <div>
       </div>
-      <ReactPaginate
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        previousLabel={'<'}
-        nextLabel={'>'}
-        breakLabel={'...'}
-        initialPage={linkData.curPage - 1}
-        pageCount={linkData.maxPage}
-        onPageChange={handlePagination}
-        containerClassName={'paginate-wrap'}
-        subContainerClassName={'paginate-inner'}
-        pageClassName={'paginate-li'}
-        pageLinkClassName={'paginate-a'}
-        activeClassName={'paginate-active'}
-        nextLinkClassName={'paginate-next-a'}
-        previousLinkClassName={'paginate-prev-a'}
-        breakLinkClassName={'paginate-break-a'}
-      />
+      {links && links.length > 0 &&
+        <ReactPaginate
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          previousLabel={'<'}
+          nextLabel={'>'}
+          breakLabel={'...'}
+          initialPage={linkData.curPage - 1}
+          pageCount={linkData.maxPage}
+          onPageChange={handlePagination}
+          containerClassName={'paginate-wrap'}
+          subContainerClassName={'paginate-inner'}
+          pageClassName={'paginate-li'}
+          pageLinkClassName={'paginate-a'}
+          activeClassName={'paginate-active'}
+          nextLinkClassName={'paginate-next-a'}
+          previousLinkClassName={'paginate-prev-a'}
+          breakLinkClassName={'paginate-break-a'}
+        />
+      }
+
       {/*<div>*/}
       {/*  <input type="text" onChange={(e) => handleSearch(e.target.value)} />*/}
       {/*</div>*/}

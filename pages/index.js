@@ -4,7 +4,7 @@ import cookies from 'next-cookies'
 import Dashboard from './dahsboard'
 import LinkList from '../components/LinkList'
 import Layout from '../components/Layout'
-import { server } from '../config';
+import {server} from "../config";
 
 export default function Home (props) {
   const router = useRouter();
@@ -15,10 +15,10 @@ export default function Home (props) {
   }, []);
   //TODO: token var ama hic link yoksa uyari ver.
 
-  if (props.data && (props.data.isSignedIn || (props.data.links && props.data.links.length > 0))) {
+  if (props.data && (props.data.token || (props.data.links && props.data.links.length > 0))) {
     return (
       <Layout>
-        <LinkList linkData={props.data} id={props.id} />
+        <LinkList linkData={props.data} id={props.id} isSignedIn={props.isSignedIn} />
       </Layout>
     )
   } else {
@@ -47,10 +47,11 @@ export const getServerSideProps = async (context) => {
     const resultData = {
       data: result.data || null,
       id: id,
-      isSignedIn: !!token,
+      isSignedIn: !!token
     };
     return { props: resultData };
   } catch(err){
+    console.log(err)
     return { props: { data: null } };
   }
 };

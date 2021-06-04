@@ -129,7 +129,6 @@ app.prepare().then(() => {
 
   server.get('/s/*', (req, res) => {
     const reqUrl = req.url && req.url.substring(2).substring(1)
-    console.log('req ss', reqUrl.substring(1))
     if (checkUrl(reqUrl)) {
       return linkController.stayLink(req, res, reqUrl)
     } else {
@@ -147,7 +146,7 @@ app.prepare().then(() => {
   });
 
   server.get('*', async (req, res, next) => {
-    const reqUrl = req.url.substring(1)
+    const reqUrl = req.url && req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {
       res.status(301);
@@ -161,4 +160,4 @@ app.prepare().then(() => {
     if (err) throw err
     console.log('Server ready on PORT', PORT)
   });
-})
+});
