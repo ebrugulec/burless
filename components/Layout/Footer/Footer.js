@@ -5,27 +5,23 @@ import Link from 'next/link'
 import Image from 'next/image'
 import "../../../styles/Footer.scss"
 import React from 'react'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function Footer () {
   const dt = new Date();
   return (
     <div className="footer">
-      {/*<div className="footer-section-img-wrapper">*/}
-      {/*  <div className="footer-img">*/}
-      {/*    <Image*/}
-      {/*      src="/burless-is-more.svg"*/}
-      {/*      layout="fill"*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*</div>*/}
       <div className="footer-menu">
-        About
+        <a className="menu" target="_blank" href="https://twitter.com/glcebru">Me</a>
+        <a className="menu" target="_blank" href="https://burless.medium.com">About</a>
       </div>
       <div className="social-links">
-        <Image
-          src="/twitter.png"
-          layout="fill"
-        />
+        <a href="https://twitter.com/burless_app" target="_blank">
+          <Image
+            src="/twitter.png"
+            layout="fill"
+          />
+        </a>
       </div>
       <div className="copyright">
         © {dt.getFullYear()} Burless

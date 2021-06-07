@@ -266,6 +266,16 @@ export const getServerSideProps = async (context) => {
   // const userAgent = context.req ? context.req.headers['user-agent'] : ''
   const { id } = context.req.params || null;
 
+  if (!token) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    };
+  }
+
   if (id) {
     try {
       const response = await fetch(`${BASE_URL}/api/links/statistic/${id}`, {

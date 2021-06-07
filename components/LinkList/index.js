@@ -15,7 +15,6 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
   const [loading, setLoading] = useState(false)
   const [firstRender, setFirstRender] = useState(true)
   const [matchedIdStyle, setMatchedIdStyle] = useState(false);
-  const [newLinkId, setNewLinkId] = useState(null)
   const startLoading = () => setLoading(true)
   const stopLoading = () => setLoading(false)
   const size = windowSize();
@@ -25,7 +24,6 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
   let isLargeScreen = size.width > 768;
 
   useEffect(() => {
-    setFirstRender(false)
     Router.events.on('routeChangeStart', startLoading)
     Router.events.on('routeChangeComplete', stopLoading)
     return () => {
@@ -41,41 +39,44 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
       } else {
         // Set links from linkData
         setLinks(linkData.links)
+        setFirstRender(false)
       }
     }
-  }, [linkData])
+
+    if (router.query && router.query.page == 1) {
+      router.replace('/', undefined, { shallow: true })
+    }
+  }, [linkData]);
 
   const handlePagination = (page) => {
-    if (!firstRender) {
-      const path = router.pathname
-      const query = router.query
-      query.page = page.selected + 1
-      router.push({
-        pathname: path,
-        query: query,
-      })
-    }
+    const path = router.pathname;
+    const query = router.query;
+    query.page = page.selected + 1;
+    router.push({
+      pathname: path,
+      query: `page=${query.page}`,
+    })
     // userListRef.current.scrollIntoView()
   };
+  //
+  // useEffect(() => {
+  //   if (id) {
+  //     setMatchedIdStyle(true);
+  //     setTimeout(() => {
+  //       setMatchedIdStyle(false);
+  //     }, 9000)
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (id) {
-      setMatchedIdStyle(true);
-      setTimeout(() => {
-        setMatchedIdStyle(false);
-      }, 9000)
-    }
-  }, []);
-
-  const addedNewLink = (responseData) => {
-    setNewLinkId(responseData.data.link._id)
-    setLinks([responseData.data.link, ...links])
-  };
-
-  function returnNewAddedLinkStyle (linkId) {
-    return linkId === newLinkId ? 'table-success'
-      : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
-  }
+  // const addedNewLink = (responseData) => {
+  //   setNewLinkId(responseData.data.link._id)
+  //   setLinks([responseData.data.link, ...links])
+  // };
+  //
+  // function returnNewAddedLinkStyle (linkId) {
+  //   return linkId === newLinkId ? 'table-success'
+  //     : ((newLinkId === null && linkId === id ) ? 'table-success' : '')
+  // }
 
   function handleDeleteLink(linkId) {
     axios.delete(`/api/links/${linkId}`)
@@ -198,61 +199,8 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
           breakLinkClassName={'paginate-break-a'}
         />
       }
-
-      {/*<div>*/}
-      {/*  <input type="text" onChange={(e) => handleSearch(e.target.value)} />*/}
-      {/*</div>*/}
-      {/*<table className="table content-table">*/}
-      {/*  <thead>*/}
-      {/*  <tr>*/}
-      {/*    {isLargeScreen && <th scope="col">Clicks</th>}*/}
-      {/*    <th scope="col">Short Link</th>*/}
-      {/*    {isLargeScreen && <th scope="col">Long Link</th>}*/}
-      {/*    {isLargeScreen && <th scope="col">Created Date</th>}*/}
-      {/*    <th scope="col">Actions</th>*/}
-      {/*  </tr>*/}
-      {/*  </thead>*/}
-      {/*  <tbody>*/}
-      {/*  {links && links.length > 0 &&*/}
-      {/*  links.map((link, i) => {*/}
-      {/*    return (*/}
-      {/*      <tr key={i} className={returnNewAddedLinkStyle(link._id)}>*/}
-      {/*        {isLargeScreen &&*/}
-      {/*          <th className="click">*/}
-      {/*            {link.totalClickCount}*/}
-      {/*          </th>*/}
-      {/*        }*/}
-      {/*        <th key={i}>*/}
-      {/*          <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
-      {/*            <a>{link.shortLink}</a>*/}
-      {/*          </Link>*/}
-      {/*        </th>*/}
-      {/*        {isLargeScreen &&*/}
-      {/*          <th>*/}
-      {/*            <div className="long-link">*/}
-      {/*              <a className="link">{link.longLink}</a>*/}
-      {/*            </div>*/}
-      {/*          </th>*/}
-      {/*        }*/}
-      {/*        {isLargeScreen &&*/}
-      {/*          <th>*/}
-      {/*            12.2.2222*/}
-      {/*          </th>*/}
-      {/*        }*/}
-      {/*        <th>*/}
-      {/*          <Link className="link" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>*/}
-      {/*            <a><FontAwesomeIcon icon={faChartBar} /></a>*/}
-      {/*          </Link>*/}
-      {/*          {isLargeScreen && <a><FontAwesomeIcon icon={faTrash} /></a>}*/}
-      {/*        </th>*/}
-      {/*      </tr>*/}
-      {/*    )*/}
-      {/*  })}*/}
-      {/*  </tbody>*/}
-      {/*</table>*/}
-
-      {/*<NewLink addedNewLink={addedNewLink}/>*/}
     </div>
   )
-}
+};
+
 export default LinkList

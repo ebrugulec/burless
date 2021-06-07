@@ -9,10 +9,14 @@ import React from 'react'
 function Header () {
   return (
     <div className="header">
-      <Image src="/burless_is_more.svg"
-       width={80}
-       height={33}
-      />
+      <Link href={`/`}>
+        <a>
+          <Image src="/burless_is_more.svg"
+                 width={80}
+                 height={33}
+          />
+        </a>
+      </Link>
       {/*<Image*/}
       {/*  src="/hamburger.svg"*/}
       {/* width={24}*/}

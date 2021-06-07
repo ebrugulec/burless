@@ -2,6 +2,68 @@
 .dashboard {
   box-sizing: border-box;
 
+  .dashboard-footer-section-img-wrapper {
+    position: relative;
+    margin-top: 50px;
+
+    .footer-img {
+      width: 77px;
+      height: 30px;
+      display: flex;
+    }
+  }
+
+  .dashboard-footer {
+    margin-top: 25px;
+    padding: 10px;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    bottom: 10px;
+    width: 100%;
+    height: 100px;
+    clear: both;
+    position: relative;
+
+    .social-links {
+      //margin-top: 17px;
+      margin-left: 25px;
+    }
+
+    .dashboard-footer-menu {
+      margin-top: 17px;
+
+      .menu {
+        color: #2C374D;
+
+        &:not(:first-child) {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .copyright {
+      text-align: center;
+      align-items: center;
+      margin-top: 17px;
+      margin-bottom: 10px;
+      .img {
+        position: absolute;
+      }
+    }
+
+    .social-links {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      .img {
+        //position: relative;
+      }
+    }
+  }
+
   .main-section-image-wrapper {
     position: relative;
 

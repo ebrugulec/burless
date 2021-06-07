@@ -4,6 +4,7 @@ import '../styles/Report.scss';
 import {faLink, faMousePointer, faUser, faEnvelope, faSignOutAlt, faChartBar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import cookies from "next-cookies";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -21,7 +22,7 @@ function Report (props) {
               Total Link Count
             </div>
             <div className="card-info">
-              {totalLinks}
+              {props.data && totalLinks}
             </div>
           </div>
           <div className="card">
@@ -55,6 +56,16 @@ function Report (props) {
 }
 
 export const getServerSideProps = async (context) => {
+  const token = cookies(context).burless || null
+  if (!token) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    };
+  }
   try {
     const response = await fetch(`${BASE_URL}/api/links/report`, {
       credentials: 'include',

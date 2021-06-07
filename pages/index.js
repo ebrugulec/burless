@@ -10,7 +10,7 @@ export default function Home (props) {
   const router = useRouter();
   useEffect(() => {
     if (props.id) {
-      router.push('/', undefined, { shallow: true })
+      router.replace('/', undefined, { shallow: true })
     }
   }, []);
   //TODO: token var ama hic link yoksa uyari ver.

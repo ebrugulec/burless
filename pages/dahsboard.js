@@ -3,6 +3,7 @@ import Header from "../components/Layout/Header/Header";
 import React from "react";
 import Image from "next/image";
 import DashboardHeader from "../components/Layout/DashboardHeader";
+import Link from "next/link";
 
 export default function Dashboard ({ id }) {
   const dt = new Date();
@@ -216,26 +217,29 @@ export default function Dashboard ({ id }) {
           Get Started
         </button>
       </div>
-
-      {/*<div className="footer">*/}
-      {/*  <div className="footer-section-img-wrapper">*/}
-      {/*    <div className="footer-img">*/}
-      {/*      <Image*/}
-      {/*        src="/burless-is-more.svg"*/}
-      {/*        layout="fill"*/}
-      {/*      />*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*  <div className="social-links">*/}
-      {/*    <Image*/}
-      {/*      src="/twitter.png"*/}
-      {/*      layout="fill"*/}
-      {/*    />*/}
-      {/*  </div>*/}
-      {/*  <div className="copyright">*/}
-      {/*    © {dt.getFullYear()} Burless*/}
-      {/*  </div>*/}
-      {/*</div>*/}
+      <div className="dashboard-footer-section-img-wrapper">
+        <div className="footer-img">
+          <Image
+            src="/burless-is-more.svg"
+            layout="fill"
+          />
+        </div>
+      </div>
+      <div className="dashboard-footer">
+        <div className="dashboard-footer-menu">
+          <a className="menu" target="_blank" href="https://burless.medium.com">About</a>
+          <a className="menu" target="_blank" href="https://twitter.com/glcebru">Me</a>
+        </div>
+        <div className="social-links">
+          <Image
+            src="/twitter.png"
+            layout="fill"
+          />
+        </div>
+        <div className="copyright">
+          © {dt.getFullYear()} Burless
+        </div>
+      </div>
     </div>
   )
 }
