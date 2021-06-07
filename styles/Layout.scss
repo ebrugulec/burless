@@ -1,4 +1,8 @@
 .layout {
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   .hamburger-button-wrapper {
     position: relative;
     z-index: 20;

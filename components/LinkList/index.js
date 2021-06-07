@@ -90,15 +90,17 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
   }
 
   const handleSearch = async (searchString) => {
-    axios.get(`/api/links/search?linkCode=${searchString}`)
-      .then((res) => {
-        if (res && res.data && res.data.data) {
-          setLinks(res.data.data.links)
-        }
-      })
-      .catch((err) => {
-        console.log('err', err)
-      });
+    if (searchVal.length > 3) {
+      axios.get(`/api/links/search?linkCode=${searchString}`)
+        .then((res) => {
+          if (res && res.data && res.data.data) {
+            setLinks(res.data.data.links)
+          }
+        })
+        .catch((err) => {
+          console.log('err', err)
+        });
+    }
     setSearchVal(searchString)
   };
 //TODO: Font check

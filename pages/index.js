@@ -28,8 +28,8 @@ export default function Home (props) {
 
 export const getServerSideProps = async (context) => {
   const { query } = context;
-  const token = cookies(context).burless || null
-  const id = context.query.id ? JSON.parse(context.query.id) : null
+  const token = cookies(context).burless || null;
+  const id = context.query.id ? JSON.parse(context.query.id) : null;
   const page = query.page || 1;
 
   try {

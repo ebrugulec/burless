@@ -22,7 +22,7 @@ function DashboardHeader () {
           />
         </a>
       </Link>
-      <div>
+      <div className="dashboard-header-menu">
         <Link
           href={{
             pathname: '/login',

@@ -2,8 +2,14 @@
   padding-top: 35px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  font-size: 16px;
+  justify-content: space-between;
+  font-size: 15px;
+  width: 90%;
+  margin: auto;
+
+  .dashboard-header-menu {
+    align-self: center;
+  }
 
   a {
     color: #2C374D;

@@ -182,7 +182,7 @@
     }
 
     &.main-title-section {
-      margin-top: 20px;
+      margin-top: 60px;
       margin-bottom: 20px;
     }
 
@@ -252,7 +252,7 @@
           position: absolute;
           border-radius: 2px 2px 0 0;
           background: #FFFFFF;
-          top: 5.2%;
+          top: 11px;
           left: 50%;
           transform: translate(-50%, -50%);
           display: flex;
@@ -301,14 +301,14 @@
 
             .link {
               box-sizing: border-box;
-              //margin: 5px;
-              //padding: 5px;
+              padding-left: 5px;
               font-size: 8px;
               height: 13px;
               border: 1px solid #EBEEF5;
               color: #717273;
               border-radius: 5px;
               width: 100%;
+              padding-right: 3px;
 
               .burless {
                 color: #43BA7F;
@@ -330,7 +330,9 @@
 
           .buttons {
             margin-left: 4px;
-            width: 8%;
+            width: 10%;
+            align-self: flex-end;
+
             .dot {
               border-radius: 50%;
               height: 4px;
@@ -369,6 +371,12 @@
 
 @media (min-width: 768px) {
   .dashboard {
+
+    .arrow-image-wrapper {
+      width: 42px;
+      height: 51px;
+    }
+
     .welcoming-text {
       font-size: 40px;
     }
@@ -395,19 +403,18 @@
       margin: auto;
 
       .section-wrapper {
-        height: 300px;
+        height: 500px;
         .browser-wrapper {
 
           .woman {
             width: 660px;
-            height: 220px;
+            height: 360px;
           }
           .browser-text {
             top: 15%;
             left: 15%;
-
-            width: 410px;
-            height: 62px;
+            width: 510px;
+            height: 82px;
           }
         }
 

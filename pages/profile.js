@@ -5,11 +5,11 @@ import axios from 'axios';
 import cookies from 'next-cookies'
 import {redirectLogin} from "../utils";
 import '../styles/Profile.scss'
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import {server} from "../config";
 
 function Profile (props) {
   //TODO: Check whe data is null
+  console.log('props', props);
   return <Layout>
     <div className="profile">
       <div className="card-wrapper">
@@ -18,12 +18,18 @@ function Profile (props) {
           </div>
           <div className="content-div">
             <div className="title-div">
-              <h2 className="title text-opacity">ebrugulec</h2>
+              { props.data &&
+                <h2 className="title text-opacity">
+                  {props.data.username}
+                </h2>
+              }
             </div>
             <div className="desc-div">
-              <p className="desc-text text-opacity">
-                ebru@gulec.com
-              </p>
+              {props.data &&
+                <p className="desc-text text-opacity">
+                  {props.data.email}
+                </p>
+              }
             </div>
           </div>
         </div>
@@ -44,7 +50,7 @@ export const getServerSideProps = async (context) => {
     };
   }
   try {
-    const response = await fetch(`${BASE_URL}/api/users/me`, {
+    const response = await fetch(`${server}/api/users/me`, {
       credentials: 'include',
       ...(context.req
         ? {
@@ -54,7 +60,8 @@ export const getServerSideProps = async (context) => {
         }
         : {}),
     });
-    let result = await response.json()
+    let result = await response.json();
+    console.log('result', result)
     return { props: { data: result.data ? result.data : null } };
   } catch {
     return { props: { data: null } };

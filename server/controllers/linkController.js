@@ -246,6 +246,8 @@ class linkController {
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
       const geo = geoip.lookup(parseIp(req));
+
+      console.log('geo', geo)
       const country = geo && geo['country'] || 'A country in the universe';
       const city = geo && geo['city'] || 'A city in the universe';
       const referrer = req.get('Referrer');

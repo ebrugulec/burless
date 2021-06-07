@@ -11,7 +11,7 @@ export default function Dashboard ({ id }) {
     <div className="dashboard">
       <DashboardHeader />
       <div className="welcoming-text">
-        The easiest way to shorten url from <span>the <br/> address bar</span> and much more.
+        The easiest way to shorten links from <span>the <br/> address bar,</span> and much more.
       </div>
       <div className="section browser-section">
         <div className="section-wrapper">
@@ -66,7 +66,7 @@ export default function Dashboard ({ id }) {
             </div>
             <div className="browser-text">
               <Image
-                src="/browser-text.svg"
+                src="/text-browser.svg"
                 layout="fill"
               />
             </div>
@@ -82,7 +82,7 @@ export default function Dashboard ({ id }) {
 
       <div className="section main-title-section">
         <div className="main-title">
-          Features and some cool things
+          Feature and some cool things
           <div className="main-section-image-wrapper">
             <div className="section-image">
               <Image
@@ -115,7 +115,7 @@ export default function Dashboard ({ id }) {
         <div className="section-image-wrapper">
           <div className="section-image">
             <Image
-              src="/your-link.svg"
+              src="/long-link-image.svg"
               layout="fill"
             />
           </div>
@@ -125,7 +125,7 @@ export default function Dashboard ({ id }) {
             Easy to use
           </div>
           <div className="section-content">
-            Copy the long url and paste it after burless.com and hit enter. It's that easy and simple. (Don't forget to register)
+            Copy the long url and paste it after burless.com and hit enter. It's that easy and simple.
           </div>
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function Dashboard ({ id }) {
             Statistics
           </div>
           <div className="section-content">
-            Track each shortened link in real-time. Detailed analytics provides you information about clicks, page referrer, devices, browsers, systems, geolocation. Pretty cool. huh?
+            Track each shortened link in real-time. Detailed analytics provides you information about clicks, page referrer and much more. Pretty cool. huh?
           </div>
         </div>
         <div className="section-image-wrapper">
@@ -174,13 +174,13 @@ export default function Dashboard ({ id }) {
             Stay at link
           </div>
           <div className="section-content">
-            It's easy too if you want to shorten the link and stay on the same page. Just write burless.com/s before the url.
+            It's easy too if you want to shorten the link and stay on the same page. Just write burless.com/s before the link.
           </div>
         </div>
         <div className="section-image-wrapper">
           <div className="section-image">
             <Image
-              src="/return-url.svg"
+              src="/stay-url-image.svg"
               layout="fill"
             />
           </div>
@@ -213,9 +213,18 @@ export default function Dashboard ({ id }) {
         <span className="section-content">
           Add "burless.com/" to the beginning of the any links.
         </span>
-        <button className="started-button">
-          Get Started
-        </button>
+
+        <Link
+          href={{
+            pathname: '/register',
+          }}
+        >
+          <a>
+            <button className="started-button">
+              Get Started
+            </button>
+          </a>
+        </Link>
       </div>
       <div className="dashboard-footer-section-img-wrapper">
         <div className="footer-img">

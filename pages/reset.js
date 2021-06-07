@@ -1,15 +1,14 @@
 import React, {useState} from 'react'
 import axios from "axios";
 import DashboardHeader from "../components/Layout/DashboardHeader";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import {server} from "../config";
 
 export default function Reset () {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('')
 
   function sendResetLink () {
-    axios.post(`${BASE_URL}/api/users/reset-password`, { email })
+    axios.post(`${server}/api/users/reset-password`, { email })
       .then((res) => {
         setMessage('Password reset link has been sent to your inbox.')
       })

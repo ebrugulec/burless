@@ -5,8 +5,7 @@ import {faLink, faMousePointer, faUser, faEnvelope, faSignOutAlt, faChartBar} fr
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import cookies from "next-cookies";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import {server} from "../config";
 
 function Report (props) {
   const { totalLinks, totalClickCount, mostClicked } = props?.data;
@@ -22,7 +21,7 @@ function Report (props) {
               Total Link Count
             </div>
             <div className="card-info">
-              {props.data && totalLinks}
+              {props.data && props.data.totalLinks}
             </div>
           </div>
           <div className="card">
@@ -33,7 +32,7 @@ function Report (props) {
               Total Click Count
             </div>
             <div className="card-info">
-              {totalClickCount[0]?.totalClickCount}
+              {props.data.totalClickCount[0]?.totalClickCount}
             </div>
           </div>
           <div className="card">
@@ -44,9 +43,9 @@ function Report (props) {
               Most Clicked Link
             </div>
             <div className="card-info">
-              {/*<Link className="" href={`/statistic/${encodeURIComponent(mostClicked[0]?.linkCode)}`}>*/}
-              {/*  <a>{mostClicked[0]?.linkCode}</a>*/}
-              {/*</Link>*/}
+              <Link className="" href={`/statistic/${encodeURIComponent(props.data.mostClicked[0]?.linkCode)}`}>
+                <a>{props.data.mostClicked[0]?.linkCode}</a>
+              </Link>
             </div>
           </div>
         </div>
@@ -67,7 +66,7 @@ export const getServerSideProps = async (context) => {
     };
   }
   try {
-    const response = await fetch(`${BASE_URL}/api/links/report`, {
+    const response = await fetch(`${server}/api/links/report`, {
       credentials: 'include',
       ...(context.req
         ? {

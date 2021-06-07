@@ -7,8 +7,7 @@ import {Line} from 'react-chartjs-2';
 import axios from "axios";
 
 import '../styles/Statistic.scss'
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import {server} from "../config";
 
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -129,7 +128,7 @@ export default function Statistic (props) {
   const handleOnchangeSelect = (val) => {
     setSelectedValue(val);
     if (props.id && val !== setSelectedValue) {
-      axios.get(`${BASE_URL}/api/links/statistic/${props.id}/${val}`)
+      axios.get(`${server}/api/links/statistic/${props.id}/${val}`)
         .then((res) => {
           if (res.data && res.data.data && res.data.data.clickInfo) {
             setStatisticData({});
@@ -278,7 +277,7 @@ export const getServerSideProps = async (context) => {
 
   if (id) {
     try {
-      const response = await fetch(`${BASE_URL}/api/links/statistic/${id}`, {
+      const response = await fetch(`${server}/api/links/statistic/${id}`, {
         credentials: 'include',
         ...(context.req
           ? {
