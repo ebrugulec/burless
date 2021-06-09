@@ -245,7 +245,8 @@ class linkController {
   static saveLinkAndStatisticInfo = async (req, linkCode) => {
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
-      const geo = geoip.lookup(parseIp(req));
+console.log('heyy', req.headers["x-real-ip"])
+      const geo = geoip.lookup(req.headers["x-real-ip"]);
 
       console.log('geo', geo)
       const country = geo && geo['country'] || 'a country';
