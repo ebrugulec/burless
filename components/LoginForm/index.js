@@ -10,7 +10,7 @@ function LoginForm({
   values
 }) {
   return (
-    <div>
+    <div className="login">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">
@@ -26,7 +26,9 @@ function LoginForm({
               name="email"
               required
             />
-            {touched.email && errors.email}
+            <div className="required-placeholder">
+              {touched.email && errors.email}
+            </div>
           </label>
         </div>
         <div className="form-group">
@@ -43,7 +45,9 @@ function LoginForm({
               name="password"
               required
             />
-            {touched.password && errors.password}
+            <div className="required-placeholder">
+              {touched.password && errors.password}
+            </div>
           </label>
         </div>
         <div className="form-group action-buttons">

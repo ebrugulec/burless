@@ -8,25 +8,27 @@ export default function Reset () {
   const [message, setMessage] = useState('')
 
   function sendResetLink () {
-    axios.post(`${server}/api/users/reset-password`, { email })
-      .then((res) => {
-        setMessage('Password reset link has been sent to your inbox.')
-      })
-      .catch((err) => {
-        setMessage('Something went wrong');
-      });
+    if (email.length > 0) {
+      axios.post(`${server}/api/users/reset-password`, { email })
+        .then((res) => {
+          setMessage('Password reset link has been sent to your inbox.')
+        })
+        .catch((err) => {
+          setMessage('Something went wrong');
+        });
+    }
   }
 
   return (
     <>
       <DashboardHeader/>
       <div className="reset">
-        <div>
-          <input value={email} onChange={event => setEmail(event.target.value)} />
+        <div className="reset-wrapper">
+          <input className="form-control" placeholder="Your email address" value={email} onChange={event => setEmail(event.target.value)} />
           <button onClick={sendResetLink}>Send Rest Link</button>
         </div>
         { message &&
-        <div>
+        <div className="required-placeholder">
           {message}
         </div>
         }

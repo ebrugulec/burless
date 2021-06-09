@@ -248,8 +248,8 @@ class linkController {
       const geo = geoip.lookup(parseIp(req));
 
       console.log('geo', geo)
-      const country = geo && geo['country'] || 'A country in the universe';
-      const city = geo && geo['city'] || 'A city in the universe';
+      const country = geo && geo['country'] || 'a country';
+      const city = geo && geo['city'] || 'a city';
       const referrer = req.get('Referrer');
       let totalClickCount = link.totalClickCount;
       totalClickCount++;

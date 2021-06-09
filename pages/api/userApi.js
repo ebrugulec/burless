@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {checkEnvironmentAndGetUrl} from "../../utils";
+import {server} from "../../config";
 
 export const login = async ({ email, password }) => {
-  console.log('checkEnvironmentAndGetUrl()', checkEnvironmentAndGetUrl())
-  const response = await axios.post(`/api/login`, {
+  const response = await axios.post(`${server}/api/login`, {
     email,
     password,
   })
@@ -13,7 +13,7 @@ export const login = async ({ email, password }) => {
 };
 
 export const register = async ({ username, email, password }) => {
-  const response = await axios.post(`/api/signup`, {
+  const response = await axios.post(`${server}/api/signup`, {
     username,
     email,
     password,
@@ -25,7 +25,7 @@ export const register = async ({ username, email, password }) => {
 
 export const getUser = async () => {
   try {
-    let res = await axios.get(`/api/me`);
+    let res = await axios.get(`${server}/api/me`);
 
     return res.data.user
   } catch (error) {
@@ -36,7 +36,7 @@ export const getUser = async () => {
 
 export const logout = async () => {
   try {
-    await axios.get(`/api/auth/logout`)
+    await axios.get(`${server}/api/auth/logout`)
   } catch (error) {
     console.log(error)
   }

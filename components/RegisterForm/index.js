@@ -26,7 +26,9 @@ function RegisterForm({
               name="username"
               required
             />
-            {touched.username && errors.username}
+            <div className="required-placeholder">
+              {touched.username && errors.username}
+            </div>
           </label>
         </div>
         <div className="form-group">
@@ -43,7 +45,9 @@ function RegisterForm({
               name="email"
               required
             />
-            {touched.email && errors.email}
+            <div className="required-placeholder">
+              {touched.email && errors.email}
+            </div>
           </label>
         </div>
         <div className="form-group">
@@ -60,7 +64,9 @@ function RegisterForm({
               name="password"
               required
             />
-            {touched.password && errors.password}
+            <div className="required-placeholder">
+              {touched.password && errors.password}
+            </div>
           </label>
         </div>
         <div className="form-group action-buttons">
