@@ -8,6 +8,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import windowSize from "../../lib/windowSize";
 import axios from "axios";
+import {server} from "../../config";
 
 const LinkList = ({ linkData, id, isSignedIn }) => {
   const userListRef = useRef(null)
@@ -79,9 +80,8 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
   // }
 
   function handleDeleteLink(linkId) {
-    axios.delete(`/api/links/${linkId}`)
+    axios.delete(`${server}/api/links/${linkId}`)
       .then((res) => {
-        console.log('links.filter(link => link.id !== linkId)', links.filter(link => link.id !== linkId))
         setLinks(links.filter(link => link._id !== linkId))
       })
       .catch((err) => {
@@ -90,8 +90,8 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
   }
 
   const handleSearch = async (searchString) => {
-    if (searchVal.length > 3) {
-      axios.get(`/api/links/search?linkCode=${searchString}`)
+    if (searchVal.length === 0 || searchVal.length >= 3) {
+      axios.get(`${server}/api/links/search?linkCode=${searchString}`)
         .then((res) => {
           if (res && res.data && res.data.data) {
             setLinks(res.data.data.links)

@@ -11,7 +11,7 @@ export default function Dashboard ({ id }) {
     <div className="dashboard">
       <DashboardHeader />
       <div className="welcoming-text">
-        The easiest way to shorten links from <span>the <br/> address bar,</span> and much more.
+        The easiest way to shorten url from <span>the <br/> address bar,</span> and much more.
       </div>
       <div className="section browser-section">
         <div className="section-wrapper">

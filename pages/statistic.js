@@ -1,8 +1,6 @@
 import Layout from '../components/Layout'
 import React, {useEffect, useState} from 'react'
-import {requirePageAuth} from "../lib/auth";
 import cookies from "next-cookies";
-import {redirectLogin} from "../utils";
 import {Line} from 'react-chartjs-2';
 import axios from "axios";
 
@@ -301,14 +299,4 @@ export const getServerSideProps = async (context) => {
     //Todo: id yoksa islem yap ona gore.
     return { props: { data: null } };
   }
-
-  // if (!token) {
-  //   return {
-  //     props: {},
-  //     redirect: {
-  //       destination: '/login',
-  //       permanent: false
-  //     }
-  //   };
-  // }
 };

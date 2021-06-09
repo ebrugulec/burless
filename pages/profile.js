@@ -1,9 +1,6 @@
 import Layout from '../components/Layout'
 import React from 'react'
-import {requirePageAuth} from "../lib/auth";
-import axios from 'axios';
 import cookies from 'next-cookies'
-import {redirectLogin} from "../utils";
 import '../styles/Profile.scss'
 import {server} from "../config";
 
