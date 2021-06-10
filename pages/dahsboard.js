@@ -23,11 +23,12 @@ export default function Dashboard ({ id }) {
                   <span className="dot yellow"/>
                   <span className="dot green"/>
                 </div>
-                <div className="back-forward">
-                  <Image src="/back-forward.svg"
-                     width={24}
-                     height={13}
-                  />
+                <div className="back-forward-wrapper">
+                  <div className="back-forward">
+                    <Image src="/back-forward.svg"
+                           layout="fill"
+                    />
+                  </div>
                 </div>
                 <div className="link-area">
                   <div className="link">

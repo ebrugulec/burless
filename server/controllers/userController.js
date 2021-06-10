@@ -76,7 +76,6 @@ class userController {
   };
 
   static signIn = async (req, res) => {
-    console.log(';sgin in')
     const sessionId = req.sessionID;
     const errors = validationResult(req);
 
@@ -104,7 +103,7 @@ class userController {
       if (!isMatch)
         return res.status(401).json({
           errors: [
-            {msg: "Incorrect Password!"}
+            {msg: "Incorrect Credential!"}
           ]
         });
 
@@ -162,10 +161,15 @@ class userController {
   };
 
   static async updateUserLinksWithSession(sessionId, userId) {
-    await Link.updateMany(
-      {session: sessionId},
-      {"user": userId},
-      {upsert: true});
+    const payload = userId ? { 'user': ObjectId(userId) } : { session: sessionId };
+    const link = await Link.findOne(payload);
+    if (link) {
+      await Link.updateMany(
+        {session: sessionId},
+        {"user": userId},
+        {upsert: true});
+    }
+
   }
 }
 

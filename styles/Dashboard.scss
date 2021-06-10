@@ -286,7 +286,7 @@
             align-items: center;
             box-sizing: border-box;
             position: relative;
-            margin-left: 7px;
+            margin-left: 2px;
             width: 80%;
 
             .refresh {
@@ -320,19 +320,23 @@
             display: flex;
             width: 90%;
 
-            .back-forward {
-              justify-content: center;
-              align-items: center;
-              display: flex;
-              margin-top: 2px;
+            .back-forward-wrapper {
+              position: relative;
+
+              .back-forward {
+                width: 20px;
+                //height: 45px;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+              }
             }
           }
 
           .buttons {
-            margin-left: 4px;
-            width: 10%;
+            margin-left: 5px;
             align-self: center;
-            margin-bottom: 5px;
+            min-width: 30px;
 
             .dot {
               border-radius: 50%;
@@ -408,13 +412,23 @@
         .browser-wrapper {
 
           .arrow-image-wrapper {
-            width: 42px;
-            height: 50px;
+            width: 35px;
+            height: 45px;
           }
 
           .link-bar {
             height: 50px;
             top: 27px;
+
+            .browser-left  {
+              .back-forward-wrapper {
+                .back-forward {
+                  width: 40px;
+                  height: 20px;
+                  margin-right: 5px;
+                }
+              }
+            }
 
             .new-window-area {
               .plus-wrapper {
@@ -442,9 +456,16 @@
                 height: 12px;
                 margin-left: 7px;
               }
+
+              //.back-forward {
+              //  width: 6px;
+              //  height: 6px;
+              //}
             }
 
             .buttons {
+              margin-left: 12px;
+              margin-right: 15px;
               .dot {
                 width: 9px;
                 height: 9px;

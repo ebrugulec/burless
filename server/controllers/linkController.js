@@ -1,26 +1,18 @@
 const shortId = require('shortid');
-const validUrl = require('valid-url');
 const Link = require('../models/Link');
-const TotalClick = require('../models/TotalClick');
-// const Click = require('../models/click');
-const UAParser = require('ua-parser-js');
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
 const Click = require('../models/Click');
-const { parse } = require('url');
 const geoip = require('geoip-lite');
 const redis = require("redis");
 dotenv.config();
 const getUserIdFromToken = require('../../utils/getUserIdFromToken');
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const client = redis.createClient(REDIS_PORT);
-const {parseIp} = require("../../utils");
 const checkUrl = require('../../utils/checkUrl');
 const {checkLinkId} = require("../../utils");
-const useragent = require('express-useragent');
+const parser = require('ua-parser-js');
 const {
   getDatesBetweenDates,
   handleDaysForStatistic,
@@ -245,13 +237,12 @@ class linkController {
   static saveLinkAndStatisticInfo = async (req, linkCode) => {
     const link = await Link.findOne({ 'linkCode': linkCode });
     if (link) {
-console.log('heyy', req.headers["x-real-ip"])
       const geo = geoip.lookup(req.headers["x-real-ip"]);
-
-      console.log('geo', geo)
-      const country = geo && geo['country'] || 'a country';
-      const city = geo && geo['city'] || 'a city';
+      const ua = parser(req.headers['user-agent']);
+      const operatingSystem = (ua && ua.os && ua.os.name) ? ua.os.name : 'Unknown';
+      const country = geo && geo['country'] || 'A country';
       const referrer = req.get('Referrer');
+
       let totalClickCount = link.totalClickCount;
       totalClickCount++;
 
@@ -260,7 +251,7 @@ console.log('heyy', req.headers["x-real-ip"])
         linkCode: linkCode,
         referrer,
         country,
-        city,
+        operatingSystem,
       });
       await click.save();
       await link.update({totalClickCount});
@@ -297,7 +288,7 @@ console.log('heyy', req.headers["x-real-ip"])
       });
   };
 
-  static getCity  = async (linkCode) => {
+  static getOperatingSystem  = async (linkCode) => {
     return Click.aggregate(
       [
         {
@@ -306,12 +297,12 @@ console.log('heyy', req.headers["x-real-ip"])
           },
         },
         {$group: {
-            _id: "$city",
+            _id: "$operatingSystem",
             count: {$sum: 1}
           }},
         {
           $project: {
-            "city": "$_id",
+            "operatingSystem": "$_id",
             count: 1,
             "_id": 0
           }
@@ -319,8 +310,8 @@ console.log('heyy', req.headers["x-real-ip"])
         {$sort: {"count": -1} },
         { "$limit": 5 },
       ]).exec()
-      .then((countries) => {
-        return countries;
+      .then((os) => {
+        return os;
       })
       .catch((err) => {
         return {error: err};
@@ -459,7 +450,7 @@ console.log('heyy', req.headers["x-real-ip"])
     const link = await Link.findOne({ 'linkCode': id }, usersProjection);
     const referrers = await this.getReferrer(id);
     const countries = await this.getCountry(id);
-    const cities = await this.getCity(id);
+    const os = await this.getOperatingSystem(id);
     const groupedClickInfo = await this.getLinkClickCount(id);
 
     return res.json({
@@ -468,7 +459,7 @@ console.log('heyy', req.headers["x-real-ip"])
         link,
         referrers,
         countries,
-        cities,
+        os,
         clickInfo: groupedClickInfo,
       }
     });

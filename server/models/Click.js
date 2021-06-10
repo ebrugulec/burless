@@ -24,6 +24,9 @@ const ClickSchema = new Schema({
   city: {
     type: String,
   },
+  operatingSystem: {
+    type: String,
+  }
 });
 
 module.exports = mongoose.model('Click', ClickSchema)

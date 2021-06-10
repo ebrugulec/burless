@@ -112,95 +112,107 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
           You have created a new short link. Copy and start use. 💃
         </div>
       }
-      <div className="link-header-text">
-        <h3>Links</h3>
-      </div>
-      <div className="link-header">
-        {isLargeScreen &&
-          <div className="count">
-            CLICK
-          </div>
-        }
-        <div className="short-link">
+      { linkData.links &&
+        linkData.links.length > 0 ?
+          <>
+            <div className="link-header-text">
+              <h3>Links</h3>
+            </div>
+            <div className="link-header">
+              {isLargeScreen &&
+              <div className="count">
+                CLICK
+              </div>
+              }
+              <div className="short-link-title">
           <span>
             SHORT LINK
           </span>
-          {isSignedIn &&
-            <span>
+                {isSignedIn &&
+                <span>
               <input className="search" type="text" onChange={(e) => handleSearch(e.target.value)} />
             </span>
-          }
-        </div>
-        {isLargeScreen &&
-          <div className="date">
-            CREATED
-          </div>
-        }
-        {isLargeScreen &&
-          <div className="long-link">
-            LONG LINK
-          </div>
-        }
-        <div className="operations">
-          OPERATIONS
-        </div>
-      </div>
-      {links.map((link, i) => {
-        return (
-          <div className="link">
-            {isLargeScreen &&
-              <div className="count">
-                {link.totalClickCount}
+                }
               </div>
-            }
-            <div className="short-link">
-              <a className="" target="_blank" href={link.linkCode}>{link.shortLink}</a>
-            </div>
-
-            {isLargeScreen &&
-            <div className="date">
-              Apr, 11 2021
-            </div>
-            }
-            {isLargeScreen &&
+              {isLargeScreen &&
+              <div className="date">
+                CREATED
+              </div>
+              }
+              {isLargeScreen &&
               <div className="long-link">
-                <a className="">{link.longLink}</a>
+                LONG LINK
               </div>
-            }
-            <div className="operations">
-              <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
-                <a><FontAwesomeIcon icon={faChartBar} /></a>
-              </Link>
-              <span onClick={() => handleDeleteLink(link._id)}>
+              }
+              <div className="operations">
+                OPERATIONS
+              </div>
+            </div>
+            {links.map((link, i) => {
+                return (
+                  <div className="link">
+                    {isLargeScreen &&
+                    <div className="count">
+                      {link.totalClickCount}
+                    </div>
+                    }
+                    <div className="short-link">
+                      <a className="" target="_blank" href={link.linkCode}>{link.shortLink}</a>
+                    </div>
+
+                    {isLargeScreen &&
+                    <div className="date">
+                      Apr, 11 2021
+                    </div>
+                    }
+                    {isLargeScreen &&
+                    <div className="long-link">
+                      <a className="">{link.longLink}</a>
+                    </div>
+                    }
+                    <div className="operations">
+                      <Link className="" href={`/statistic/${encodeURIComponent(link.linkCode)}`}>
+                        <a><FontAwesomeIcon icon={faChartBar} /></a>
+                      </Link>
+                      <span onClick={() => handleDeleteLink(link._id)}>
                 <FontAwesomeIcon icon={faTrash} />
               </span>
+                    </div>
+                  </div>
+                )
+              }
+            )}
+            <div>
             </div>
+            {links && links.length > 0 &&
+            <ReactPaginate
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakLabel={'...'}
+              initialPage={linkData.curPage - 1}
+              pageCount={linkData.maxPage}
+              onPageChange={handlePagination}
+              containerClassName={'paginate-wrap'}
+              subContainerClassName={'paginate-inner'}
+              pageClassName={'paginate-li'}
+              pageLinkClassName={'paginate-a'}
+              activeClassName={'paginate-active'}
+              nextLinkClassName={'paginate-next-a'}
+              previousLinkClassName={'paginate-prev-a'}
+              breakLinkClassName={'paginate-break-a'}
+            />
+            }
+          </>
+          :
+          <div className="not-found-link">
+            <h4>
+              You don't have any links yet. Let's create 💃🏽
+            </h4>
           </div>
-        )
       }
-      )}
-      <div>
-      </div>
-      {links && links.length > 0 &&
-        <ReactPaginate
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={'...'}
-          initialPage={linkData.curPage - 1}
-          pageCount={linkData.maxPage}
-          onPageChange={handlePagination}
-          containerClassName={'paginate-wrap'}
-          subContainerClassName={'paginate-inner'}
-          pageClassName={'paginate-li'}
-          pageLinkClassName={'paginate-a'}
-          activeClassName={'paginate-active'}
-          nextLinkClassName={'paginate-next-a'}
-          previousLinkClassName={'paginate-prev-a'}
-          breakLinkClassName={'paginate-break-a'}
-        />
-      }
+
     </div>
   )
 };

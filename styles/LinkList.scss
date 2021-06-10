@@ -83,6 +83,14 @@ $purple-color-lighter: #d9c5e6;
 }
 
 .link-list {
+  //min-height: 300px;
+
+  .not-found-link {
+    text-align: center;
+    margin-top: 90px;
+    margin-bottom: 90px;
+  }
+
   .click {
     text-align: center;
   }
@@ -198,8 +206,9 @@ $purple-color-lighter: #d9c5e6;
       }
     }
 
-    .short-link {
+    .short-link-title {
       color: #717273;
+      width: 29%;
       &:hover {
         cursor: default;
       }
@@ -296,6 +305,10 @@ $purple-color-lighter: #d9c5e6;
     width: 92%;
 
     .short-link {
+      width: 49%;
+    }
+
+    .short-link-title {
       width: 49%;
     }
 

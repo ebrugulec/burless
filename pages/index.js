@@ -15,7 +15,8 @@ export default function Home (props) {
   }, []);
   //TODO: token var ama hic link yoksa uyari ver.
 
-  if (props.data && (props.data.token || (props.data.links && props.data.links.length > 0))) {
+  console.log(props)
+  if (props.isSignedIn || (props.data.links && props.data.links.length > 0)) {
     return (
       <Layout>
         <LinkList linkData={props.data} id={props.id} isSignedIn={props.isSignedIn} />

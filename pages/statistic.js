@@ -106,9 +106,7 @@ export default function Statistic (props) {
   const [statisticData, setStatisticData] = useState({});
   const [selectedVal, setSelectedValue] = useState('');
 
-  const {link, referrers, countries, cities} = props?.data;
-  // const {referrers} = link;
-  console.log('props?.data', props?.data)
+  const {link, referrers, countries, os} = props?.data;
 
   useEffect(() => {
     const {clickInfo} = props.data;
@@ -232,19 +230,19 @@ export default function Statistic (props) {
               })}
             </div>
           }
-          {cities && countries.length > 0 &&
-          <div className="click-info city">
+          {os && os.length > 0 &&
+          <div className="click-info os">
             <div className="click-info-header">
-              Cities
+              Operating System
             </div>
-            {cities.map((data, i) => {
+            {os.map((data, i) => {
               return (
                 <div className="click-info-content" key={i}>
                   <span className="count">
                     {data.count}
                   </span>
                   <span className="data">
-                    {data.city}
+                    {data.operatingSystem}
                   </span>
                 </div>
               )
