@@ -161,7 +161,7 @@ class userController {
   };
 
   static async updateUserLinksWithSession(sessionId, userId) {
-    const payload = userId ? { 'user': ObjectId(userId) } : { session: sessionId };
+    const payload = sessionId ? { session: sessionId } : { 'user': ObjectId(userId) } ;
     const link = await Link.findOne(payload);
     if (link) {
       await Link.updateMany(

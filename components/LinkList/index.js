@@ -10,6 +10,8 @@ import windowSize from "../../lib/windowSize";
 import axios from "axios";
 import {server} from "../../config";
 
+const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
 const LinkList = ({ linkData, id, isSignedIn }) => {
   const userListRef = useRef(null)
   const [links, setLinks] = useState([])
@@ -104,6 +106,7 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
     setSearchVal(searchString)
   };
 //TODO: Font check
+
   return (
     <div className="link-list">
       {
@@ -162,7 +165,9 @@ const LinkList = ({ linkData, id, isSignedIn }) => {
 
                     {isLargeScreen &&
                     <div className="date">
-                      Apr, 11 2021
+                      {
+                        new Date(link.createdAt).toLocaleDateString("en-US", dateOptions)
+                      }
                     </div>
                     }
                     {isLargeScreen &&

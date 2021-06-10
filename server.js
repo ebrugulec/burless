@@ -149,7 +149,6 @@ app.prepare().then(() => {
     const reqUrl = req.url && req.url.substring(1)
     //TODO: Check here
     if (checkUrl(reqUrl)) {
-      console.log('checkUrl(reqUrl)', reqUrl);
       res.status(301);
       await linkController.shortenLink(req, res, app, reqUrl)
     } else {
