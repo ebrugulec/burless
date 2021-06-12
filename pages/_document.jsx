@@ -4,18 +4,20 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
-          />
           <meta name="theme-color" content="#FCC232" />
           {/*<link*/}
           {/*  rel="stylesheet"*/}
           {/*  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"*/}
           {/*/>*/}
+
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J2KL6YM1"></script><script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-R1J2KL6YM1'); </script>`
+            }}
+          />
           <style jsx global>
             {`
               html,

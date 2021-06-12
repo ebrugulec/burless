@@ -5,7 +5,7 @@ function HeadComponent() {
     <Head>
       <title>Burless | URL Shortener</title>
       {/*<link rel="shortcut icon" href="../public/favicon.ico" />*/}
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
     </Head>
   )
 }

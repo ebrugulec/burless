@@ -83,7 +83,7 @@ export default function Dashboard ({ id }) {
 
       <div className="section main-title-section">
         <div className="main-title">
-          Feature and some cool things
+          Features and some cool things
           <div className="main-section-image-wrapper">
             <div className="section-image">
               <Image
