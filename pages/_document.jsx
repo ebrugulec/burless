@@ -4,7 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html>
         <Head>
           <meta charSet="utf-8" />
           <meta name="theme-color" content="#FCC232" />
@@ -12,12 +12,6 @@ class MyDocument extends Document {
           {/*  rel="stylesheet"*/}
           {/*  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"*/}
           {/*/>*/}
-
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J2KL6YM1"></script><script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-R1J2KL6YM1'); </script>`
-            }}
-          />
           <style jsx global>
             {`
               html,
